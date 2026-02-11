@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphic Design Portfolio - Aceeb Dignitoso</title>
+    <meta name="description" content="Professional graphic design portfolio featuring brand identity, UI/UX design, and creative solutions.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * { scroll-behavior: smooth; }
+        body { -webkit-font-smoothing: antialiased; background: #0a0a0f; }
+
+        /* Scrolling color-changing line - Adobe spectrum */
+        .adobe-line {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 0%;
+            z-index: 9999;
+            transition: background 0.3s ease;
+        }
+
+        /* Photoshop blue */
+        @keyframes ps-glow {
+            0%, 100% { 
+                background: linear-gradient(180deg, #31A8FF 0%, #1E96FF 100%);
+                box-shadow: 0 0 20px rgba(49, 168, 255, 0.6), 0 0 40px rgba(49, 168, 255, 0.4);
+            }
+            50% { 
+                background: linear-gradient(180deg, #1E96FF 0%, #0078D4 100%);
+                box-shadow: 0 0 30px rgba(49, 168, 255, 0.8), 0 0 60px rgba(49, 168, 255, 0.6);
+            }
+        }
+
+        /* Illustrator orange */
+        @keyframes ai-glow {
+            0%, 100% { 
+                background: linear-gradient(180deg, #FF9A00 0%, #FF7F00 100%);
+                box-shadow: 0 0 20px rgba(255, 154, 0, 0.6), 0 0 40px rgba(255, 154, 0, 0.4);
+            }
+            50% { 
+                background: linear-gradient(180deg, #FF7F00 0%, #E67300 100%);
+                box-shadow: 0 0 30px rgba(255, 154, 0, 0.8), 0 0 60px rgba(255, 154, 0, 0.6);
+            }
+        }
+
+        /* InDesign pink */
+        @keyframes id-glow {
+            0%, 100% { 
+                background: linear-gradient(180deg, #FF3366 0%, #FF0050 100%);
+                box-shadow: 0 0 20px rgba(255, 51, 102, 0.6), 0 0 40px rgba(255, 51, 102, 0.4);
+            }
+            50% { 
+                background: linear-gradient(180deg, #FF0050 0%, #E6004C 100%);
+                box-shadow: 0 0 30px rgba(255, 51, 102, 0.8), 0 0 60px rgba(255, 51, 102, 0.6);
+            }
+        }
+
+        .ps-mode { animation: ps-glow 3s ease-in-out infinite; }
+        .ai-mode { animation: ai-glow 3s ease-in-out infinite; }
+        .id-mode { animation: id-glow 3s ease-in-out infinite; }
+
+        /* Floating design tools */
+        @keyframes float-tool {
+            0%, 100% { transform: translateY(0) rotate(0); opacity: 0.2; }
+            50% { transform: translateY(-40px) rotate(180deg); opacity: 0.5; }
+        }
+
+        .floating-tool {
+            position: absolute;
+            animation: float-tool 10s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        /* Grid background */
+        .design-grid {
+            background-image: 
+                linear-gradient(rgba(49, 168, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(49, 168, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        /* Color palette animation */
+        @keyframes palette-shift {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .color-palette {
+            animation: palette-shift 20s linear infinite;
+        }
+
+        /* Project card reveal */
+        .project-card {
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(49, 168, 255, 0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .project-card:hover::after {
+            left: 100%;
+        }
+
+        .project-card:hover {
+            transform: translateY(-15px) rotateX(5deg);
+            box-shadow: 0 25px 70px rgba(49, 168, 255, 0.3);
+        }
+
+        /* Pen tool cursor trail */
+        @keyframes pen-draw {
+            0% { stroke-dashoffset: 1000; }
+            100% { stroke-dashoffset: 0; }
+        }
+
+        .pen-path {
+            stroke-dasharray: 1000;
+            animation: pen-draw 3s ease-in-out infinite;
+        }
+
+        /* Typography scale */
+        @keyframes text-scale {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+
+        .text-hero {
+            animation: text-scale 4s ease-in-out infinite;
+        }
+
+        /* Gradient mesh effect */
+        .gradient-mesh {
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(49, 168, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(255, 154, 0, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 50% 80%, rgba(255, 51, 102, 0.15) 0%, transparent 50%);
+        }
+
+        /* Fade animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Software badge pulse */
+        @keyframes badge-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .software-badge:hover {
+            animation: badge-pulse 0.6s ease-in-out;
+        }
+
+        /* Creative particles */
+        @keyframes creative-float {
+            0% { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(100px) rotate(360deg); opacity: 0; }
+        }
+
+        .creative-particle {
+            position: fixed;
+            pointer-events: none;
+            animation: creative-float 15s linear infinite;
+        }
+
+        /* Bezier curve decoration */
+        .bezier-curve {
+            stroke-dasharray: 5, 5;
+            animation: dash 20s linear infinite;
+        }
+
+        @keyframes dash {
+            to { stroke-dashoffset: -100; }
+        }
+
+        /* Glow effect */
+        .glow-hover {
+            transition: all 0.3s ease;
+        }
+
+        .glow-hover:hover {
+            filter: drop-shadow(0 0 20px currentColor);
+        }
+    </style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+    const { useState, useEffect } = React;
+
+    const GraphicDesignPortfolio = () => {
+        const [scrollProgress, setScrollProgress] = useState(0);
+        const [activeSection, setActiveSection] = useState('hero');
+        const [lineMode, setLineMode] = useState('ps-mode');
+        const [particles, setParticles] = useState([]);
+
+        useEffect(() => {
+            const handleScroll = () => {
+                const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = (window.scrollY / totalHeight) * 100;
+                setScrollProgress(progress);
+
+                // Change line color mode based on scroll
+                if (progress < 25) {
+                    setLineMode('ps-mode'); // Photoshop blue
+                } else if (progress < 50) {
+                    setLineMode('ai-mode'); // Illustrator orange
+                } else if (progress < 75) {
+                    setLineMode('id-mode'); // InDesign pink
+                } else {
+                    setLineMode('ps-mode'); // Back to blue
+                }
+
+                // Update active section
+                const sections = ['hero', 'portfolio', 'services', 'tools', 'contact'];
+                const current = sections.find(id => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        const rect = el.getBoundingClientRect();
+                        return rect.top <= 150 && rect.bottom >= 150;
+                    }
+                    return false;
+                });
+                if (current) setActiveSection(current);
+
+                // Fade in animations
+                document.querySelectorAll('.fade-in').forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.top < window.innerHeight - 100) {
+                        el.classList.add('visible');
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', handleScroll);
+            handleScroll();
+            return () => window.removeEventListener('scroll', handleScroll);
+        }, []);
+
+        // Generate creative particles
+        useEffect(() => {
+            const shapes = ['◆', '●', '▲', '■', '★'];
+            const colors = ['#31A8FF', '#FF9A00', '#FF3366'];
+            const particleArray = Array.from({ length: 20 }, (_, i) => ({
+                id: i,
+                shape: shapes[Math.floor(Math.random() * shapes.length)],
+                color: colors[Math.floor(Math.random() * colors.length)],
+                left: Math.random() * 100,
+                size: 20 + Math.random() * 30,
+                delay: Math.random() * 15,
+                duration: 12 + Math.random() * 6
+            }));
+            setParticles(particleArray);
+        }, []);
+
+        const scrollToSection = (id) => {
+            document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+        };
+
+        const projects = [
+            {
+                title: 'Tech Startup Branding',
+                category: 'Brand Identity',
+                description: 'Complete brand system including logo, color palette, typography, and brand guidelines.',
+                tools: ['Illustrator', 'Photoshop'],
+                image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&h=600&fit=crop',
+                color: '#31A8FF'
+            },
+            {
+                title: 'E-Commerce UI Design',
+                category: 'UI/UX Design',
+                description: 'Modern e-commerce interface with intuitive navigation and conversion-focused design.',
+                tools: ['Figma', 'Photoshop'],
+                image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop',
+                color: '#FF9A00'
+            },
+            {
+                title: 'Restaurant Menu Design',
+                category: 'Print Design',
+                description: 'Elegant menu design with custom illustrations and appetizing food photography layout.',
+                tools: ['InDesign', 'Photoshop'],
+                image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=600&fit=crop',
+                color: '#FF3366'
+            },
+            {
+                title: 'Social Media Campaign',
+                category: 'Social Graphics',
+                description: 'Cohesive social media graphics for a 30-day brand awareness campaign.',
+                tools: ['Photoshop', 'Illustrator'],
+                image: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=800&h=600&fit=crop',
+                color: '#31A8FF'
+            },
+            {
+                title: 'App Icon Design',
+                category: 'Icon Design',
+                description: 'iOS and Android app icon with multiple size variations and adaptive design.',
+                tools: ['Illustrator', 'Photoshop'],
+                image: 'https://images.unsplash.com/photo-1618761714954-0b8cd0026356?w=800&h=600&fit=crop',
+                color: '#FF9A00'
+            },
+            {
+                title: 'Magazine Layout',
+                category: 'Editorial Design',
+                description: 'Modern magazine spread with dynamic typography and photo treatment.',
+                tools: ['InDesign', 'Photoshop'],
+                image: 'https://images.unsplash.com/photo-1586243287039-23f4c8e2e7ab?w=800&h=600&fit=crop',
+                color: '#FF3366'
+            }
+        ];
+
+        const tools = [
+            { name: 'Photoshop', icon: 'Ps', color: '#31A8FF', description: 'Image editing & manipulation' },
+            { name: 'Illustrator', icon: 'Ai', color: '#FF9A00', description: 'Vector graphics & logos' },
+            { name: 'InDesign', icon: 'Id', color: '#FF3366', description: 'Layout & typography' },
+            { name: 'Figma', icon: 'Fi', color: '#F24E1E', description: 'UI/UX design' },
+            { name: 'XD', icon: 'Xd', color: '#FF61F6', description: 'Prototyping & wireframes' },
+            { name: 'Lightroom', icon: 'Lr', color: '#31A8FF', description: 'Photo editing' }
+        ];
+
+        return (
+            <div className="min-h-screen text-white relative overflow-hidden">
+                {/* Animated Adobe line */}
+                <div 
+                    className={`adobe-line ${lineMode}`}
+                    style={{ height: `${scrollProgress}%` }}
+                />
+
+                {/* Creative particles */}
+                {particles.map(p => (
+                    <div 
+                        key={p.id}
+                        className="creative-particle text-4xl"
+                        style={{
+                            left: `${p.left}%`,
+                            bottom: 0,
+                            color: p.color,
+                            fontSize: `${p.size}px`,
+                            animationDelay: `${p.delay}s`,
+                            animationDuration: `${p.duration}s`,
+                            opacity: 0.3
+                        }}
+                    >
+                        {p.shape}
+                    </div>
+                ))}
+
+                {/* Floating design tools */}
+                <div className="floating-tool text-blue-400" style={{ top: '15%', left: '8%', animationDelay: '0s' }}>
+                    <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/>
+                    </svg>
+                </div>
+                <div className="floating-tool text-orange-400" style={{ top: '25%', right: '12%', animationDelay: '3s', animationDuration: '12s' }}>
+                    <svg className="w-20 h-20" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17.5 12c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5.67 1.5 1.5 1.5 1.5-.67 1.5-1.5m-3.5 3c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5m-4-1.5c0-.83-.67-1.5-1.5-1.5S7 12.67 7 13.5 7.67 15 8.5 15s1.5-.67 1.5-1.5M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9z"/>
+                    </svg>
+                </div>
+
+                {/* Background grid */}
+                <div className="design-grid fixed inset-0 opacity-20 pointer-events-none" />
+
+                {/* Navigation */}
+                <nav className="fixed top-0 left-0 right-0 z-40 bg-zinc-950/80 backdrop-blur-lg border-b border-blue-900/30">
+                    <div className="max-w-7xl mx-auto px-6 lg:px-12">
+                        <div className="flex items-center justify-between h-20">
+                            <button onClick={() => scrollToSection('hero')} className="text-2xl font-bold">
+                                DESIGN<span className="text-blue-400">.</span>
+                            </button>
+                            <div className="hidden md:flex items-center space-x-8">
+                                {['hero', 'portfolio', 'services', 'tools', 'contact'].map(id => (
+                                    <button
+                                        key={id}
+                                        onClick={() => scrollToSection(id)}
+                                        className={`text-sm font-medium capitalize transition-all ${
+                                            activeSection === id 
+                                                ? 'text-blue-400' 
+                                                : 'text-zinc-400 hover:text-white'
+                                        }`}
+                                    >
+                                        {id}
+                                        {activeSection === id && (
+                                            <div className="h-0.5 bg-blue-400 mt-1 glow-hover" />
+                                        )}
+                                    </button>
+                                ))}
+                            </div>
+                            <a 
+                                href="../index.html"
+                                className="px-6 py-2 border border-blue-500 text-blue-400 hover:bg-blue-500/20 transition-all text-sm font-semibold glow-hover"
+                            >
+                                ← Back to Main
+                            </a>
+                        </div>
+                    </div>
+                </nav>
+
+                {/* Hero Section */}
+                <section id="hero" className="min-h-screen flex items-center justify-center pt-20 relative gradient-mesh">
+                    {/* SVG decorative curve */}
+                    <svg className="absolute inset-0 w-full h-full opacity-10 pointer-events-none" viewBox="0 0 1000 1000">
+                        <path className="bezier-curve" d="M 0,500 Q 250,300 500,500 T 1000,500" fill="none" stroke="#31A8FF" strokeWidth="2"/>
+                        <path className="bezier-curve" d="M 0,400 Q 250,600 500,400 T 1000,400" fill="none" stroke="#FF9A00" strokeWidth="2" style={{animationDelay: '5s'}}/>
+                        <path className="bezier-curve" d="M 0,600 Q 250,400 500,600 T 1000,600" fill="none" stroke="#FF3366" strokeWidth="2" style={{animationDelay: '10s'}}/>
+                    </svg>
+
+                    <div className="max-w-6xl mx-auto px-6 text-center relative z-10 fade-in">
+                        <div className="inline-block px-6 py-3 bg-blue-500/10 border border-blue-500/30 rounded-full mb-8">
+                            <span className="text-blue-400 text-sm font-bold tracking-widest">GRAPHIC DESIGN PORTFOLIO</span>
+                        </div>
+                        
+                        <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight text-hero">
+                            Design That
+                            <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-orange-400 to-pink-500">
+                                Speaks Volumes
+                            </span>
+                        </h1>
+                        
+                        <p className="text-xl md:text-2xl text-zinc-400 max-w-3xl mx-auto mb-12">
+                            Creating visual identities, stunning interfaces, and memorable brand experiences.
+                        </p>
+
+                        {/* Rotating color palette */}
+                        <div className="flex justify-center gap-4 mb-12 overflow-hidden">
+                            <div className="flex gap-4 color-palette">
+                                {['#31A8FF', '#FF9A00', '#FF3366', '#00E4BB', '#9999FF', '#F24E1E', '#31A8FF', '#FF9A00', '#FF3366', '#00E4BB'].map((color, i) => (
+                                    <div 
+                                        key={i}
+                                        className="w-16 h-16 rounded-lg flex-shrink-0 glow-hover cursor-pointer"
+                                        style={{ backgroundColor: color, boxShadow: `0 4px 20px ${color}40` }}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                        
+                        <div className="flex flex-wrap gap-6 justify-center">
+                            <button 
+                                onClick={() => scrollToSection('portfolio')}
+                                className="px-10 py-5 bg-blue-500 hover:bg-blue-600 text-white font-bold text-lg transition-all hover:scale-105 glow-hover"
+                            >
+                                View Portfolio
+                            </button>
+                            <button 
+                                onClick={() => scrollToSection('contact')}
+                                className="px-10 py-5 border-2 border-blue-500 text-blue-400 font-bold text-lg hover:bg-blue-500/20 transition-all"
+                            >
+                                Hire Me
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Portfolio Grid */}
+                <section id="portfolio" className="py-32 border-t border-blue-900/30 relative">
+                    <div className="max-w-7xl mx-auto px-6 lg:px-12">
+                        <div className="text-center mb-20 fade-in">
+                            <div className="inline-block px-4 py-2 bg-blue-500/10 border border-blue-500/30 rounded-full mb-4">
+                                <span className="text-blue-400 text-xs font-bold tracking-widest">RECENT WORK</span>
+                            </div>
+                            <h2 className="text-5xl md:text-6xl font-bold mb-6">
+                                Featured<br />
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-orange-400">Projects</span>
+                            </h2>
+                            <p className="text-xl text-zinc-400 max-w-2xl mx-auto">
+                                A showcase of diverse design work across branding, digital, and print
+                            </p>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {projects.map((project, i) => (
+                                <div 
+                                    key={i}
+                                    className="fade-in project-card group border border-zinc-800 bg-zinc-900 overflow-hidden cursor-pointer"
+                                    style={{ transitionDelay: `${i * 100}ms` }}
+                                >
+                                    <div className="relative h-64 overflow-hidden">
+                                        <img 
+                                            src={project.image} 
+                                            alt={project.title}
+                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                        <div 
+                                            className="absolute top-4 right-4 px-3 py-1 text-white text-xs font-bold rounded"
+                                            style={{ backgroundColor: project.color }}
+                                        >
+                                            {project.category}
+                                        </div>
+                                    </div>
+
+                                    <div className="p-6 space-y-4">
+                                        <h3 className="text-xl font-bold group-hover:text-blue-400 transition-colors">
+                                            {project.title}
+                                        </h3>
+                                        <p className="text-zinc-400 text-sm">{project.description}</p>
+                                        
+                                        <div className="flex flex-wrap gap-2 pt-2">
+                                            {project.tools.map((tool, j) => (
+                                                <span 
+                                                    key={j}
+                                                    className="px-3 py-1 text-xs bg-zinc-800 text-zinc-300 border border-zinc-700"
+                                                >
+                                                    {tool}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* Services */}
+                <section id="services" className="py-32 border-t border-blue-900/30 relative">
+                    <div className="absolute inset-0 gradient-mesh opacity-50" />
+                    
+                    <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+                        <div className="text-center mb-20 fade-in">
+                            <h2 className="text-5xl md:text-6xl font-bold mb-6">
+                                What I<br />
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-pink-500">Create</span>
+                            </h2>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                            {[
+                                { title: 'Brand Identity', icon: '🎨', items: ['Logo design', 'Color systems', 'Typography', 'Brand guides'] },
+                                { title: 'UI/UX Design', icon: '📱', items: ['App interfaces', 'Website mockups', 'Wireframes', 'Prototypes'] },
+                                { title: 'Print Design', icon: '📄', items: ['Brochures', 'Posters', 'Packaging', 'Business cards'] },
+                                { title: 'Digital Assets', icon: '✨', items: ['Social graphics', 'Banners', 'Icons', 'Illustrations'] }
+                            ].map((service, i) => (
+                                <div 
+                                    key={i}
+                                    className="fade-in group border border-zinc-800 bg-zinc-900/50 p-8 hover:border-blue-500/50 transition-all duration-500 hover:-translate-y-2"
+                                    style={{ transitionDelay: `${i * 100}ms` }}
+                                >
+                                    <div className="text-5xl mb-4">{service.icon}</div>
+                                    <h3 className="text-2xl font-bold mb-4 group-hover:text-blue-400 transition-colors">
+                                        {service.title}
+                                    </h3>
+                                    <ul className="space-y-2">
+                                        {service.items.map((item, j) => (
+                                            <li key={j} className="text-zinc-400 text-sm flex items-center">
+                                                <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-3" />
+                                                {item}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* Tools */}
+                <section id="tools" className="py-32 border-t border-blue-900/30 relative">
+                    <div className="max-w-7xl mx-auto px-6 lg:px-12">
+                        <div className="text-center mb-20 fade-in">
+                            <h2 className="text-5xl md:text-6xl font-bold mb-6">
+                                Creative<br />
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-blue-400">Arsenal</span>
+                            </h2>
+                            <p className="text-xl text-zinc-400 max-w-2xl mx-auto">
+                                Professional mastery of industry-leading design tools
+                            </p>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {tools.map((tool, i) => (
+                                <div 
+                                    key={i}
+                                    className="fade-in software-badge group border border-zinc-800 bg-zinc-900/50 p-8 hover:border-blue-500/50 transition-all duration-500 hover:-translate-y-2"
+                                    style={{ transitionDelay: `${i * 100}ms` }}
+                                >
+                                    <div 
+                                        className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6 text-white text-3xl font-bold shadow-2xl glow-hover"
+                                        style={{ 
+                                            backgroundColor: tool.color,
+                                            boxShadow: `0 10px 40px ${tool.color}40`
+                                        }}
+                                    >
+                                        {tool.icon}
+                                    </div>
+                                    <h3 className="text-2xl font-bold mb-2 group-hover:text-blue-400 transition-colors">
+                                        {tool.name}
+                                    </h3>
+                                    <p className="text-zinc-400 text-sm">{tool.description}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* Contact */}
+                <section id="contact" className="py-32 border-t border-blue-900/30 relative">
+                    <div className="max-w-4xl mx-auto px-6 text-center fade-in">
+                        <div className="inline-block px-6 py-3 bg-blue-500/10 border border-blue-500/30 rounded-full mb-8">
+                            <span className="text-blue-400 text-sm font-bold tracking-widest">GET IN TOUCH</span>
+                        </div>
+                        
+                        <h2 className="text-5xl md:text-6xl font-bold mb-6">
+                            Let's Create<br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-orange-400 to-pink-500">
+                                Something Beautiful
+                            </span>
+                        </h2>
+                        
+                        <p className="text-xl text-zinc-400 mb-12 max-w-2xl mx-auto">
+                            Need a logo, brand identity, or UI design? Let's collaborate on your next project.
+                        </p>
+
+                        <div className="grid md:grid-cols-3 gap-6 mb-12">
+                            {[
+                                { icon: '📧', label: 'Email', value: 'aceebdignitoso@gmail.com', href: 'mailto:aceebdignitoso@gmail.com' },
+                                { icon: '💬', label: 'WhatsApp', value: '+92 334 6419 135', href: 'https://wa.me/+923346419135' },
+                                { icon: '💼', label: 'LinkedIn', value: 'Connect', href: 'https://www.linkedin.com/in/therealhaseebrehman/' }
+                            ].map((contact, i) => (
+                                <a
+                                    key={i}
+                                    href={contact.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="border border-zinc-800 bg-zinc-900/50 p-6 hover:border-blue-500/50 transition-all duration-300 hover:-translate-y-2 block"
+                                >
+                                    <div className="text-4xl mb-3">{contact.icon}</div>
+                                    <div className="text-sm text-zinc-500 mb-1">{contact.label}</div>
+                                    <div className="text-sm font-semibold text-blue-400">{contact.value}</div>
+                                </a>
+                            ))}
+                        </div>
+
+                        <div className="flex flex-wrap gap-6 justify-center">
+                            <a 
+                                href="mailto:aceebdignitoso@gmail.com"
+                                className="px-10 py-5 bg-blue-500 hover:bg-blue-600 text-white font-bold text-lg transition-all hover:scale-105"
+                            >
+                                Start a Project
+                            </a>
+                            <a 
+                                href="https://wa.me/+923346419135"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="px-10 py-5 border-2 border-blue-500 text-blue-400 font-bold text-lg hover:bg-blue-500/20 transition-all"
+                            >
+                                WhatsApp Me
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Footer */}
+                <footer className="border-t border-blue-900/30 py-12">
+                    <div className="max-w-7xl mx-auto px-6 text-center">
+                        <div className="text-2xl font-bold mb-4">
+                            DESIGN<span className="text-blue-400">.</span>
+                        </div>
+                        <p className="text-zinc-500 text-sm">
+                            © 2026 Aceeb Dignitoso. All rights reserved.
+                        </p>
+                    </div>
+                </footer>
+            </div>
+        );
+    };
+
+    ReactDOM.render(<GraphicDesignPortfolio />, document.getElementById('root'));
+</script>
+</body>
+</html>

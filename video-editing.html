@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Editing Portfolio - Aceeb Dignitoso</title>
+    <meta name="description" content="Professional video editing portfolio featuring motion graphics, color grading, and cinematic edits.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * { scroll-behavior: smooth; }
+        body { -webkit-font-smoothing: antialiased; background: #0a0a0f; }
+
+        /* Neon line that changes color on scroll */
+        .neon-line {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 0%;
+            background: linear-gradient(180deg, #9d4edd 0%, #e0aaff 50%, #c77dff 100%);
+            box-shadow: 0 0 20px currentColor, 0 0 40px currentColor;
+            z-index: 9999;
+            transition: background 0.3s ease;
+        }
+
+        /* Floating video editing icons */
+        @keyframes float-icon {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.3; }
+            50% { transform: translateY(-30px) rotate(180deg); opacity: 0.6; }
+        }
+
+        .floating-icon {
+            position: absolute;
+            animation: float-icon 8s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        /* Premiere Pro style gradient */
+        @keyframes premiere-glow {
+            0%, 100% { 
+                background: linear-gradient(135deg, #9d4edd 0%, #c77dff 100%);
+                box-shadow: 0 0 30px rgba(157, 78, 221, 0.6);
+            }
+            50% { 
+                background: linear-gradient(135deg, #c77dff 0%, #e0aaff 100%);
+                box-shadow: 0 0 50px rgba(199, 125, 255, 0.8);
+            }
+        }
+
+        /* After Effects style gradient */
+        @keyframes ae-glow {
+            0%, 100% { 
+                background: linear-gradient(135deg, #9d4edd 0%, #7b2cbf 100%);
+                box-shadow: 0 0 30px rgba(157, 78, 221, 0.6);
+            }
+            50% { 
+                background: linear-gradient(135deg, #7b2cbf 0%, #5a189a 100%);
+                box-shadow: 0 0 50px rgba(123, 44, 191, 0.8);
+            }
+        }
+
+        /* DaVinci Resolve style gradient */
+        @keyframes davinci-glow {
+            0%, 100% { 
+                background: linear-gradient(135deg, #e63946 0%, #f72585 100%);
+                box-shadow: 0 0 30px rgba(230, 57, 70, 0.6);
+            }
+            50% { 
+                background: linear-gradient(135deg, #f72585 0%, #b5179e 100%);
+                box-shadow: 0 0 50px rgba(247, 37, 133, 0.8);
+            }
+        }
+
+        .premiere-card {
+            animation: premiere-glow 3s ease-in-out infinite;
+        }
+
+        .ae-card {
+            animation: ae-glow 3s ease-in-out infinite;
+            animation-delay: 1s;
+        }
+
+        .davinci-card {
+            animation: davinci-glow 3s ease-in-out infinite;
+            animation-delay: 2s;
+        }
+
+        /* Glitch effect for timeline */
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        .glitch:hover {
+            animation: glitch 0.3s infinite;
+        }
+
+        /* Video project card hover */
+        .video-card {
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(157, 78, 221, 0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .video-card:hover::before {
+            left: 100%;
+        }
+
+        .video-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(157, 78, 221, 0.4);
+        }
+
+        /* Timeline scrubber effect */
+        @keyframes scrub {
+            0% { left: 0%; }
+            100% { left: 100%; }
+        }
+
+        .timeline-scrubber {
+            position: absolute;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: #e0aaff;
+            box-shadow: 0 0 10px #e0aaff;
+            animation: scrub 5s linear infinite;
+        }
+
+        /* Neon text glow */
+        .neon-text {
+            color: #e0aaff;
+            text-shadow: 
+                0 0 5px #e0aaff,
+                0 0 10px #e0aaff,
+                0 0 20px #c77dff,
+                0 0 40px #c77dff;
+        }
+
+        /* Software badge styles */
+        .software-badge {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .software-badge::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .software-badge:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* Particle effect */
+        @keyframes particle-float {
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
+
+        .particle {
+            position: fixed;
+            width: 3px;
+            height: 3px;
+            background: #c77dff;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particle-float 10s linear infinite;
+            box-shadow: 0 0 10px #c77dff;
+        }
+
+        /* Fade in on scroll */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Video play button pulse */
+        @keyframes pulse-play {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .play-button {
+            animation: pulse-play 2s ease-in-out infinite;
+        }
+
+        /* Waveform animation */
+        @keyframes waveform {
+            0%, 100% { height: 20%; }
+            50% { height: 100%; }
+        }
+
+        .waveform-bar {
+            animation: waveform 1s ease-in-out infinite;
+        }
+
+        /* Color grading gradient */
+        .color-grade-bg {
+            background: linear-gradient(135deg, 
+                rgba(157, 78, 221, 0.1) 0%,
+                rgba(199, 125, 255, 0.1) 25%,
+                rgba(224, 170, 255, 0.1) 50%,
+                rgba(247, 37, 133, 0.1) 75%,
+                rgba(230, 57, 70, 0.1) 100%
+            );
+        }
+
+        /* Hover glow effect */
+        .glow-on-hover {
+            transition: all 0.3s ease;
+        }
+
+        .glow-on-hover:hover {
+            box-shadow: 0 0 20px currentColor, 0 0 40px currentColor, 0 0 60px currentColor;
+        }
+    </style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    const VideoEditingPortfolio = () => {
+        const [scrollProgress, setScrollProgress] = useState(0);
+        const [activeSection, setActiveSection] = useState('hero');
+        const [neonColor, setNeonColor] = useState('#9d4edd');
+        const [particles, setParticles] = useState([]);
+
+        // Scroll progress and color change
+        useEffect(() => {
+            const handleScroll = () => {
+                const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = (window.scrollY / totalHeight) * 100;
+                setScrollProgress(progress);
+
+                // Change neon color based on scroll position
+                if (progress < 20) {
+                    setNeonColor('#9d4edd'); // Premiere Pro purple
+                } else if (progress < 40) {
+                    setNeonColor('#c77dff'); // Light purple
+                } else if (progress < 60) {
+                    setNeonColor('#e0aaff'); // Lighter purple
+                } else if (progress < 80) {
+                    setNeonColor('#f72585'); // Pink
+                } else {
+                    setNeonColor('#e63946'); // Red (DaVinci)
+                }
+
+                // Update active section
+                const sections = ['hero', 'software', 'projects', 'skills', 'contact'];
+                const current = sections.find(id => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        const rect = el.getBoundingClientRect();
+                        return rect.top <= 150 && rect.bottom >= 150;
+                    }
+                    return false;
+                });
+                if (current) setActiveSection(current);
+
+                // Trigger fade-in animations
+                document.querySelectorAll('.fade-in').forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.top < window.innerHeight - 100) {
+                        el.classList.add('visible');
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', handleScroll);
+            handleScroll();
+            return () => window.removeEventListener('scroll', handleScroll);
+        }, []);
+
+        // Generate particles
+        useEffect(() => {
+            const particleArray = Array.from({ length: 30 }, (_, i) => ({
+                id: i,
+                left: Math.random() * 100,
+                delay: Math.random() * 10,
+                duration: 8 + Math.random() * 4
+            }));
+            setParticles(particleArray);
+        }, []);
+
+        const scrollToSection = (id) => {
+            document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+        };
+
+        // Video projects data
+        const projects = [
+            {
+                title: 'Corporate Brand Film',
+                category: 'Commercial',
+                duration: '2:30',
+                software: ['Premiere Pro', 'After Effects'],
+                description: 'High-end corporate video with motion graphics and professional color grading.',
+                thumbnail: 'https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?w=800&h=450&fit=crop',
+                gradient: 'from-purple-600 to-pink-600'
+            },
+            {
+                title: 'Social Media Campaign',
+                category: 'Social Content',
+                duration: '0:30',
+                software: ['Premiere Pro', 'Audition'],
+                description: '15-second Instagram reels series with dynamic transitions and sound design.',
+                thumbnail: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&h=450&fit=crop',
+                gradient: 'from-pink-600 to-purple-600'
+            },
+            {
+                title: 'Product Demo Video',
+                category: 'E-Commerce',
+                duration: '1:45',
+                software: ['DaVinci Resolve', 'After Effects'],
+                description: 'Sleek product showcase with cinematic color grading and motion tracking.',
+                thumbnail: 'https://images.unsplash.com/photo-1536240478700-b869070f9279?w=800&h=450&fit=crop',
+                gradient: 'from-red-600 to-pink-600'
+            },
+            {
+                title: 'Music Video Edit',
+                category: 'Entertainment',
+                duration: '3:45',
+                software: ['Premiere Pro', 'After Effects'],
+                description: 'Fast-paced music video with beat-synced cuts and VFX compositing.',
+                thumbnail: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=800&h=450&fit=crop',
+                gradient: 'from-purple-600 to-indigo-600'
+            },
+            {
+                title: 'Documentary Short',
+                category: 'Documentary',
+                duration: '8:15',
+                software: ['DaVinci Resolve', 'Audition'],
+                description: 'Compelling storytelling with interview cutaways and b-roll integration.',
+                thumbnail: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&h=450&fit=crop',
+                gradient: 'from-indigo-600 to-purple-600'
+            },
+            {
+                title: 'Event Highlight Reel',
+                category: 'Event Coverage',
+                duration: '4:20',
+                software: ['Premiere Pro', 'After Effects'],
+                description: 'Conference highlight reel with lower thirds and animated titles.',
+                thumbnail: 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&h=450&fit=crop',
+                gradient: 'from-pink-600 to-red-600'
+            }
+        ];
+
+        const software = [
+            { name: 'Premiere Pro', icon: 'Pr', color: '#9999FF', description: 'Primary editing suite' },
+            { name: 'After Effects', icon: 'Ae', color: '#9999FF', description: 'Motion graphics & VFX' },
+            { name: 'DaVinci Resolve', icon: 'Da', color: '#E63946', description: 'Color grading master' },
+            { name: 'Audition', icon: 'Au', color: '#00E4BB', description: 'Sound design & mixing' },
+            { name: 'Media Encoder', icon: 'Me', color: '#9999FF', description: 'Export & compression' },
+            { name: 'Photoshop', icon: 'Ps', color: '#31A8FF', description: 'Thumbnail design' }
+        ];
+
+        return (
+            <div className="min-h-screen text-white relative overflow-hidden">
+                {/* Animated neon line */}
+                <div 
+                    className="neon-line" 
+                    style={{ 
+                        height: `${scrollProgress}%`,
+                        background: `linear-gradient(180deg, ${neonColor} 0%, ${neonColor}99 50%, ${neonColor} 100%)`,
+                        boxShadow: `0 0 20px ${neonColor}, 0 0 40px ${neonColor}`
+                    }}
+                />
+
+                {/* Particles */}
+                {particles.map(p => (
+                    <div 
+                        key={p.id}
+                        className="particle"
+                        style={{
+                            left: `${p.left}%`,
+                            bottom: 0,
+                            animationDelay: `${p.delay}s`,
+                            animationDuration: `${p.duration}s`
+                        }}
+                    />
+                ))}
+
+                {/* Floating icons */}
+                <div className="floating-icon" style={{ top: '10%', left: '5%', animationDelay: '0s' }}>
+                    <svg className="w-12 h-12 text-purple-400" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 12H9.5v-2h-2v2H6V9h1.5v2.5h2V9H11v6zm7-1c0 .55-.45 1-1 1h-.75v1.5h-1.5V15H14c-.55 0-1-.45-1-1v-4c0-.55.45-1 1-1h3c.55 0 1 .45 1 1v4zm-3.5-.5h2v-3h-2v3z"/>
+                    </svg>
+                </div>
+                <div className="floating-icon" style={{ top: '20%', right: '8%', animationDelay: '2s', animationDuration: '10s' }}>
+                    <svg className="w-16 h-16 text-pink-400" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+                    </svg>
+                </div>
+                <div className="floating-icon" style={{ bottom: '15%', left: '10%', animationDelay: '4s', animationDuration: '12s' }}>
+                    <svg className="w-14 h-14 text-purple-300" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/>
+                    </svg>
+                </div>
+
+                {/* Navigation */}
+                <nav className="fixed top-0 left-0 right-0 z-40 bg-zinc-950/80 backdrop-blur-lg border-b border-purple-900/30">
+                    <div className="max-w-7xl mx-auto px-6 lg:px-12">
+                        <div className="flex items-center justify-between h-20">
+                            <button onClick={() => scrollToSection('hero')} className="text-2xl font-bold">
+                                VIDEO<span className="neon-text">.</span>
+                            </button>
+                            <div className="hidden md:flex items-center space-x-8">
+                                {['hero', 'software', 'projects', 'skills', 'contact'].map(id => (
+                                    <button
+                                        key={id}
+                                        onClick={() => scrollToSection(id)}
+                                        className={`text-sm font-medium capitalize transition-all ${
+                                            activeSection === id 
+                                                ? 'text-purple-400' 
+                                                : 'text-zinc-400 hover:text-white'
+                                        }`}
+                                    >
+                                        {id}
+                                        {activeSection === id && (
+                                            <div className="h-0.5 bg-purple-400 mt-1" style={{ boxShadow: `0 0 10px ${neonColor}` }} />
+                                        )}
+                                    </button>
+                                ))}
+                            </div>
+                            <a 
+                                href="../portfolio-enhanced 2.html"
+                                className="px-6 py-2 border border-purple-500 text-purple-400 hover:bg-purple-500/20 transition-all text-sm font-semibold glow-on-hover"
+                                style={{ color: neonColor, borderColor: neonColor }}
+                            >
+                                ← Back to Main
+                            </a>
+                        </div>
+                    </div>
+                </nav>
+
+                {/* Hero Section */}
+                <section id="hero" className="min-h-screen flex items-center justify-center pt-20 relative">
+                    <div className="absolute inset-0 bg-gradient-to-b from-purple-950/20 via-zinc-950 to-zinc-950" />
+                    
+                    {/* Animated waveform background */}
+                    <div className="absolute bottom-0 left-0 right-0 h-32 flex items-end justify-center gap-2 opacity-20">
+                        {Array.from({ length: 50 }).map((_, i) => (
+                            <div 
+                                key={i}
+                                className="waveform-bar w-2 bg-purple-500"
+                                style={{
+                                    animationDelay: `${i * 0.05}s`,
+                                    animationDuration: `${1 + (i % 3) * 0.2}s`
+                                }}
+                            />
+                        ))}
+                    </div>
+
+                    <div className="max-w-6xl mx-auto px-6 text-center relative z-10 fade-in">
+                        <div className="inline-block px-6 py-3 bg-purple-500/10 border border-purple-500/30 rounded-full mb-8">
+                            <span className="neon-text text-sm font-bold tracking-widest">VIDEO EDITING PORTFOLIO</span>
+                        </div>
+                        
+                        <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
+                            Crafting Visual
+                            <br />
+                            <span className="neon-text">Stories</span>
+                        </h1>
+                        
+                        <p className="text-xl md:text-2xl text-zinc-400 max-w-3xl mx-auto mb-12">
+                            Professional video editing, motion graphics, and color grading that brings your vision to life.
+                        </p>
+                        
+                        <div className="flex flex-wrap gap-6 justify-center">
+                            <button 
+                                onClick={() => scrollToSection('projects')}
+                                className="px-10 py-5 font-bold text-lg transition-all premiere-card text-white"
+                            >
+                                View Showreel
+                            </button>
+                            <button 
+                                onClick={() => scrollToSection('contact')}
+                                className="px-10 py-5 border-2 font-bold text-lg hover:bg-purple-500/20 transition-all"
+                                style={{ borderColor: neonColor, color: neonColor }}
+                            >
+                                Hire Me
+                            </button>
+                        </div>
+
+                        {/* Play button */}
+                        <div className="mt-20">
+                            <div className="play-button inline-flex items-center justify-center w-20 h-20 rounded-full bg-purple-500/20 border-2 border-purple-400 cursor-pointer hover:scale-110 transition-transform">
+                                <svg className="w-8 h-8 text-purple-400 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
+                            </div>
+                            <p className="text-sm text-zinc-500 mt-4">Watch Demo Reel</p>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Software Expertise */}
+                <section id="software" className="py-32 border-t border-purple-900/30 relative">
+                    <div className="absolute inset-0 color-grade-bg" />
+                    
+                    <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+                        <div className="text-center mb-20 fade-in">
+                            <div className="inline-block px-4 py-2 bg-purple-500/10 border border-purple-500/30 rounded-full mb-4">
+                                <span className="text-purple-400 text-xs font-bold tracking-widest">TOOLKIT</span>
+                            </div>
+                            <h2 className="text-5xl md:text-6xl font-bold mb-6">
+                                Industry-Standard<br />
+                                <span className="neon-text">Software</span>
+                            </h2>
+                            <p className="text-xl text-zinc-400 max-w-2xl mx-auto">
+                                Mastery of Adobe Creative Cloud and professional editing suites
+                            </p>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {software.map((tool, i) => (
+                                <div 
+                                    key={i}
+                                    className="fade-in software-badge group relative border border-zinc-800 bg-zinc-900/50 p-8 hover:border-purple-500/50 transition-all duration-500 hover:-translate-y-2"
+                                    style={{ transitionDelay: `${i * 100}ms` }}
+                                >
+                                    <div className="relative z-10">
+                                        <div 
+                                            className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6 text-white text-3xl font-bold shadow-2xl"
+                                            style={{ 
+                                                backgroundColor: tool.color,
+                                                boxShadow: `0 10px 40px ${tool.color}40`
+                                            }}
+                                        >
+                                            {tool.icon}
+                                        </div>
+                                        <h3 className="text-2xl font-bold mb-2 group-hover:text-purple-400 transition-colors">
+                                            {tool.name}
+                                        </h3>
+                                        <p className="text-zinc-400 text-sm">{tool.description}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* Video Projects */}
+                <section id="projects" className="py-32 border-t border-purple-900/30 relative">
+                    <div className="max-w-7xl mx-auto px-6 lg:px-12">
+                        <div className="text-center mb-20 fade-in">
+                            <h2 className="text-5xl md:text-6xl font-bold mb-6">
+                                Featured<br />
+                                <span className="neon-text">Projects</span>
+                            </h2>
+                            <p className="text-xl text-zinc-400 max-w-2xl mx-auto">
+                                Recent video editing work showcasing diverse styles and techniques
+                            </p>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {projects.map((project, i) => (
+                                <div 
+                                    key={i}
+                                    className="fade-in video-card group border border-zinc-800 bg-zinc-900 overflow-hidden cursor-pointer"
+                                    style={{ transitionDelay: `${i * 100}ms` }}
+                                >
+                                    {/* Thumbnail */}
+                                    <div className="relative h-64 overflow-hidden bg-zinc-800">
+                                        <img 
+                                            src={project.thumbnail} 
+                                            alt={project.title}
+                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                        />
+                                        
+                                        {/* Overlay with play button */}
+                                        <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                            <div className="absolute inset-0 flex items-center justify-center">
+                                                <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm border-2 border-white flex items-center justify-center">
+                                                    <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                                        <path d="M8 5v14l11-7z"/>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Category badge */}
+                                        <div className="absolute top-4 right-4 px-3 py-1 bg-purple-500/90 text-white text-xs font-bold rounded">
+                                            {project.category}
+                                        </div>
+
+                                        {/* Duration */}
+                                        <div className="absolute bottom-4 right-4 px-2 py-1 bg-black/80 text-white text-xs font-mono">
+                                            {project.duration}
+                                        </div>
+
+                                        {/* Timeline scrubber */}
+                                        <div className="absolute bottom-0 left-0 right-0 h-1 bg-zinc-700">
+                                            <div className={`h-full bg-gradient-to-r ${project.gradient}`} style={{ width: '40%' }} />
+                                        </div>
+                                    </div>
+
+                                    {/* Content */}
+                                    <div className="p-6 space-y-4">
+                                        <h3 className="text-xl font-bold group-hover:text-purple-400 transition-colors glitch">
+                                            {project.title}
+                                        </h3>
+                                        <p className="text-zinc-400 text-sm">{project.description}</p>
+                                        
+                                        {/* Software used */}
+                                        <div className="flex flex-wrap gap-2 pt-2">
+                                            {project.software.map((sw, j) => (
+                                                <span 
+                                                    key={j}
+                                                    className="px-3 py-1 text-xs bg-zinc-800 text-zinc-300 border border-zinc-700"
+                                                >
+                                                    {sw}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* Skills & Services */}
+                <section id="skills" className="py-32 border-t border-purple-900/30 relative">
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-950/10 to-transparent" />
+                    
+                    <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+                        <div className="text-center mb-20 fade-in">
+                            <h2 className="text-5xl md:text-6xl font-bold mb-6">
+                                What I<br />
+                                <span className="neon-text">Offer</span>
+                            </h2>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                            {[
+                                { title: 'Video Editing', icon: '🎬', items: ['Narrative editing', 'Pacing & rhythm', 'Multi-cam sync', 'Rough cuts'] },
+                                { title: 'Motion Graphics', icon: '✨', items: ['Title animations', 'Lower thirds', 'Logo reveals', 'Transitions'] },
+                                { title: 'Color Grading', icon: '🎨', items: ['LUT creation', 'Skin tone correction', 'Mood styling', 'Match grading'] },
+                                { title: 'Sound Design', icon: '🔊', items: ['Audio mixing', 'Foley effects', 'Music sync', 'Noise reduction'] }
+                            ].map((service, i) => (
+                                <div 
+                                    key={i}
+                                    className="fade-in group border border-zinc-800 bg-zinc-900/50 p-8 hover:border-purple-500/50 transition-all duration-500 hover:-translate-y-2"
+                                    style={{ transitionDelay: `${i * 100}ms` }}
+                                >
+                                    <div className="text-5xl mb-4">{service.icon}</div>
+                                    <h3 className="text-2xl font-bold mb-4 group-hover:text-purple-400 transition-colors">
+                                        {service.title}
+                                    </h3>
+                                    <ul className="space-y-2">
+                                        {service.items.map((item, j) => (
+                                            <li key={j} className="text-zinc-400 text-sm flex items-center">
+                                                <span className="w-1.5 h-1.5 bg-purple-500 rounded-full mr-3" />
+                                                {item}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* Contact */}
+                <section id="contact" className="py-32 border-t border-purple-900/30 relative">
+                    <div className="max-w-4xl mx-auto px-6 text-center fade-in">
+                        <div className="inline-block px-6 py-3 bg-purple-500/10 border border-purple-500/30 rounded-full mb-8">
+                            <span className="neon-text text-sm font-bold tracking-widest">LET'S COLLABORATE</span>
+                        </div>
+                        
+                        <h2 className="text-5xl md:text-6xl font-bold mb-6">
+                            Ready to Create<br />
+                            <span className="neon-text">Something Amazing?</span>
+                        </h2>
+                        
+                        <p className="text-xl text-zinc-400 mb-12 max-w-2xl mx-auto">
+                            Whether it's a commercial, music video, or social content — let's bring your vision to life.
+                        </p>
+
+                        <div className="grid md:grid-cols-3 gap-6 mb-12">
+                            {[
+                                { icon: '📧', label: 'Email', value: 'aceebdignitoso@gmail.com', href: 'mailto:aceebdignitoso@gmail.com' },
+                                { icon: '💬', label: 'WhatsApp', value: '+92 334 6419 135', href: 'https://wa.me/+923346419135' },
+                                { icon: '💼', label: 'LinkedIn', value: 'Connect', href: 'https://www.linkedin.com/in/therealhaseebrehman/' }
+                            ].map((contact, i) => (
+                                <a
+                                    key={i}
+                                    href={contact.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="border border-zinc-800 bg-zinc-900/50 p-6 hover:border-purple-500/50 transition-all duration-300 hover:-translate-y-2 block"
+                                >
+                                    <div className="text-4xl mb-3">{contact.icon}</div>
+                                    <div className="text-sm text-zinc-500 mb-1">{contact.label}</div>
+                                    <div className="text-sm font-semibold text-purple-400">{contact.value}</div>
+                                </a>
+                            ))}
+                        </div>
+
+                        <div className="flex flex-wrap gap-6 justify-center">
+                            <a 
+                                href="mailto:aceebdignitoso@gmail.com"
+                                className="px-10 py-5 font-bold text-lg transition-all premiere-card text-white"
+                            >
+                                Send a Message
+                            </a>
+                            <a 
+                                href="https://wa.me/+923346419135"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="px-10 py-5 border-2 border-purple-500 text-purple-400 font-bold text-lg hover:bg-purple-500/20 transition-all"
+                            >
+                                WhatsApp Chat
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Footer */}
+                <footer className="border-t border-purple-900/30 py-12">
+                    <div className="max-w-7xl mx-auto px-6 text-center">
+                        <div className="text-2xl font-bold mb-4">
+                            VIDEO<span className="neon-text">.</span>
+                        </div>
+                        <p className="text-zinc-500 text-sm">
+                            © 2026 Aceeb Dignitoso. All rights reserved.
+                        </p>
+                    </div>
+                </footer>
+            </div>
+        );
+    };
+
+    ReactDOM.render(<VideoEditingPortfolio />, document.getElementById('root'));
+</script>
+</body>
+</html>
