@@ -9,9 +9,20 @@
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:wght@400;700;900&family=Urbanist:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { scroll-behavior: smooth; }
-        body { -webkit-font-smoothing: antialiased; background: #0a0a0f; }
+        body { 
+            -webkit-font-smoothing: antialiased; 
+            background: #0a0a0f; 
+            font-family: 'Urbanist', sans-serif;
+        }
+
+        /* Typography */
+        .font-display { font-family: 'Bebas Neue', cursive; }
+        .font-serif { font-family: 'Playfair Display', serif; }
 
         /* Scrolling color-changing line - Adobe spectrum */
         .adobe-line {
@@ -99,6 +110,7 @@
             transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
             position: relative;
             overflow: hidden;
+            background: #1a1a24;
         }
 
         .project-card::after {
@@ -117,29 +129,33 @@
         }
 
         .project-card:hover {
-            transform: translateY(-15px) rotateX(5deg);
+            transform: translateY(-10px) scale(1.02);
             box-shadow: 0 25px 70px rgba(49, 168, 255, 0.3);
         }
 
-        /* Pen tool cursor trail */
-        @keyframes pen-draw {
-            0% { stroke-dashoffset: 1000; }
-            100% { stroke-dashoffset: 0; }
+        .project-card img {
+            transition: transform 0.8s cubic-bezier(0.23, 1, 0.320, 1);
         }
 
-        .pen-path {
-            stroke-dasharray: 1000;
-            animation: pen-draw 3s ease-in-out infinite;
+        .project-card:hover img {
+            transform: scale(1.1);
         }
 
-        /* Typography scale */
-        @keyframes text-scale {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.8; }
+        /* Category filter buttons */
+        .filter-btn {
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
         }
 
-        .text-hero {
-            animation: text-scale 4s ease-in-out infinite;
+        .filter-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-color: #667eea;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .filter-btn:hover:not(.active) {
+            background: rgba(102, 126, 234, 0.1);
+            border-color: #667eea;
         }
 
         /* Gradient mesh effect */
@@ -204,19 +220,404 @@
         .glow-hover:hover {
             filter: drop-shadow(0 0 20px currentColor);
         }
+
+        /* Lightbox styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox img {
+            max-width: 90vw;
+            max-height: 90vh;
+            object-fit: contain;
+            box-shadow: 0 0 100px rgba(49, 168, 255, 0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            font-size: 40px;
+            color: white;
+            cursor: pointer;
+            z-index: 10001;
+            transition: all 0.3s ease;
+        }
+
+        .lightbox-close:hover {
+            color: #31A8FF;
+            transform: scale(1.2);
+        }
+
+        /* Masonry grid */
+        .masonry-grid {
+            column-count: 1;
+            column-gap: 1.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .masonry-grid {
+                column-count: 2;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .masonry-grid {
+                column-count: 3;
+            }
+        }
+
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Text scale animation */
+        @keyframes text-scale {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+
+        .text-hero {
+            animation: text-scale 4s ease-in-out infinite;
+        }
+
+        /* BEFORE/AFTER COMPARISON STYLES */
+        .comparison-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: pan-y pinch-zoom;
+        }
+
+        .comparison-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+        }
+
+        .comparison-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+        }
+
+        .comparison-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        .comparison-overlay img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+        }
+
+        .comparison-slider {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #31A8FF, #FF9A00, #FF3366);
+            cursor: ew-resize;
+            z-index: 3;
+            box-shadow: 0 0 20px rgba(49, 168, 255, 0.8);
+        }
+
+        .comparison-slider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #31A8FF, #FF9A00);
+            border: 3px solid white;
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(49, 168, 255, 0.6), 0 4px 20px rgba(0, 0, 0, 0.4);
+            cursor: ew-resize;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .comparison-slider::after {
+            content: '⇔';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            pointer-events: none;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .comparison-labels {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .comparison-label {
+            position: absolute;
+            top: 20px;
+            padding: 8px 20px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .comparison-label.before {
+            left: 20px;
+            background: linear-gradient(135deg, rgba(255, 51, 102, 0.9), rgba(255, 0, 80, 0.9));
+        }
+
+        .comparison-label.after {
+            right: 20px;
+            background: linear-gradient(135deg, rgba(49, 168, 255, 0.9), rgba(30, 150, 255, 0.9));
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .comparison-slider::before {
+                width: 40px;
+                height: 40px;
+            }
+
+            .comparison-slider::after {
+                font-size: 16px;
+            }
+
+            .comparison-label {
+                font-size: 11px;
+                padding: 6px 12px;
+                top: 12px;
+            }
+
+            .comparison-label.before {
+                left: 12px;
+            }
+
+            .comparison-label.after {
+                right: 12px;
+            }
+        }
+
+        /* Comparison section animations */
+        @keyframes slide-reveal {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .comparison-reveal {
+            animation: slide-reveal 0.8s ease-out;
+        }
+
+        /* Pulsing glow on slider handle */
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(49, 168, 255, 0.8), 0 4px 20px rgba(0, 0, 0, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(49, 168, 255, 1), 0 4px 20px rgba(0, 0, 0, 0.4);
+            }
+        }
+
+        .comparison-slider::before {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
     </style>
 </head>
 <body>
 <div id="root"></div>
 
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <img id="lightbox-img" src="" alt="Enlarged view">
+</div>
+
+<script>
+    function openLightbox(src) {
+        document.getElementById('lightbox').classList.add('active');
+        document.getElementById('lightbox-img').src = src;
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        document.getElementById('lightbox').classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    // Close on escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeLightbox();
+    });
+
+    // Close on background click
+    document.getElementById('lightbox').addEventListener('click', function(e) {
+        if (e.target.id === 'lightbox') closeLightbox();
+    });
+</script>
+
 <script type="text/babel">
-    const { useState, useEffect } = React;
+    const { useState, useEffect, useRef } = React;
+
+    // Before/After Comparison Component
+    const BeforeAfterComparison = ({ beforeImage, afterImage }) => {
+        const [sliderPosition, setSliderPosition] = useState(50);
+        const [isDragging, setIsDragging] = useState(false);
+        const containerRef = useRef(null);
+
+        const handleMove = (clientX) => {
+            if (!containerRef.current) return;
+            
+            const rect = containerRef.current.getBoundingClientRect();
+            const x = clientX - rect.left;
+            const percentage = (x / rect.width) * 100;
+            const clampedPercentage = Math.min(Math.max(percentage, 0), 100);
+            setSliderPosition(clampedPercentage);
+        };
+
+        const handleMouseMove = (e) => {
+            if (!isDragging) return;
+            handleMove(e.clientX);
+        };
+
+        const handleTouchMove = (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            handleMove(e.touches[0].clientX);
+        };
+
+        const handleStart = () => {
+            setIsDragging(true);
+        };
+
+        const handleEnd = () => {
+            setIsDragging(false);
+        };
+
+        useEffect(() => {
+            if (isDragging) {
+                document.addEventListener('mousemove', handleMouseMove);
+                document.addEventListener('mouseup', handleEnd);
+                document.addEventListener('touchmove', handleTouchMove, { passive: false });
+                document.addEventListener('touchend', handleEnd);
+            }
+
+            return () => {
+                document.removeEventListener('mousemove', handleMouseMove);
+                document.removeEventListener('mouseup', handleEnd);
+                document.removeEventListener('touchmove', handleTouchMove);
+                document.removeEventListener('touchend', handleEnd);
+            };
+        }, [isDragging]);
+
+        return (
+            <div 
+                ref={containerRef}
+                className="comparison-container comparison-reveal"
+                onMouseDown={handleStart}
+                onTouchStart={handleStart}
+            >
+                <div className="comparison-wrapper">
+                    {/* Before image (bottom layer) */}
+                    <img 
+                        src={beforeImage} 
+                        alt="Before" 
+                        className="comparison-image"
+                    />
+
+                    {/* After image (top layer with clip) */}
+                    <div 
+                        className="comparison-overlay"
+                        style={{ width: `${sliderPosition}%` }}
+                    >
+                        <img 
+                            src={afterImage} 
+                            alt="After"
+                        />
+                    </div>
+
+                    {/* Slider handle */}
+                    <div 
+                        className="comparison-slider"
+                        style={{ left: `${sliderPosition}%` }}
+                    />
+
+                    {/* Labels */}
+                    <div className="comparison-labels">
+                        <div className="comparison-label before">Before</div>
+                        <div className="comparison-label after">After</div>
+                    </div>
+                </div>
+            </div>
+        );
+    };
 
     const GraphicDesignPortfolio = () => {
         const [scrollProgress, setScrollProgress] = useState(0);
         const [activeSection, setActiveSection] = useState('hero');
         const [lineMode, setLineMode] = useState('ps-mode');
         const [particles, setParticles] = useState([]);
+        const [activeFilter, setActiveFilter] = useState('all');
 
         useEffect(() => {
             const handleScroll = () => {
@@ -226,17 +627,17 @@
 
                 // Change line color mode based on scroll
                 if (progress < 25) {
-                    setLineMode('ps-mode'); // Photoshop blue
+                    setLineMode('ps-mode');
                 } else if (progress < 50) {
-                    setLineMode('ai-mode'); // Illustrator orange
+                    setLineMode('ai-mode');
                 } else if (progress < 75) {
-                    setLineMode('id-mode'); // InDesign pink
+                    setLineMode('id-mode');
                 } else {
-                    setLineMode('ps-mode'); // Back to blue
+                    setLineMode('ps-mode');
                 }
 
                 // Update active section
-                const sections = ['hero', 'portfolio', 'services', 'tools', 'contact'];
+                const sections = ['hero', 'comparison', 'portfolio', 'services', 'tools', 'contact'];
                 const current = sections.find(id => {
                     const el = document.getElementById(id);
                     if (el) {
@@ -281,56 +682,325 @@
             document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
         };
 
+        // Expanded portfolio projects with your uploaded images
         const projects = [
             {
-                title: 'Tech Startup Branding',
-                category: 'Brand Identity',
-                description: 'Complete brand system including logo, color palette, typography, and brand guidelines.',
-                tools: ['Illustrator', 'Photoshop'],
-                image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&h=600&fit=crop',
-                color: '#31A8FF'
-            },
-            {
-                title: 'E-Commerce UI Design',
-                category: 'UI/UX Design',
-                description: 'Modern e-commerce interface with intuitive navigation and conversion-focused design.',
-                tools: ['Figma', 'Photoshop'],
-                image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop',
-                color: '#FF9A00'
-            },
-            {
-                title: 'Restaurant Menu Design',
-                category: 'Print Design',
-                description: 'Elegant menu design with custom illustrations and appetizing food photography layout.',
-                tools: ['InDesign', 'Photoshop'],
-                image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=600&fit=crop',
-                color: '#FF3366'
-            },
-            {
-                title: 'Social Media Campaign',
-                category: 'Social Graphics',
-                description: 'Cohesive social media graphics for a 30-day brand awareness campaign.',
+                title: 'Premium Leather Backpack',
+                category: 'Product Design',
+                niche: 'E-commerce',
+                description: 'Luxury product showcase with detailed specifications and premium presentation.',
                 tools: ['Photoshop', 'Illustrator'],
-                image: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=800&h=600&fit=crop',
-                color: '#31A8FF'
+                image: '2200 copy.jpg',
+                color: '#8B4513',
+                resolution: '1080x1080'
             },
             {
-                title: 'App Icon Design',
-                category: 'Icon Design',
-                description: 'iOS and Android app icon with multiple size variations and adaptive design.',
+                title: 'Healthcare Service Campaign',
+                category: 'Social Media',
+                niche: 'Healthcare',
+                description: 'Multi-panel healthcare service promotion with Arabic typography and modern design.',
+                tools: ['Photoshop', 'Illustrator'],
+                image: 'adel-amer-a5 - Copy.jpg',
+                color: '#1E88E5',
+                resolution: '1080x1080'
+            },
+            {
+                title: 'Medical App Promotion',
+                category: 'Social Graphics',
+                niche: 'Healthcare',
+                description: 'Healthcare app promotional graphics with clean layouts and professional imagery.',
+                tools: ['Photoshop', 'Illustrator'],
+                image: 'adel-amer-a3.jpg',
+                color: '#0288D1',
+                resolution: '1080x1080'
+            },
+            {
+                title: 'Starbucks Coffee Ad',
+                category: 'Food & Beverage',
+                niche: 'Coffee Shop',
+                description: 'Brand-aligned coffee advertisement with dynamic product photography and bold graphics.',
+                tools: ['Photoshop'],
+                image: 'sneha-saraf-insta-post-4.jpg',
+                color: '#00704A',
+                resolution: '1080x1080'
+            },
+            {
+                title: 'Ice Cream Promotion',
+                category: 'Food & Beverage',
+                niche: 'Dessert',
+                description: 'Delicious ice cream advertisement with appetizing visuals and promotional pricing.',
+                tools: ['Photoshop'],
+                image: 'sneha-saraf-assignment-insta-post-1.jpg',
+                color: '#6F4E37',
+                resolution: '1080x1080'
+            },
+            {
+                title: 'IPL Cricket Match Live',
+                category: 'Sports',
+                niche: 'Cricket',
+                description: 'Live cricket match promotional banner with player portraits and team branding.',
+                tools: ['Photoshop'],
+                image: 'MATCH 19 IPL(2025) SRH VS GT.jpg',
+                color: '#FF6B00',
+                resolution: '1920x1080'
+            },
+            {
+                title: 'Healthcare Technology',
+                category: 'Social Media',
+                niche: 'Medical Tech',
+                description: 'Modern healthcare technology campaign with professional medical imagery.',
+                tools: ['Photoshop', 'Illustrator'],
+                image: 'adel-amer-a2 - Copy.jpg',
+                color: '#2979FF',
+                resolution: '1080x1080'
+            },
+            {
+                title: 'Health Services Package',
+                category: 'Social Graphics',
+                niche: 'Healthcare',
+                description: 'Comprehensive health services promotional design with Arabic and English text.',
+                tools: ['Photoshop', 'Illustrator'],
+                image: 'adel-amer-a4.jpg',
+                color: '#0277BD',
+                resolution: '1080x1080'
+            },
+            {
+                title: 'Wellness App Interface',
+                category: 'Product Design',
+                niche: 'Healthcare',
+                description: 'Health and wellness app promotional graphics with calming design and clear messaging.',
+                tools: ['Figma', 'Photoshop'],
+                image: 'adel-amer-a6 - Copy.jpg',
+                color: '#26C6DA',
+                resolution: '1080x1080'
+            },
+            {
+                title: 'YouTube Thumbnail Design',
+                category: 'Social Graphics',
+                niche: 'Content Creation',
+                description: 'Eye-catching YouTube thumbnail with bold text and engaging visual elements.',
+                tools: ['Photoshop'],
+                image: 'maxresdefault - Copy.jpg',
+                color: '#FF0000',
+                resolution: '1280x720'
+            },
+            {
+                title: 'Gaming Channel Banner',
+                category: 'Gaming',
+                niche: 'YouTube',
+                description: 'Dynamic gaming channel artwork with high-energy graphics and branding.',
+                tools: ['Photoshop'],
+                image: 'gergana-yankova-thumbnail3.jpg',
+                color: '#9146FF',
+                resolution: '1280x720'
+            },
+            {
+                title: 'Content Creator Thumbnail',
+                category: 'Social Media',
+                niche: 'Digital Content',
+                description: 'Professional content creator thumbnail with attention-grabbing design.',
+                tools: ['Photoshop'],
+                image: 'maxresdefault (1) - Copy.jpg',
+                color: '#FF6B35',
+                resolution: '1280x720'
+            },
+            {
+                title: 'Fashion Editorial Design',
+                category: 'Social Graphics',
+                niche: 'Fashion',
+                description: 'High-fashion editorial layout with sophisticated typography and imagery.',
+                tools: ['Photoshop', 'InDesign'],
+                image: 'odev-2 - Copy.jpg',
+                color: '#1A1A1D',
+                resolution: '1080x1350'
+            },
+            {
+                title: 'Black Panther Fan Art',
+                category: 'Entertainment',
+                niche: 'Movies',
+                description: 'Stunning superhero fan art with cinematic composition and dramatic lighting.',
+                tools: ['Photoshop'],
+                image: 'By Aceeb Dignitoso.jpg',
+                color: '#8E44AD',
+                resolution: '1080x1350'
+            },
+            {
+                title: 'Thumbnail Design Guide',
+                category: 'Social Graphics',
+                niche: 'Education',
+                description: 'Educational infographic on creating attractive YouTube thumbnails.',
                 tools: ['Illustrator', 'Photoshop'],
-                image: 'https://images.unsplash.com/photo-1618761714954-0b8cd0026356?w=800&h=600&fit=crop',
-                color: '#FF9A00'
+                image: 'youtube guide by aceeb dignitoso.webp',
+                color: '#E74C3C',
+                resolution: '1200x1200'
             },
             {
-                title: 'Magazine Layout',
-                category: 'Editorial Design',
-                description: 'Modern magazine spread with dynamic typography and photo treatment.',
-                tools: ['InDesign', 'Photoshop'],
-                image: 'https://images.unsplash.com/photo-1586243287039-23f4c8e2e7ab?w=800&h=600&fit=crop',
-                color: '#FF3366'
+                title: 'Sports Movie Poster',
+                category: 'Entertainment',
+                niche: 'Sports Film',
+                description: 'Dramatic sports movie promotional poster with bold typography and imagery.',
+                tools: ['Photoshop'],
+                image: 'Sports banner by dignitoso.jpg',
+                color: '#16A085',
+                resolution: '1080x1350'
+            },
+
+            {
+                title: 'Political Campaign Design',
+                category: 'Social Graphics',
+                niche: 'Political',
+                description: 'Professional election campaign poster with Urdu typography and strong visual hierarchy.',
+                tools: ['Photoshop', 'Illustrator'],
+                image: 'Political Campaign Design.jpg',
+                color: '#31A8FF',
+                resolution: '1080x1350'
+            },
+            {
+                title: 'Healthcare App Campaign',
+                category: 'Social Media',
+                niche: 'Healthcare',
+                description: 'Multi-panel healthcare app promotion with Arabic typography and cohesive brand identity.',
+                tools: ['Photoshop', 'Illustrator'],
+                image: 'Health Care.jpg',
+                color: '#00B4D8',
+                resolution: '1080x1080'
+            },
+            {
+                title: 'Burger Promotion',
+                category: 'Food & Beverage',
+                niche: 'Restaurant',
+                description: 'Bold burger advertisement with dynamic typography and appetizing product photography.',
+                tools: ['Photoshop'],
+                image: 'Burger Post.jpg',
+                color: '#FFB800',
+                resolution: '1080x1080'
+            },
+            {
+                title: 'Coffee Facebook Design',
+                category: 'Product Design',
+                niche: 'Food & Beverage',
+                description: 'Premium coffee packaging design with elegant branding and product presentation.',
+                tools: ['Photoshop', 'Illustrator'],
+                image: 'coffe.jpg',
+                color: '#6F4E37',
+                resolution: '1920x1080'
+            },
+            {
+                title: 'Batman Motivational',
+                category: 'Social Graphics',
+                niche: 'Entertainment',
+                description: 'Dramatic motivational poster with cinematic composition and bold typography.',
+                tools: ['Photoshop'],
+                image: 'Batman Motivational - Copy.jpg',
+                color: '#DC3545',
+                resolution: '1080x1080'
+            },
+            {
+                title: 'Grilled Burger Ad',
+                category: 'Food & Beverage',
+                niche: 'Restaurant',
+                description: 'Premium burger advertisement with professional food styling and promotional copy.',
+                tools: ['Photoshop'],
+                image: 'Burger Post - Copy.jpg',
+                color: '#000000',
+                resolution: '1080x1080'
+            },
+            {
+                title: 'The Last of Us II',
+                category: 'Gaming',
+                niche: 'Entertainment',
+                description: 'Video game promotional artwork with double exposure technique and cinematic feel.',
+                tools: ['Photoshop'],
+                image: 'Last of Us by Aceeb Dignitoso.jpg',
+                color: '#E8E8E8',
+                resolution: '1080x1080'
+            },
+            {
+                title: 'Electric Shaver Product',
+                category: 'Product Design',
+                niche: 'Technology',
+                description: 'High-end product advertisement with technical specs and premium presentation.',
+                tools: ['Photoshop', 'Illustrator'],
+                image: 'Shaving Post By Aceeb Dignitoso.jpg',
+                color: '#0EA5E9',
+                resolution: '1200x800'
+            },
+            {
+                title: 'Venom Movie Poster',
+                category: 'Entertainment',
+                niche: 'Movies',
+                description: 'Movie fan art with dramatic lighting and character composition.',
+                tools: ['Photoshop'],
+                image: 'Venom Poster By Aceeb Dignitoso.jpg',
+                color: '#9333EA',
+                resolution: '1080x1350'
+            },
+            {
+                title: 'KFC Burger Special',
+                category: 'Food & Beverage',
+                niche: 'Restaurant',
+                description: 'Fast food promotional design with vibrant colors and call-to-action.',
+                tools: ['Photoshop'],
+                image: 'KFC burger poster by aceeb dignitoso.jpg',
+                color: '#E11D48',
+                resolution: '1080x1080'
+            },
+            {
+                title: 'Coffee Promotion',
+                category: 'Food & Beverage',
+                niche: 'Coffee Shop',
+                description: 'Premium coffee advertisement with atmospheric lighting and product focus.',
+                tools: ['Photoshop'],
+                image: 'Coffee Post By Aceeb digitoso.jpg',
+                color: '#F97316',
+                resolution: '1080x1080'
+            },
+            {
+                title: 'Shawarma Wrap Design',
+                category: 'Food & Beverage',
+                niche: 'Restaurant',
+                description: 'Bold food advertisement with creative typography and appetizing product shot.',
+                tools: ['Photoshop'],
+                image: 'Shawarma Wrap poster by Aceeb Dignitoso.jpg',
+                color: '#DC2626',
+                resolution: '1080x1080'
+            },
+            {
+                title: 'Motivational Typography',
+                category: 'Social Graphics',
+                niche: 'Branding',
+                description: 'Bold typographic design with high contrast and strong messaging.',
+                tools: ['Illustrator'],
+                image: 'Motivational post by Aceeb Diginitoso.webp',
+                color: '#EF4444',
+                resolution: '1200x1200'
+            },
+            {
+                title: 'Cricket Match Promo',
+                category: 'Sports',
+                niche: 'Entertainment',
+                description: 'Sports event promotional graphic with team branding and match details.',
+                tools: ['Photoshop'],
+                image: 'MATCH STORY - Copy.jpg',
+                color: '#10B981',
+                resolution: '1080x1920'
             }
         ];
+
+        const categories = [
+            { id: 'all', label: 'All Work', icon: '🎨' },
+            { id: 'Food & Beverage', label: 'Food & Beverage', icon: '🍔' },
+            { id: 'Entertainment', label: 'Entertainment', icon: '🎬' },
+            { id: 'Social Graphics', label: 'Social Media', icon: '📱' },
+            { id: 'Product Design', label: 'Product Design', icon: '✨' },
+            { id: 'Sports', label: 'Sports', icon: '⚽' },
+            { id: 'Gaming', label: 'Gaming', icon: '🎮' },
+            { id: 'Social Media', label: 'Healthcare', icon: '🏥' }
+        ];
+
+        const filteredProjects = activeFilter === 'all' 
+            ? projects 
+            : projects.filter(p => p.category === activeFilter);
 
         const tools = [
             { name: 'Photoshop', icon: 'Ps', color: '#31A8FF', description: 'Image editing & manipulation' },
@@ -387,11 +1057,11 @@
                 <nav className="fixed top-0 left-0 right-0 z-40 bg-zinc-950/80 backdrop-blur-lg border-b border-blue-900/30">
                     <div className="max-w-7xl mx-auto px-6 lg:px-12">
                         <div className="flex items-center justify-between h-20">
-                            <button onClick={() => scrollToSection('hero')} className="text-2xl font-bold">
-                                DESIGN<span className="text-blue-400">.</span>
+                            <button onClick={() => scrollToSection('hero')} className="text-2xl font-bold font-display">
+                                ACEEB<span className="text-blue-400">.</span>
                             </button>
                             <div className="hidden md:flex items-center space-x-8">
-                                {['hero', 'portfolio', 'services', 'tools', 'contact'].map(id => (
+                                {['hero', 'comparison', 'portfolio', 'services', 'tools', 'contact'].map(id => (
                                     <button
                                         key={id}
                                         onClick={() => scrollToSection(id)}
@@ -401,7 +1071,7 @@
                                                 : 'text-zinc-400 hover:text-white'
                                         }`}
                                     >
-                                        {id}
+                                        {id === 'comparison' ? 'Before/After' : id}
                                         {activeSection === id && (
                                             <div className="h-0.5 bg-blue-400 mt-1 glow-hover" />
                                         )}
@@ -409,10 +1079,10 @@
                                 ))}
                             </div>
                             <a 
-                                href="../index.html"
+                                href="mailto:aceebdignitoso@gmail.com"
                                 className="px-6 py-2 border border-blue-500 text-blue-400 hover:bg-blue-500/20 transition-all text-sm font-semibold glow-hover"
                             >
-                                ← Back to Main
+                                Hire Me
                             </a>
                         </div>
                     </div>
@@ -432,7 +1102,7 @@
                             <span className="text-blue-400 text-sm font-bold tracking-widest">GRAPHIC DESIGN PORTFOLIO</span>
                         </div>
                         
-                        <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight text-hero">
+                        <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight text-hero font-display">
                             Design That
                             <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-orange-400 to-pink-500">
@@ -441,7 +1111,7 @@
                         </h1>
                         
                         <p className="text-xl md:text-2xl text-zinc-400 max-w-3xl mx-auto mb-12">
-                            Creating visual identities, stunning interfaces, and memorable brand experiences.
+                            Creating visual identities, stunning social graphics, and memorable brand experiences across food, entertainment, healthcare, and lifestyle brands.
                         </p>
 
                         {/* Rotating color palette */}
@@ -459,17 +1129,65 @@
                         
                         <div className="flex flex-wrap gap-6 justify-center">
                             <button 
-                                onClick={() => scrollToSection('portfolio')}
+                                onClick={() => scrollToSection('comparison')}
                                 className="px-10 py-5 bg-blue-500 hover:bg-blue-600 text-white font-bold text-lg transition-all hover:scale-105 glow-hover"
+                            >
+                                See Before/After
+                            </button>
+                            <button 
+                                onClick={() => scrollToSection('portfolio')}
+                                className="px-10 py-5 border-2 border-blue-500 text-blue-400 font-bold text-lg hover:bg-blue-500/20 transition-all"
                             >
                                 View Portfolio
                             </button>
-                            <button 
-                                onClick={() => scrollToSection('contact')}
-                                className="px-10 py-5 border-2 border-blue-500 text-blue-400 font-bold text-lg hover:bg-blue-500/20 transition-all"
-                            >
-                                Hire Me
-                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                {/* BEFORE/AFTER COMPARISON SECTION */}
+                <section id="comparison" className="py-32 border-t border-blue-900/30 relative">
+                    <div className="absolute inset-0 gradient-mesh opacity-30" />
+                    
+                    <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+                        <div className="text-center mb-16 fade-in">
+                            <div className="inline-block px-4 py-2 bg-orange-500/10 border border-orange-500/30 rounded-full mb-4">
+                                <span className="text-orange-400 text-xs font-bold tracking-widest">DESIGN TRANSFORMATION</span>
+                            </div>
+                            <h2 className="text-5xl md:text-6xl font-bold mb-6 font-display">
+                                Before
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-blue-400"> & </span>
+                                After
+                            </h2>
+                            <p className="text-xl text-zinc-400 max-w-2xl mx-auto mb-4">
+                                Drag the slider to see the transformation. Watch raw concept evolve into polished promotional design.
+                            </p>
+                            <p className="text-sm text-zinc-500 max-w-xl mx-auto">
+                                💡 <strong>Tip:</strong> Click and drag the slider, or tap and swipe on mobile
+                            </p>
+                        </div>
+
+                        <BeforeAfterComparison 
+                            beforeImage="Edited and enchanced by aceeb dignitoso.jpg"
+                            afterImage="Virtual Screen shot of game.jpg"
+                        />
+
+                        <div className="mt-12 text-center fade-in">
+                            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                                <div className="border border-pink-500/30 bg-zinc-900/50 p-8 rounded-lg">
+                                    <div className="text-pink-400 text-4xl mb-4">📸</div>
+                                    <h3 className="text-xl font-bold mb-3 text-pink-400">Before</h3>
+                                    <p className="text-zinc-400 text-sm">
+                                        Raw promotional artwork from Stalker 2: Heart of Chornobyl, showcasing atmospheric character design and environmental storytelling.
+                                    </p>
+                                </div>
+                                <div className="border border-blue-500/30 bg-zinc-900/50 p-8 rounded-lg">
+                                    <div className="text-blue-400 text-4xl mb-4">✨</div>
+                                    <h3 className="text-xl font-bold mb-3 text-blue-400">After</h3>
+                                    <p className="text-zinc-400 text-sm">
+                                        Enhanced pre-order promotional design with typography, bonus content details, and structured information hierarchy for marketing campaign.
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -477,42 +1195,62 @@
                 {/* Portfolio Grid */}
                 <section id="portfolio" className="py-32 border-t border-blue-900/30 relative">
                     <div className="max-w-7xl mx-auto px-6 lg:px-12">
-                        <div className="text-center mb-20 fade-in">
+                        <div className="text-center mb-12 fade-in">
                             <div className="inline-block px-4 py-2 bg-blue-500/10 border border-blue-500/30 rounded-full mb-4">
-                                <span className="text-blue-400 text-xs font-bold tracking-widest">RECENT WORK</span>
+                                <span className="text-blue-400 text-xs font-bold tracking-widest">FEATURED WORK</span>
                             </div>
-                            <h2 className="text-5xl md:text-6xl font-bold mb-6">
-                                Featured<br />
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-orange-400">Projects</span>
+                            <h2 className="text-5xl md:text-6xl font-bold mb-6 font-display">
+                                Portfolio
                             </h2>
                             <p className="text-xl text-zinc-400 max-w-2xl mx-auto">
-                                A showcase of diverse design work across branding, digital, and print
+                                30+ projects showcasing diverse design work across branding, social media, food & beverage, healthcare, and entertainment
                             </p>
                         </div>
 
-                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {projects.map((project, i) => (
+                        {/* Category Filters */}
+                        <div className="flex flex-wrap justify-center gap-4 mb-12 fade-in">
+                            {categories.map(cat => (
+                                <button
+                                    key={cat.id}
+                                    onClick={() => setActiveFilter(cat.id)}
+                                    className={`filter-btn px-6 py-3 rounded-full font-semibold text-sm ${
+                                        activeFilter === cat.id ? 'active' : 'bg-zinc-800/50 text-zinc-300'
+                                    }`}
+                                >
+                                    <span className="mr-2">{cat.icon}</span>
+                                    {cat.label}
+                                </button>
+                            ))}
+                        </div>
+
+                        {/* Masonry Grid */}
+                        <div className="masonry-grid">
+                            {filteredProjects.map((project, i) => (
                                 <div 
                                     key={i}
-                                    className="fade-in project-card group border border-zinc-800 bg-zinc-900 overflow-hidden cursor-pointer"
-                                    style={{ transitionDelay: `${i * 100}ms` }}
+                                    className="masonry-item fade-in project-card group border border-zinc-800 cursor-pointer"
+                                    style={{ transitionDelay: `${i * 50}ms` }}
+                                    onClick={() => window.openLightbox(project.image)}
                                 >
-                                    <div className="relative h-64 overflow-hidden">
+                                    <div className="relative overflow-hidden">
                                         <img 
                                             src={project.image} 
                                             alt={project.title}
-                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                            className="w-full h-auto object-cover"
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                                         <div 
-                                            className="absolute top-4 right-4 px-3 py-1 text-white text-xs font-bold rounded"
-                                            style={{ backgroundColor: project.color }}
+                                            className="absolute top-4 right-4 px-3 py-1 text-white text-xs font-bold rounded backdrop-blur-sm"
+                                            style={{ backgroundColor: `${project.color}80` }}
                                         >
                                             {project.category}
                                         </div>
+                                        <div className="absolute bottom-4 left-4 right-4 text-xs text-zinc-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            📐 {project.resolution}
+                                        </div>
                                     </div>
 
-                                    <div className="p-6 space-y-4">
+                                    <div className="p-6 space-y-3">
                                         <h3 className="text-xl font-bold group-hover:text-blue-400 transition-colors">
                                             {project.title}
                                         </h3>
@@ -522,7 +1260,7 @@
                                             {project.tools.map((tool, j) => (
                                                 <span 
                                                     key={j}
-                                                    className="px-3 py-1 text-xs bg-zinc-800 text-zinc-300 border border-zinc-700"
+                                                    className="px-3 py-1 text-xs bg-zinc-800 text-zinc-300 border border-zinc-700 rounded"
                                                 >
                                                     {tool}
                                                 </span>
@@ -532,6 +1270,12 @@
                                 </div>
                             ))}
                         </div>
+
+                        {filteredProjects.length === 0 && (
+                            <div className="text-center py-20">
+                                <p className="text-2xl text-zinc-500">No projects found in this category</p>
+                            </div>
+                        )}
                     </div>
                 </section>
 
@@ -541,18 +1285,19 @@
                     
                     <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
                         <div className="text-center mb-20 fade-in">
-                            <h2 className="text-5xl md:text-6xl font-bold mb-6">
-                                What I<br />
+                            <h2 className="text-5xl md:text-6xl font-bold mb-6 font-display">
+                                What I
+                                <br />
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-pink-500">Create</span>
                             </h2>
                         </div>
 
                         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                             {[
-                                { title: 'Brand Identity', icon: '🎨', items: ['Logo design', 'Color systems', 'Typography', 'Brand guides'] },
-                                { title: 'UI/UX Design', icon: '📱', items: ['App interfaces', 'Website mockups', 'Wireframes', 'Prototypes'] },
-                                { title: 'Print Design', icon: '📄', items: ['Brochures', 'Posters', 'Packaging', 'Business cards'] },
-                                { title: 'Digital Assets', icon: '✨', items: ['Social graphics', 'Banners', 'Icons', 'Illustrations'] }
+                                { title: 'Food & Beverage', icon: '🍔', items: ['Menu designs', 'Product ads', 'Social posts', 'Packaging'] },
+                                { title: 'Social Media', icon: '📱', items: ['Instagram posts', 'Story designs', 'Campaign graphics', 'Brand content'] },
+                                { title: 'Entertainment', icon: '🎬', items: ['Movie posters', 'Gaming graphics', 'Sports promos', 'Event designs'] },
+                                { title: 'Brand Design', icon: '✨', items: ['Logo design', 'Brand identity', 'Typography', 'Color systems'] }
                             ].map((service, i) => (
                                 <div 
                                     key={i}
@@ -581,8 +1326,9 @@
                 <section id="tools" className="py-32 border-t border-blue-900/30 relative">
                     <div className="max-w-7xl mx-auto px-6 lg:px-12">
                         <div className="text-center mb-20 fade-in">
-                            <h2 className="text-5xl md:text-6xl font-bold mb-6">
-                                Creative<br />
+                            <h2 className="text-5xl md:text-6xl font-bold mb-6 font-display">
+                                Creative
+                                <br />
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-blue-400">Arsenal</span>
                             </h2>
                             <p className="text-xl text-zinc-400 max-w-2xl mx-auto">
@@ -623,15 +1369,16 @@
                             <span className="text-blue-400 text-sm font-bold tracking-widest">GET IN TOUCH</span>
                         </div>
                         
-                        <h2 className="text-5xl md:text-6xl font-bold mb-6">
-                            Let's Create<br />
+                        <h2 className="text-5xl md:text-6xl font-bold mb-6 font-display">
+                            Let's Create
+                            <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-orange-400 to-pink-500">
                                 Something Beautiful
                             </span>
                         </h2>
                         
                         <p className="text-xl text-zinc-400 mb-12 max-w-2xl mx-auto">
-                            Need a logo, brand identity, or UI design? Let's collaborate on your next project.
+                            Need social media graphics, food photography design, or brand identity? Let's collaborate on your next project.
                         </p>
 
                         <div className="grid md:grid-cols-3 gap-6 mb-12">
@@ -676,8 +1423,8 @@
                 {/* Footer */}
                 <footer className="border-t border-blue-900/30 py-12">
                     <div className="max-w-7xl mx-auto px-6 text-center">
-                        <div className="text-2xl font-bold mb-4">
-                            DESIGN<span className="text-blue-400">.</span>
+                        <div className="text-2xl font-bold mb-4 font-display">
+                            ACEEB<span className="text-blue-400">.</span>
                         </div>
                         <p className="text-zinc-500 text-sm">
                             © 2026 Aceeb Dignitoso. All rights reserved.
