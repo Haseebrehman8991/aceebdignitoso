@@ -11,7 +11,7 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:wght@400;700;900&family=Urbanist:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Urbanist:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { scroll-behavior: smooth; }
         body { 
@@ -111,6 +111,7 @@
             position: relative;
             overflow: hidden;
             background: #1a1a24;
+            will-change: transform;
         }
 
         .project-card::after {
@@ -164,6 +165,27 @@
                 radial-gradient(circle at 20% 50%, rgba(49, 168, 255, 0.15) 0%, transparent 50%),
                 radial-gradient(circle at 80% 50%, rgba(255, 154, 0, 0.15) 0%, transparent 50%),
                 radial-gradient(circle at 50% 80%, rgba(255, 51, 102, 0.15) 0%, transparent 50%);
+        }
+
+        /* Image lazy load skeleton */
+        .project-card img {
+            background: #1a1a24;
+            min-height: 200px;
+        }
+
+        .project-card img[loading] {
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .project-card img.loaded {
+            opacity: 1;
+        }
+
+        /* Off-screen section rendering optimization */
+        #portfolio, #services, #tools, #contact {
+            content-visibility: auto;
+            contain-intrinsic-size: 0 800px;
         }
 
         /* Fade animations */
@@ -514,6 +536,15 @@
     document.getElementById('lightbox').addEventListener('click', function(e) {
         if (e.target.id === 'lightbox') closeLightbox();
     });
+
+    // Fade in images once loaded (avoids flash of broken/loading images)
+    document.addEventListener('DOMContentLoaded', function() {
+        document.body.addEventListener('load', function(e) {
+            if (e.target.tagName === 'IMG') {
+                e.target.classList.add('loaded');
+            }
+        }, true);
+    });
 </script>
 
 <script type="text/babel">
@@ -583,6 +614,8 @@
                         src={beforeImage} 
                         alt="Before" 
                         className="comparison-image"
+                        loading="lazy"
+                        decoding="async"
                     />
 
                     {/* After image (top layer with clip) */}
@@ -593,6 +626,8 @@
                         <img 
                             src={afterImage} 
                             alt="After"
+                            loading="lazy"
+                            decoding="async"
                         />
                     </div>
 
@@ -666,7 +701,7 @@
         useEffect(() => {
             const shapes = ['◆', '●', '▲', '■', '★'];
             const colors = ['#31A8FF', '#FF9A00', '#FF3366'];
-            const particleArray = Array.from({ length: 20 }, (_, i) => ({
+            const particleArray = Array.from({ length: 8 }, (_, i) => ({
                 id: i,
                 shape: shapes[Math.floor(Math.random() * shapes.length)],
                 color: colors[Math.floor(Math.random() * colors.length)],
@@ -1237,6 +1272,8 @@
                                             src={project.image} 
                                             alt={project.title}
                                             className="w-full h-auto object-cover"
+                                            loading="lazy"
+                                            decoding="async"
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                                         <div 
