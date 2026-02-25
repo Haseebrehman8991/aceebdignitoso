@@ -13,496 +13,368 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Urbanist:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * { scroll-behavior: smooth; }
-        body { 
-            -webkit-font-smoothing: antialiased; 
-            background: #0a0a0f; 
+        * { scroll-behavior: smooth; box-sizing: border-box; }
+        body {
+            -webkit-font-smoothing: antialiased;
+            background: #0a0a0f;
             font-family: 'Urbanist', sans-serif;
+            overflow-x: hidden;
         }
-
-        /* Typography */
         .font-display { font-family: 'Bebas Neue', cursive; }
-        .font-serif { font-family: 'Playfair Display', serif; }
 
-        /* Scrolling color-changing line - Adobe spectrum */
+        /* ── scroll progress line ── */
         .adobe-line {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 4px;
-            height: 0%;
-            z-index: 9999;
-            transition: background 0.3s ease;
+            position: fixed; top: 0; right: 0; width: 4px; height: 0%;
+            z-index: 9999; transition: background .3s ease;
         }
-
-        /* Photoshop blue */
         @keyframes ps-glow {
-            0%, 100% { 
-                background: linear-gradient(180deg, #31A8FF 0%, #1E96FF 100%);
-                box-shadow: 0 0 20px rgba(49, 168, 255, 0.6), 0 0 40px rgba(49, 168, 255, 0.4);
-            }
-            50% { 
-                background: linear-gradient(180deg, #1E96FF 0%, #0078D4 100%);
-                box-shadow: 0 0 30px rgba(49, 168, 255, 0.8), 0 0 60px rgba(49, 168, 255, 0.6);
-            }
+            0%,100%{background:linear-gradient(180deg,#31A8FF 0%,#1E96FF 100%);box-shadow:0 0 20px rgba(49,168,255,.6),0 0 40px rgba(49,168,255,.4);}
+            50%{background:linear-gradient(180deg,#1E96FF 0%,#0078D4 100%);box-shadow:0 0 30px rgba(49,168,255,.8),0 0 60px rgba(49,168,255,.6);}
         }
-
-        /* Illustrator orange */
         @keyframes ai-glow {
-            0%, 100% { 
-                background: linear-gradient(180deg, #FF9A00 0%, #FF7F00 100%);
-                box-shadow: 0 0 20px rgba(255, 154, 0, 0.6), 0 0 40px rgba(255, 154, 0, 0.4);
-            }
-            50% { 
-                background: linear-gradient(180deg, #FF7F00 0%, #E67300 100%);
-                box-shadow: 0 0 30px rgba(255, 154, 0, 0.8), 0 0 60px rgba(255, 154, 0, 0.6);
-            }
+            0%,100%{background:linear-gradient(180deg,#FF9A00 0%,#FF7F00 100%);box-shadow:0 0 20px rgba(255,154,0,.6),0 0 40px rgba(255,154,0,.4);}
+            50%{background:linear-gradient(180deg,#FF7F00 0%,#E67300 100%);box-shadow:0 0 30px rgba(255,154,0,.8),0 0 60px rgba(255,154,0,.6);}
         }
-
-        /* InDesign pink */
         @keyframes id-glow {
-            0%, 100% { 
-                background: linear-gradient(180deg, #FF3366 0%, #FF0050 100%);
-                box-shadow: 0 0 20px rgba(255, 51, 102, 0.6), 0 0 40px rgba(255, 51, 102, 0.4);
-            }
-            50% { 
-                background: linear-gradient(180deg, #FF0050 0%, #E6004C 100%);
-                box-shadow: 0 0 30px rgba(255, 51, 102, 0.8), 0 0 60px rgba(255, 51, 102, 0.6);
-            }
+            0%,100%{background:linear-gradient(180deg,#FF3366 0%,#FF0050 100%);box-shadow:0 0 20px rgba(255,51,102,.6),0 0 40px rgba(255,51,102,.4);}
+            50%{background:linear-gradient(180deg,#FF0050 0%,#E6004C 100%);box-shadow:0 0 30px rgba(255,51,102,.8),0 0 60px rgba(255,51,102,.6);}
         }
+        .ps-mode{animation:ps-glow 3s ease-in-out infinite;}
+        .ai-mode{animation:ai-glow 3s ease-in-out infinite;}
+        .id-mode{animation:id-glow 3s ease-in-out infinite;}
 
-        .ps-mode { animation: ps-glow 3s ease-in-out infinite; }
-        .ai-mode { animation: ai-glow 3s ease-in-out infinite; }
-        .id-mode { animation: id-glow 3s ease-in-out infinite; }
-
-        /* Floating design tools */
-        @keyframes float-tool {
-            0%, 100% { transform: translateY(0) rotate(0); opacity: 0.2; }
-            50% { transform: translateY(-40px) rotate(180deg); opacity: 0.5; }
-        }
-
-        .floating-tool {
-            position: absolute;
-            animation: float-tool 10s ease-in-out infinite;
-            pointer-events: none;
-        }
-
-        /* Grid background */
         .design-grid {
-            background-image: 
-                linear-gradient(rgba(49, 168, 255, 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(49, 168, 255, 0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
+            background-image:linear-gradient(rgba(49,168,255,.1) 1px,transparent 1px),linear-gradient(90deg,rgba(49,168,255,.1) 1px,transparent 1px);
+            background-size:50px 50px;
         }
 
-        /* Color palette animation */
-        @keyframes palette-shift {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
+        @keyframes palette-shift{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+        .color-palette{animation:palette-shift 20s linear infinite;}
 
-        .color-palette {
-            animation: palette-shift 20s linear infinite;
-        }
-
-        /* Project card reveal */
         .project-card {
-            transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
-            position: relative;
-            overflow: hidden;
-            background: #1a1a24;
-            will-change: transform;
+            transition:all .6s cubic-bezier(.23,1,.320,1);
+            position:relative; overflow:hidden; background:#1a1a24; will-change:transform;
         }
-
         .project-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(49, 168, 255, 0.3), transparent);
-            transition: left 0.6s;
+            content:''; position:absolute; top:0; left:-100%; width:100%; height:100%;
+            background:linear-gradient(90deg,transparent,rgba(49,168,255,.3),transparent);
+            transition:left .6s;
         }
+        .project-card:hover::after{left:100%;}
+        .project-card:hover{transform:translateY(-10px) scale(1.02);box-shadow:0 25px 70px rgba(49,168,255,.3);}
+        .project-card img{transition:transform .8s cubic-bezier(.23,1,.320,1);}
+        .project-card:hover img{transform:scale(1.1);}
 
-        .project-card:hover::after {
-            left: 100%;
-        }
+        .filter-btn{transition:all .3s ease;border:2px solid transparent;}
+        .filter-btn.active{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);border-color:#667eea;box-shadow:0 10px 30px rgba(102,126,234,.4);}
+        .filter-btn:hover:not(.active){background:rgba(102,126,234,.1);border-color:#667eea;}
 
-        .project-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 25px 70px rgba(49, 168, 255, 0.3);
-        }
-
-        .project-card img {
-            transition: transform 0.8s cubic-bezier(0.23, 1, 0.320, 1);
-        }
-
-        .project-card:hover img {
-            transform: scale(1.1);
-        }
-
-        /* Category filter buttons */
-        .filter-btn {
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .filter-btn.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-color: #667eea;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-        }
-
-        .filter-btn:hover:not(.active) {
-            background: rgba(102, 126, 234, 0.1);
-            border-color: #667eea;
-        }
-
-        /* Gradient mesh effect */
         .gradient-mesh {
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(49, 168, 255, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 50%, rgba(255, 154, 0, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 50% 80%, rgba(255, 51, 102, 0.15) 0%, transparent 50%);
+            background:radial-gradient(circle at 20% 50%,rgba(49,168,255,.15) 0%,transparent 50%),
+                        radial-gradient(circle at 80% 50%,rgba(255,154,0,.15) 0%,transparent 50%),
+                        radial-gradient(circle at 50% 80%,rgba(255,51,102,.15) 0%,transparent 50%);
         }
+        .fade-in{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease;}
+        .fade-in.visible{opacity:1;transform:translateY(0);}
 
-        /* Image lazy load skeleton */
-        .project-card img {
-            background: #1a1a24;
-            min-height: 200px;
+        @keyframes badge-pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.1);}}
+        .software-badge:hover{animation:badge-pulse .6s ease-in-out;}
+
+        @keyframes creative-float{
+            0%{transform:translateY(100vh) translateX(0) rotate(0deg);opacity:0;}
+            10%{opacity:1;} 90%{opacity:1;}
+            100%{transform:translateY(-100vh) translateX(100px) rotate(360deg);opacity:0;}
         }
+        .creative-particle{position:fixed;pointer-events:none;animation:creative-float 15s linear infinite;}
 
-        .project-card img[loading] {
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
+        .bezier-curve{stroke-dasharray:5,5;animation:dash 20s linear infinite;}
+        @keyframes dash{to{stroke-dashoffset:-100;}}
 
-        .project-card img.loaded {
-            opacity: 1;
-        }
+        /* ── Lightbox ── */
+        .lightbox{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,.95);z-index:10000;align-items:center;justify-content:center;opacity:0;transition:opacity .3s ease;}
+        .lightbox.active{display:flex;opacity:1;}
+        .lightbox img{max-width:90vw;max-height:90vh;object-fit:contain;box-shadow:0 0 100px rgba(49,168,255,.5);}
+        .lightbox-close{position:absolute;top:20px;right:40px;font-size:40px;color:white;cursor:pointer;z-index:10001;transition:all .3s ease;}
+        .lightbox-close:hover{color:#31A8FF;transform:scale(1.2);}
 
-        /* Off-screen section rendering optimization */
-        #portfolio, #services, #tools, #contact {
-            content-visibility: auto;
-            contain-intrinsic-size: 0 800px;
-        }
+        /* ── Masonry ── */
+        .masonry-grid{column-count:1;column-gap:1.5rem;}
+        @media(min-width:640px){.masonry-grid{column-count:2;}}
+        @media(min-width:1024px){.masonry-grid{column-count:3;}}
+        .masonry-item{break-inside:avoid;margin-bottom:1.5rem;}
 
-        /* Fade animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
+        @keyframes text-scale{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.05);opacity:.8;}}
+        .text-hero{animation:text-scale 4s ease-in-out infinite;}
 
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        /* ── Before/After ── */
+        .comparison-container{position:relative;width:100%;max-width:1200px;margin:0 auto;overflow:hidden;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5);user-select:none;-webkit-user-select:none;touch-action:pan-y pinch-zoom;}
+        .comparison-wrapper{position:relative;width:100%;padding-bottom:56.25%;}
+        .comparison-image{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;pointer-events:none;}
+        .comparison-overlay{position:absolute;top:0;left:0;width:50%;height:100%;overflow:hidden;z-index:2;}
+        .comparison-overlay img{position:absolute;top:0;left:0;width:200%;height:100%;object-fit:cover;pointer-events:none;}
+        .comparison-slider{position:absolute;top:0;left:50%;transform:translateX(-50%);width:4px;height:100%;background:linear-gradient(180deg,#31A8FF,#FF9A00,#FF3366);cursor:ew-resize;z-index:3;box-shadow:0 0 20px rgba(49,168,255,.8);}
+        .comparison-slider::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;background:linear-gradient(135deg,#31A8FF,#FF9A00);border:3px solid white;border-radius:50%;box-shadow:0 0 30px rgba(49,168,255,.6),0 4px 20px rgba(0,0,0,.4);cursor:ew-resize;animation:pulse-glow 2s ease-in-out infinite;}
+        .comparison-slider::after{content:'⇔';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:white;font-size:20px;font-weight:bold;pointer-events:none;text-shadow:0 2px 4px rgba(0,0,0,.3);}
+        .comparison-labels{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;}
+        .comparison-label{position:absolute;top:20px;padding:8px 20px;background:rgba(0,0,0,.7);backdrop-filter:blur(10px);color:white;font-weight:700;font-size:14px;border-radius:20px;text-transform:uppercase;letter-spacing:1px;}
+        .comparison-label.before{left:20px;background:linear-gradient(135deg,rgba(255,51,102,.9),rgba(255,0,80,.9));}
+        .comparison-label.after{right:20px;background:linear-gradient(135deg,rgba(49,168,255,.9),rgba(30,150,255,.9));}
+        @keyframes pulse-glow{0%,100%{box-shadow:0 0 20px rgba(49,168,255,.8),0 4px 20px rgba(0,0,0,.4);}50%{box-shadow:0 0 40px rgba(49,168,255,1),0 4px 20px rgba(0,0,0,.4);}}
 
-        /* Software badge pulse */
-        @keyframes badge-pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .software-badge:hover {
-            animation: badge-pulse 0.6s ease-in-out;
-        }
-
-        /* Creative particles */
-        @keyframes creative-float {
-            0% { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100vh) translateX(100px) rotate(360deg); opacity: 0; }
-        }
-
-        .creative-particle {
-            position: fixed;
-            pointer-events: none;
-            animation: creative-float 15s linear infinite;
-        }
-
-        /* Bezier curve decoration */
-        .bezier-curve {
-            stroke-dasharray: 5, 5;
-            animation: dash 20s linear infinite;
-        }
-
-        @keyframes dash {
-            to { stroke-dashoffset: -100; }
-        }
-
-        /* Glow effect */
-        .glow-hover {
-            transition: all 0.3s ease;
-        }
-
-        .glow-hover:hover {
-            filter: drop-shadow(0 0 20px currentColor);
-        }
-
-        /* Lightbox styles */
-        .lightbox {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 10000;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .lightbox.active {
-            display: flex;
-            opacity: 1;
-        }
-
-        .lightbox img {
-            max-width: 90vw;
-            max-height: 90vh;
-            object-fit: contain;
-            box-shadow: 0 0 100px rgba(49, 168, 255, 0.5);
-        }
-
-        .lightbox-close {
-            position: absolute;
-            top: 20px;
-            right: 40px;
-            font-size: 40px;
-            color: white;
-            cursor: pointer;
-            z-index: 10001;
-            transition: all 0.3s ease;
-        }
-
-        .lightbox-close:hover {
-            color: #31A8FF;
-            transform: scale(1.2);
-        }
-
-        /* Masonry grid */
-        .masonry-grid {
-            column-count: 1;
-            column-gap: 1.5rem;
-        }
-
-        @media (min-width: 640px) {
-            .masonry-grid {
-                column-count: 2;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .masonry-grid {
-                column-count: 3;
-            }
-        }
-
-        .masonry-item {
-            break-inside: avoid;
-            margin-bottom: 1.5rem;
-        }
-
-        /* Text scale animation */
-        @keyframes text-scale {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.8; }
-        }
-
-        .text-hero {
-            animation: text-scale 4s ease-in-out infinite;
-        }
-
-        /* BEFORE/AFTER COMPARISON STYLES */
-        .comparison-container {
+        /* ── VIDEO TESTIMONIALS ── */
+        .video-testimonials-section {
             position: relative;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
             overflow: hidden;
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            user-select: none;
-            -webkit-user-select: none;
-            touch-action: pan-y pinch-zoom;
         }
-
-        .comparison-wrapper {
-            position: relative;
-            width: 100%;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
-        }
-
-        .comparison-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            pointer-events: none;
-        }
-
-        .comparison-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 50%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 2;
-        }
-
-        .comparison-overlay img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 200%;
-            height: 100%;
-            object-fit: cover;
-            pointer-events: none;
-        }
-
-        .comparison-slider {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(180deg, #31A8FF, #FF9A00, #FF3366);
-            cursor: ew-resize;
-            z-index: 3;
-            box-shadow: 0 0 20px rgba(49, 168, 255, 0.8);
-        }
-
-        .comparison-slider::before {
+        .video-testimonials-section::before {
             content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 20% 40%, rgba(49,168,255,.1) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 60%, rgba(255,51,102,.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .video-card {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            background: linear-gradient(145deg, #111118 0%, #1a1a2e 100%);
+            border: 1px solid rgba(49,168,255,.18);
+            transition: all .5s cubic-bezier(.23,1,.32,1);
+            cursor: pointer;
+        }
+        .video-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            border-color: rgba(49,168,255,.5);
+            box-shadow: 0 30px 80px rgba(49,168,255,.25), 0 0 0 1px rgba(49,168,255,.3);
+        }
+        .video-card video {
+            width: 100%;
+            display: block;
+            border-radius: 16px 16px 0 0;
+            transition: transform .5s ease;
+        }
+        .video-card:hover video {
+            transform: scale(1.04);
+        }
+        .video-thumb-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(10,10,15,1) 0%, rgba(10,10,15,.4) 40%, transparent 70%);
+            pointer-events: none;
+            border-radius: 20px;
+        }
+        .play-btn {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -60%);
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: rgba(49,168,255,.85);
+            backdrop-filter: blur(8px);
+            border: 2px solid rgba(255,255,255,.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .3s ease;
+            pointer-events: none;
+        }
+        .video-card:hover .play-btn {
+            background: rgba(49,168,255,1);
+            transform: translate(-50%, -60%) scale(1.1);
+            box-shadow: 0 0 30px rgba(49,168,255,.7);
+        }
+        .play-btn-playing {
+            background: rgba(255,51,102,.85) !important;
+        }
+        .video-card-info {
+            padding: 1.5rem;
+            position: relative;
+        }
+        .client-country-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background: rgba(255,255,255,.05);
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 100px;
+            font-size: 12px;
+            color: rgba(255,255,255,.65);
+            font-weight: 600;
+            letter-spacing: .5px;
+            margin-bottom: .75rem;
+        }
+        .client-service-tag {
+            display: inline-block;
+            font-size: 11px;
+            color: #31A8FF;
+            font-weight: 700;
+            letter-spacing: .5px;
+            background: rgba(49,168,255,.1);
+            padding: 3px 10px;
+            border-radius: 100px;
+            border: 1px solid rgba(49,168,255,.2);
+            margin-bottom: .75rem;
+        }
+        .video-avatar-ring {
+            position: relative;
             width: 48px;
             height: 48px;
-            background: linear-gradient(135deg, #31A8FF, #FF9A00);
-            border: 3px solid white;
+            flex-shrink: 0;
+        }
+        .video-avatar-ring::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
             border-radius: 50%;
-            box-shadow: 0 0 30px rgba(49, 168, 255, 0.6), 0 4px 20px rgba(0, 0, 0, 0.4);
-            cursor: ew-resize;
+            background: conic-gradient(#31A8FF, #FF9A00, #FF3366, #31A8FF);
+            animation: ring-spin 4s linear infinite;
+        }
+        @keyframes ring-spin{to{transform:rotate(360deg);}}
+        .video-avatar-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2a2a3e, #1a1a2e);
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .comparison-slider::after {
-            content: '⇔';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 20px;
-            font-weight: bold;
-            pointer-events: none;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .comparison-labels {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
+            font-size: 22px;
             z-index: 1;
+            border: 2px solid #0a0a0f;
         }
-
-        .comparison-label {
+        .verified-dot {
             position: absolute;
-            top: 20px;
-            padding: 8px 20px;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px);
-            color: white;
-            font-weight: 700;
-            font-size: 14px;
+            bottom: -2px;
+            right: -2px;
+            width: 16px;
+            height: 16px;
+            background: #31A8FF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            border: 2px solid #0a0a0f;
+        }
+
+        /* Stars */
+        .stars-row { display: flex; gap: 3px; }
+        .star-icon { color: #FFB800; font-size: 14px; filter: drop-shadow(0 1px 4px rgba(255,184,0,.6)); }
+
+        /* ── WRITTEN TESTIMONIALS (scroll) ── */
+        .testimonials-section {
+            position: relative;
+            overflow: hidden;
+        }
+        .testimonials-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 10% 30%,rgba(49,168,255,.12) 0%,transparent 50%),
+                        radial-gradient(ellipse at 90% 70%,rgba(255,51,102,.12) 0%,transparent 50%),
+                        radial-gradient(ellipse at 50% 50%,rgba(255,154,0,.08) 0%,transparent 60%);
+            pointer-events: none;
+        }
+        .testimonial-track {
+            display: flex;
+            gap: 2rem;
+            animation: scroll-testimonials 40s linear infinite;
+            width: max-content;
+        }
+        .testimonial-track:hover{animation-play-state:paused;}
+        @keyframes scroll-testimonials{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+
+        .testimonial-card {
+            position: relative;
+            width: 360px;
+            flex-shrink: 0;
+            background: linear-gradient(145deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);
+            border: 1px solid rgba(49,168,255,.2);
             border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            padding: 2rem;
+            transition: all .4s cubic-bezier(.23,1,.32,1);
+            transform-style: preserve-3d;
+            cursor: default;
+            box-shadow: 0 4px 24px rgba(0,0,0,.4),0 1px 0 rgba(255,255,255,.05) inset,0 -1px 0 rgba(0,0,0,.3) inset;
+        }
+        .testimonial-card:hover {
+            transform: translateY(-12px) rotateX(4deg) rotateY(-2deg);
+            box-shadow: 0 30px 80px rgba(49,168,255,.25),0 0 0 1px rgba(49,168,255,.4),0 1px 0 rgba(255,255,255,.1) inset;
+            border-color: rgba(49,168,255,.5);
+        }
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            right: 24px;
+            font-size: 120px;
+            font-family: 'Bebas Neue', cursive;
+            color: rgba(49,168,255,.1);
+            line-height: 1;
+            pointer-events: none;
+            user-select: none;
         }
 
-        .comparison-label.before {
-            left: 20px;
-            background: linear-gradient(135deg, rgba(255, 51, 102, 0.9), rgba(255, 0, 80, 0.9));
+        .stars-3d { display: flex; gap: 4px; perspective: 200px; }
+        .star-3d { position: relative; width: 28px; height: 28px; animation: star-float 3s ease-in-out infinite; }
+        .star-3d:nth-child(1){animation-delay:0s;}.star-3d:nth-child(2){animation-delay:.1s;}.star-3d:nth-child(3){animation-delay:.2s;}.star-3d:nth-child(4){animation-delay:.3s;}.star-3d:nth-child(5){animation-delay:.4s;}
+        @keyframes star-float{0%,100%{transform:translateY(0) rotateY(0deg);}50%{transform:translateY(-3px) rotateY(15deg);}}
+        .star-3d svg{width:100%;height:100%;filter:drop-shadow(0 2px 6px rgba(255,165,0,.8)) drop-shadow(0 0 12px rgba(255,200,0,.5));}
+        .testimonial-card:hover .star-3d{animation:star-spin .6s ease-in-out;}
+        @keyframes star-spin{0%{transform:rotateY(0deg) scale(1);}50%{transform:rotateY(180deg) scale(1.3);}100%{transform:rotateY(360deg) scale(1);}}
+
+        .country-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background: rgba(255,255,255,.06);
+            border: 1px solid rgba(255,255,255,.12);
+            border-radius: 100px;
+            font-size: 12px;
+            color: rgba(255,255,255,.7);
+            font-weight: 600;
+            letter-spacing: .5px;
+            backdrop-filter: blur(8px);
         }
+        .avatar-ring { position: relative; width: 52px; height: 52px; flex-shrink: 0; }
+        .avatar-ring::before { content: ''; position: absolute; inset: -3px; border-radius: 50%; background: conic-gradient(#31A8FF,#FF9A00,#FF3366,#31A8FF); animation: ring-spin 4s linear infinite; }
+        .avatar-inner { position: relative; width: 100%; height: 100%; border-radius: 50%; background: linear-gradient(135deg,#2a2a3e,#1a1a2e); display: flex; align-items: center; justify-content: center; font-size: 22px; z-index: 1; border: 2px solid #0a0a0f; }
+        .verified-badge { position: absolute; bottom: -2px; right: -2px; width: 18px; height: 18px; background: #31A8FF; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 2; border: 2px solid #0a0a0f; }
 
-        .comparison-label.after {
-            right: 20px;
-            background: linear-gradient(135deg, rgba(49, 168, 255, 0.9), rgba(30, 150, 255, 0.9));
+        .stats-bar { display: flex; align-items: center; justify-content: center; gap: 2rem; flex-wrap: wrap; }
+        .stat-item { text-align: center; position: relative; }
+        .stat-item::after { content: ''; position: absolute; right: -1rem; top: 50%; transform: translateY(-50%); width: 1px; height: 32px; background: rgba(255,255,255,.1); }
+        .stat-item:last-child::after { display: none; }
+        .stat-number { font-family: 'Bebas Neue', cursive; font-size: 2.5rem; line-height: 1; background: linear-gradient(135deg,#31A8FF,#FF9A00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+        .testimonials-scroll-container { position: relative; }
+        .testimonials-scroll-container::before,.testimonials-scroll-container::after { content: ''; position: absolute; top: 0; bottom: 0; width: 120px; z-index: 10; pointer-events: none; }
+        .testimonials-scroll-container::before { left: 0; background: linear-gradient(to right,#0a0a0f,transparent); }
+        .testimonials-scroll-container::after { right: 0; background: linear-gradient(to left,#0a0a0f,transparent); }
+
+        .platform-badge { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; opacity: .8; }
+
+        /* Mobile nav */
+        .mobile-menu { display: none; position: fixed; inset: 0; background: rgba(10,10,15,.98); z-index: 9998; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; backdrop-filter: blur(20px); }
+        .mobile-menu.open { display: flex; }
+
+        @media(max-width:768px) {
+            .comparison-label { font-size: 11px; padding: 6px 12px; top: 12px; }
+            .comparison-label.before{left:12px;}.comparison-label.after{right:12px;}
+            .comparison-slider::before{width:40px;height:40px;}.comparison-slider::after{font-size:16px;}
+            .testimonial-card { width: 300px; padding: 1.5rem; }
+            .stats-bar{gap:1rem;}.stat-number{font-size:2rem;}
         }
-
-        /* Mobile optimizations */
-        @media (max-width: 768px) {
-            .comparison-slider::before {
-                width: 40px;
-                height: 40px;
-            }
-
-            .comparison-slider::after {
-                font-size: 16px;
-            }
-
-            .comparison-label {
-                font-size: 11px;
-                padding: 6px 12px;
-                top: 12px;
-            }
-
-            .comparison-label.before {
-                left: 12px;
-            }
-
-            .comparison-label.after {
-                right: 12px;
-            }
-        }
-
-        /* Comparison section animations */
-        @keyframes slide-reveal {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .comparison-reveal {
-            animation: slide-reveal 0.8s ease-out;
-        }
-
-        /* Pulsing glow on slider handle */
-        @keyframes pulse-glow {
-            0%, 100% {
-                box-shadow: 0 0 20px rgba(49, 168, 255, 0.8), 0 4px 20px rgba(0, 0, 0, 0.4);
-            }
-            50% {
-                box-shadow: 0 0 40px rgba(49, 168, 255, 1), 0 4px 20px rgba(0, 0, 0, 0.4);
-            }
-        }
-
-        .comparison-slider::before {
-            animation: pulse-glow 2s ease-in-out infinite;
+        @media(max-width:480px) {
+            .testimonial-card{width:260px;padding:1.25rem;}
+            .testimonials-scroll-container::before,.testimonials-scroll-container::after{width:60px;}
         }
     </style>
 </head>
@@ -521,36 +393,20 @@
         document.getElementById('lightbox-img').src = src;
         document.body.style.overflow = 'hidden';
     }
-
     function closeLightbox() {
         document.getElementById('lightbox').classList.remove('active');
         document.body.style.overflow = 'auto';
     }
-
-    // Close on escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') closeLightbox();
-    });
-
-    // Close on background click
-    document.getElementById('lightbox').addEventListener('click', function(e) {
-        if (e.target.id === 'lightbox') closeLightbox();
-    });
-
-    // Fade in images once loaded (avoids flash of broken/loading images)
-    document.addEventListener('DOMContentLoaded', function() {
-        document.body.addEventListener('load', function(e) {
-            if (e.target.tagName === 'IMG') {
-                e.target.classList.add('loaded');
-            }
-        }, true);
-    });
+    document.addEventListener('keydown', e => { if(e.key==='Escape') closeLightbox(); });
+    document.getElementById('lightbox').addEventListener('click', e => { if(e.target.id==='lightbox') closeLightbox(); });
 </script>
 
 <script type="text/babel">
     const { useState, useEffect, useRef } = React;
 
-    // Before/After Comparison Component
+    /* ─────────────────────────────────────────────
+       BEFORE / AFTER
+    ───────────────────────────────────────────── */
     const BeforeAfterComparison = ({ beforeImage, afterImage }) => {
         const [sliderPosition, setSliderPosition] = useState(50);
         const [isDragging, setIsDragging] = useState(false);
@@ -558,41 +414,21 @@
 
         const handleMove = (clientX) => {
             if (!containerRef.current) return;
-            
             const rect = containerRef.current.getBoundingClientRect();
-            const x = clientX - rect.left;
-            const percentage = (x / rect.width) * 100;
-            const clampedPercentage = Math.min(Math.max(percentage, 0), 100);
-            setSliderPosition(clampedPercentage);
-        };
-
-        const handleMouseMove = (e) => {
-            if (!isDragging) return;
-            handleMove(e.clientX);
-        };
-
-        const handleTouchMove = (e) => {
-            if (!isDragging) return;
-            e.preventDefault();
-            handleMove(e.touches[0].clientX);
-        };
-
-        const handleStart = () => {
-            setIsDragging(true);
-        };
-
-        const handleEnd = () => {
-            setIsDragging(false);
+            const pct = ((clientX - rect.left) / rect.width) * 100;
+            setSliderPosition(Math.min(Math.max(pct, 0), 100));
         };
 
         useEffect(() => {
+            const handleMouseMove = (e) => { if (isDragging) handleMove(e.clientX); };
+            const handleTouchMove = (e) => { if (isDragging) { e.preventDefault(); handleMove(e.touches[0].clientX); } };
+            const handleEnd = () => setIsDragging(false);
             if (isDragging) {
                 document.addEventListener('mousemove', handleMouseMove);
                 document.addEventListener('mouseup', handleEnd);
                 document.addEventListener('touchmove', handleTouchMove, { passive: false });
                 document.addEventListener('touchend', handleEnd);
             }
-
             return () => {
                 document.removeEventListener('mousemove', handleMouseMove);
                 document.removeEventListener('mouseup', handleEnd);
@@ -602,42 +438,15 @@
         }, [isDragging]);
 
         return (
-            <div 
-                ref={containerRef}
-                className="comparison-container comparison-reveal"
-                onMouseDown={handleStart}
-                onTouchStart={handleStart}
-            >
+            <div ref={containerRef} className="comparison-container"
+                onMouseDown={() => setIsDragging(true)}
+                onTouchStart={() => setIsDragging(true)}>
                 <div className="comparison-wrapper">
-                    {/* Before image (bottom layer) */}
-                    <img 
-                        src={beforeImage} 
-                        alt="Before" 
-                        className="comparison-image"
-                        loading="lazy"
-                        decoding="async"
-                    />
-
-                    {/* After image (top layer with clip) */}
-                    <div 
-                        className="comparison-overlay"
-                        style={{ width: `${sliderPosition}%` }}
-                    >
-                        <img 
-                            src={afterImage} 
-                            alt="After"
-                            loading="lazy"
-                            decoding="async"
-                        />
+                    <img src={beforeImage} alt="Before" className="comparison-image" loading="lazy" decoding="async" />
+                    <div className="comparison-overlay" style={{ width: `${sliderPosition}%` }}>
+                        <img src={afterImage} alt="After" loading="lazy" decoding="async" />
                     </div>
-
-                    {/* Slider handle */}
-                    <div 
-                        className="comparison-slider"
-                        style={{ left: `${sliderPosition}%` }}
-                    />
-
-                    {/* Labels */}
+                    <div className="comparison-slider" style={{ left: `${sliderPosition}%` }} />
                     <div className="comparison-labels">
                         <div className="comparison-label before">Before</div>
                         <div className="comparison-label after">After</div>
@@ -647,709 +456,695 @@
         );
     };
 
+    /* ─────────────────────────────────────────────
+       3D STAR
+    ───────────────────────────────────────────── */
+    const Star3D = () => (
+        <div className="star-3d">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="starGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#FFE566"/>
+                        <stop offset="50%" stopColor="#FFA500"/>
+                        <stop offset="100%" stopColor="#FF6B00"/>
+                    </linearGradient>
+                </defs>
+                <path d="M12 2.5l2.582 5.326 5.918.872-4.25 4.166 1 5.905L12 16.011l-5.25 2.758 1-5.905L3.5 8.698l5.918-.872L12 2.5z" fill="rgba(100,40,0,0.4)" transform="translate(1,2)"/>
+                <path d="M12 2l2.582 5.326 5.918.872-4.25 4.166 1 5.905L12 15.511l-5.25 2.758 1-5.905L3.5 8.198l5.918-.872L12 2z" fill="url(#starGrad)"/>
+                <path d="M10.5 5.5l.8 1.6-2-.3 1.2 1.2z" fill="rgba(255,255,200,0.6)"/>
+            </svg>
+        </div>
+    );
+
+    /* ─────────────────────────────────────────────
+       VIDEO TESTIMONIAL CARD
+    ───────────────────────────────────────────── */
+    const VideoTestimonialCard = ({ videoSrc, name, country, flag, emoji, role, service, quote, platform, platformColor }) => {
+        const videoRef = useRef(null);
+        const [playing, setPlaying] = useState(false);
+
+        const togglePlay = () => {
+            if (!videoRef.current) return;
+            if (playing) {
+                videoRef.current.pause();
+                setPlaying(false);
+            } else {
+                videoRef.current.play();
+                setPlaying(true);
+            }
+        };
+
+        return (
+            <div className="video-card fade-in" onClick={togglePlay}>
+                <div style={{ position: 'relative', borderRadius: '20px 20px 0 0', overflow: 'hidden', background: '#000' }}>
+                    <video
+                        ref={videoRef}
+                        src={videoSrc}
+                        loop
+                        playsInline
+                        preload="metadata"
+                        style={{ width: '100%', display: 'block', aspectRatio: '9/16', objectFit: 'cover', maxHeight: 400 }}
+                        onEnded={() => setPlaying(false)}
+                    />
+                    <div className="video-thumb-overlay" />
+                    <div className={`play-btn ${playing ? 'play-btn-playing' : ''}`}>
+                        {playing
+                            ? <svg width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                            : <svg width="20" height="20" fill="white" viewBox="0 0 24 24" style={{ marginLeft: 3 }}><path d="M8 5v14l11-7z"/></svg>
+                        }
+                    </div>
+                    {/* Stars overlay on video */}
+                    <div style={{ position: 'absolute', bottom: 16, left: 16, display: 'flex', gap: 3 }}>
+                        {[...Array(5)].map((_, i) => (
+                            <span key={i} className="star-icon">★</span>
+                        ))}
+                    </div>
+                    {/* Platform badge */}
+                    <span className="platform-badge" style={{ position: 'absolute', top: 14, right: 14, background: `${platformColor}22`, color: platformColor, border: `1px solid ${platformColor}44` }}>
+                        {platform}
+                    </span>
+                </div>
+
+                <div className="video-card-info">
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
+                        <div className="video-avatar-ring">
+                            <div className="video-avatar-inner">{emoji}</div>
+                            <div className="verified-dot">
+                                <svg width="8" height="8" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                            </div>
+                        </div>
+                        <div>
+                            <div style={{ fontWeight: 800, fontSize: 16, color: 'white', lineHeight: 1.2 }}>{name}</div>
+                            <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', marginTop: 2 }}>{role}</div>
+                        </div>
+                    </div>
+
+                    <div style={{ marginBottom: '0.5rem' }}>
+                        <span className="client-country-badge">
+                            <span style={{ fontSize: 16 }}>{flag}</span>
+                            <span>{country}</span>
+                        </span>
+                    </div>
+
+                    <div style={{ marginBottom: '0.75rem' }}>
+                        <span className="client-service-tag">{service}</span>
+                    </div>
+
+                    <p style={{ fontSize: 13, lineHeight: 1.7, color: 'rgba(255,255,255,0.72)', fontStyle: 'italic' }}>
+                        "{quote}"
+                    </p>
+
+                    <div style={{ marginTop: '1rem', borderTop: '1px solid rgba(255,255,255,0.07)', paddingTop: '0.875rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', fontWeight: 600 }}>
+                            {playing ? '▶ Playing review...' : 'Tap to watch review'}
+                        </div>
+                        <div style={{ display: 'flex', gap: 3 }}>
+                            {[...Array(5)].map((_,i)=>(
+                                <div key={i} style={{ width: 6, height: 6, borderRadius: '50%', background: 'linear-gradient(135deg,#FFE566,#FF9A00)' }} />
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
+    /* ─────────────────────────────────────────────
+       WRITTEN TESTIMONIAL CARD
+    ───────────────────────────────────────────── */
+    const TestimonialCard = ({ name, country, flag, emoji, role, text, platform, platformColor, service }) => (
+        <div className="testimonial-card">
+            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '1rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '.75rem' }}>
+                    <div className="avatar-ring">
+                        <div className="avatar-inner">{emoji}</div>
+                        <div className="verified-badge">
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                        </div>
+                    </div>
+                    <div>
+                        <div style={{ fontWeight: 700, fontSize: 15, color: 'white', lineHeight: 1.2 }}>{name}</div>
+                        <div style={{ fontSize: 12, color: 'rgba(255,255,255,.5)', marginTop: 2 }}>{role}</div>
+                    </div>
+                </div>
+                <span className="platform-badge" style={{ background: `${platformColor}22`, color: platformColor, border: `1px solid ${platformColor}44` }}>
+                    {platform}
+                </span>
+            </div>
+            <div className="stars-3d" style={{ marginBottom: '1rem' }}>
+                <Star3D/><Star3D/><Star3D/><Star3D/><Star3D/>
+            </div>
+            <div style={{ marginBottom: '.75rem' }}>
+                <span style={{ fontSize: 11, color: '#31A8FF', fontWeight: 700, letterSpacing: '.5px', background: 'rgba(49,168,255,.1)', padding: '3px 10px', borderRadius: 100, border: '1px solid rgba(49,168,255,.2)' }}>
+                    {service}
+                </span>
+            </div>
+            <p style={{ fontSize: 14, lineHeight: 1.7, color: 'rgba(255,255,255,.75)', marginBottom: '1.25rem', position: 'relative', zIndex: 1 }}>
+                {text}
+            </p>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid rgba(255,255,255,.08)', paddingTop: '.875rem' }}>
+                <div className="country-badge">
+                    <span style={{ fontSize: 16 }}>{flag}</span>
+                    <span>{country}</span>
+                </div>
+                <div style={{ display: 'flex', gap: 2 }}>
+                    {[...Array(5)].map((_,i)=>(
+                        <div key={i} style={{ width: 6, height: 6, borderRadius: '50%', background: 'linear-gradient(135deg,#FFE566,#FF9A00)' }} />
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+
+    /* ─────────────────────────────────────────────
+       MAIN APP
+    ───────────────────────────────────────────── */
     const GraphicDesignPortfolio = () => {
         const [scrollProgress, setScrollProgress] = useState(0);
         const [activeSection, setActiveSection] = useState('hero');
         const [lineMode, setLineMode] = useState('ps-mode');
         const [particles, setParticles] = useState([]);
         const [activeFilter, setActiveFilter] = useState('all');
+        const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
         useEffect(() => {
             const handleScroll = () => {
                 const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
                 const progress = (window.scrollY / totalHeight) * 100;
                 setScrollProgress(progress);
+                if (progress < 25) setLineMode('ps-mode');
+                else if (progress < 50) setLineMode('ai-mode');
+                else if (progress < 75) setLineMode('id-mode');
+                else setLineMode('ps-mode');
 
-                // Change line color mode based on scroll
-                if (progress < 25) {
-                    setLineMode('ps-mode');
-                } else if (progress < 50) {
-                    setLineMode('ai-mode');
-                } else if (progress < 75) {
-                    setLineMode('id-mode');
-                } else {
-                    setLineMode('ps-mode');
-                }
-
-                // Update active section
-                const sections = ['hero', 'comparison', 'portfolio', 'services', 'tools', 'contact'];
+                const sections = ['hero','services-intro','comparison','portfolio','video-testimonials','testimonials','services','tools','contact'];
                 const current = sections.find(id => {
                     const el = document.getElementById(id);
-                    if (el) {
-                        const rect = el.getBoundingClientRect();
-                        return rect.top <= 150 && rect.bottom >= 150;
-                    }
+                    if (el) { const rect = el.getBoundingClientRect(); return rect.top <= 150 && rect.bottom >= 150; }
                     return false;
                 });
                 if (current) setActiveSection(current);
 
-                // Fade in animations
                 document.querySelectorAll('.fade-in').forEach(el => {
                     const rect = el.getBoundingClientRect();
-                    if (rect.top < window.innerHeight - 100) {
-                        el.classList.add('visible');
-                    }
+                    if (rect.top < window.innerHeight - 100) el.classList.add('visible');
                 });
             };
-
             window.addEventListener('scroll', handleScroll);
             handleScroll();
             return () => window.removeEventListener('scroll', handleScroll);
         }, []);
 
-        // Generate creative particles
         useEffect(() => {
-            const shapes = ['◆', '●', '▲', '■', '★'];
-            const colors = ['#31A8FF', '#FF9A00', '#FF3366'];
-            const particleArray = Array.from({ length: 8 }, (_, i) => ({
-                id: i,
-                shape: shapes[Math.floor(Math.random() * shapes.length)],
+            const shapes = ['◆','●','▲','■','★'];
+            const colors = ['#31A8FF','#FF9A00','#FF3366'];
+            setParticles(Array.from({ length: 8 }, (_, i) => ({
+                id: i, shape: shapes[Math.floor(Math.random() * shapes.length)],
                 color: colors[Math.floor(Math.random() * colors.length)],
-                left: Math.random() * 100,
-                size: 20 + Math.random() * 30,
-                delay: Math.random() * 15,
-                duration: 12 + Math.random() * 6
-            }));
-            setParticles(particleArray);
+                left: Math.random() * 100, size: 20 + Math.random() * 30,
+                delay: Math.random() * 15, duration: 12 + Math.random() * 6
+            })));
         }, []);
 
         const scrollToSection = (id) => {
             document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+            setMobileMenuOpen(false);
         };
 
-        // Expanded portfolio projects with your uploaded images
-        const projects = [
+        /* ── VIDEO TESTIMONIALS DATA ── */
+        const videoTestimonials = [
             {
-                title: 'Premium Leather Backpack',
-                category: 'Product Design',
-                niche: 'E-commerce',
-                description: 'Luxury product showcase with detailed specifications and premium presentation.',
-                tools: ['Photoshop', 'Illustrator'],
-                image: '2200 copy.jpg',
-                color: '#8B4513',
-                resolution: '1080x1080'
+                videoSrc: 'unwatermark_Man_managing_store_posts_a066098416.mp4',
+                name: 'Kun Hyen',
+                country: 'Japan',
+                flag: '🇯🇵',
+                emoji: '🧑‍💼',
+                role: 'Store Manager',
+                service: 'Product Store Posts',
+                platform: 'Fiverr',
+                platformColor: '#1DBF73',
+                quote: "The store posts Aceeb created were exactly what our brand needed. Clean, professional, and drove real engagement. Highly recommended!"
             },
             {
-                title: 'Healthcare Service Campaign',
-                category: 'Social Media',
-                niche: 'Healthcare',
-                description: 'Multi-panel healthcare service promotion with Arabic typography and modern design.',
-                tools: ['Photoshop', 'Illustrator'],
-                image: 'adel-amer-a5 - Copy.jpg',
-                color: '#1E88E5',
-                resolution: '1080x1080'
+                videoSrc: 'unwatermark_Designer_recommended_for_brand_29a697c180.mp4',
+                name: 'Gimi',
+                country: 'France',
+                flag: '🇫🇷',
+                emoji: '👩‍🎨',
+                role: 'Brand Creative',
+                service: 'Social Media Post Design',
+                platform: 'Upwork',
+                platformColor: '#6FDA44',
+                quote: "Aceeb is the designer I recommend to everyone working on brand identity. His eye for detail and creativity is absolutely top tier."
             },
             {
-                title: 'Medical App Promotion',
-                category: 'Social Graphics',
-                niche: 'Healthcare',
-                description: 'Healthcare app promotional graphics with clean layouts and professional imagery.',
-                tools: ['Photoshop', 'Illustrator'],
-                image: 'adel-amer-a3.jpg',
-                color: '#0288D1',
-                resolution: '1080x1080'
-            },
-            {
-                title: 'Starbucks Coffee Ad',
-                category: 'Food & Beverage',
-                niche: 'Coffee Shop',
-                description: 'Brand-aligned coffee advertisement with dynamic product photography and bold graphics.',
-                tools: ['Photoshop'],
-                image: 'sneha-saraf-insta-post-4.jpg',
-                color: '#00704A',
-                resolution: '1080x1080'
-            },
-            {
-                title: 'Ice Cream Promotion',
-                category: 'Food & Beverage',
-                niche: 'Dessert',
-                description: 'Delicious ice cream advertisement with appetizing visuals and promotional pricing.',
-                tools: ['Photoshop'],
-                image: 'sneha-saraf-assignment-insta-post-1.jpg',
-                color: '#6F4E37',
-                resolution: '1080x1080'
-            },
-            {
-                title: 'IPL Cricket Match Live',
-                category: 'Sports',
-                niche: 'Cricket',
-                description: 'Live cricket match promotional banner with player portraits and team branding.',
-                tools: ['Photoshop'],
-                image: 'MATCH 19 IPL(2025) SRH VS GT.jpg',
-                color: '#FF6B00',
-                resolution: '1920x1080'
-            },
-            {
-                title: 'Healthcare Technology',
-                category: 'Social Media',
-                niche: 'Medical Tech',
-                description: 'Modern healthcare technology campaign with professional medical imagery.',
-                tools: ['Photoshop', 'Illustrator'],
-                image: 'adel-amer-a2 - Copy.jpg',
-                color: '#2979FF',
-                resolution: '1080x1080'
-            },
-            {
-                title: 'Health Services Package',
-                category: 'Social Graphics',
-                niche: 'Healthcare',
-                description: 'Comprehensive health services promotional design with Arabic and English text.',
-                tools: ['Photoshop', 'Illustrator'],
-                image: 'adel-amer-a4.jpg',
-                color: '#0277BD',
-                resolution: '1080x1080'
-            },
-            {
-                title: 'Wellness App Interface',
-                category: 'Product Design',
-                niche: 'Healthcare',
-                description: 'Health and wellness app promotional graphics with calming design and clear messaging.',
-                tools: ['Figma', 'Photoshop'],
-                image: 'adel-amer-a6 - Copy.jpg',
-                color: '#26C6DA',
-                resolution: '1080x1080'
-            },
-            {
-                title: 'YouTube Thumbnail Design',
-                category: 'Social Graphics',
-                niche: 'Content Creation',
-                description: 'Eye-catching YouTube thumbnail with bold text and engaging visual elements.',
-                tools: ['Photoshop'],
-                image: 'maxresdefault - Copy.jpg',
-                color: '#FF0000',
-                resolution: '1280x720'
-            },
-            {
-                title: 'Gaming Channel Banner',
-                category: 'Gaming',
-                niche: 'YouTube',
-                description: 'Dynamic gaming channel artwork with high-energy graphics and branding.',
-                tools: ['Photoshop'],
-                image: 'gergana-yankova-thumbnail3.jpg',
-                color: '#9146FF',
-                resolution: '1280x720'
-            },
-            {
-                title: 'Content Creator Thumbnail',
-                category: 'Social Media',
-                niche: 'Digital Content',
-                description: 'Professional content creator thumbnail with attention-grabbing design.',
-                tools: ['Photoshop'],
-                image: 'maxresdefault (1) - Copy.jpg',
-                color: '#FF6B35',
-                resolution: '1280x720'
-            },
-            {
-                title: 'Fashion Editorial Design',
-                category: 'Social Graphics',
-                niche: 'Fashion',
-                description: 'High-fashion editorial layout with sophisticated typography and imagery.',
-                tools: ['Photoshop', 'InDesign'],
-                image: 'odev-2 - Copy.jpg',
-                color: '#1A1A1D',
-                resolution: '1080x1350'
-            },
-            {
-                title: 'Black Panther Fan Art',
-                category: 'Entertainment',
-                niche: 'Movies',
-                description: 'Stunning superhero fan art with cinematic composition and dramatic lighting.',
-                tools: ['Photoshop'],
-                image: 'By Aceeb Dignitoso.jpg',
-                color: '#8E44AD',
-                resolution: '1080x1350'
-            },
-            {
-                title: 'Thumbnail Design Guide',
-                category: 'Social Graphics',
-                niche: 'Education',
-                description: 'Educational infographic on creating attractive YouTube thumbnails.',
-                tools: ['Illustrator', 'Photoshop'],
-                image: 'youtube guide by aceeb dignitoso.webp',
-                color: '#E74C3C',
-                resolution: '1200x1200'
-            },
-            {
-                title: 'Sports Movie Poster',
-                category: 'Entertainment',
-                niche: 'Sports Film',
-                description: 'Dramatic sports movie promotional poster with bold typography and imagery.',
-                tools: ['Photoshop'],
-                image: 'Sports banner by dignitoso.jpg',
-                color: '#16A085',
-                resolution: '1080x1350'
-            },
-
-            {
-                title: 'Political Campaign Design',
-                category: 'Social Graphics',
-                niche: 'Political',
-                description: 'Professional election campaign poster with Urdu typography and strong visual hierarchy.',
-                tools: ['Photoshop', 'Illustrator'],
-                image: 'Political Campaign Design.jpg',
-                color: '#31A8FF',
-                resolution: '1080x1350'
-            },
-            {
-                title: 'Healthcare App Campaign',
-                category: 'Social Media',
-                niche: 'Healthcare',
-                description: 'Multi-panel healthcare app promotion with Arabic typography and cohesive brand identity.',
-                tools: ['Photoshop', 'Illustrator'],
-                image: 'Health Care.jpg',
-                color: '#00B4D8',
-                resolution: '1080x1080'
-            },
-            {
-                title: 'Burger Promotion',
-                category: 'Food & Beverage',
-                niche: 'Restaurant',
-                description: 'Bold burger advertisement with dynamic typography and appetizing product photography.',
-                tools: ['Photoshop'],
-                image: 'Burger Post.jpg',
-                color: '#FFB800',
-                resolution: '1080x1080'
-            },
-            {
-                title: 'Coffee Facebook Design',
-                category: 'Product Design',
-                niche: 'Food & Beverage',
-                description: 'Premium coffee packaging design with elegant branding and product presentation.',
-                tools: ['Photoshop', 'Illustrator'],
-                image: 'coffe.jpg',
-                color: '#6F4E37',
-                resolution: '1920x1080'
-            },
-            {
-                title: 'Batman Motivational',
-                category: 'Social Graphics',
-                niche: 'Entertainment',
-                description: 'Dramatic motivational poster with cinematic composition and bold typography.',
-                tools: ['Photoshop'],
-                image: 'Batman Motivational - Copy.jpg',
-                color: '#DC3545',
-                resolution: '1080x1080'
-            },
-            {
-                title: 'Grilled Burger Ad',
-                category: 'Food & Beverage',
-                niche: 'Restaurant',
-                description: 'Premium burger advertisement with professional food styling and promotional copy.',
-                tools: ['Photoshop'],
-                image: 'Burger Post - Copy.jpg',
-                color: '#000000',
-                resolution: '1080x1080'
-            },
-            {
-                title: 'The Last of Us II',
-                category: 'Gaming',
-                niche: 'Entertainment',
-                description: 'Video game promotional artwork with double exposure technique and cinematic feel.',
-                tools: ['Photoshop'],
-                image: 'Last of Us by Aceeb Dignitoso.jpg',
-                color: '#E8E8E8',
-                resolution: '1080x1080'
-            },
-            {
-                title: 'Electric Shaver Product',
-                category: 'Product Design',
-                niche: 'Technology',
-                description: 'High-end product advertisement with technical specs and premium presentation.',
-                tools: ['Photoshop', 'Illustrator'],
-                image: 'Shaving Post By Aceeb Dignitoso.jpg',
-                color: '#0EA5E9',
-                resolution: '1200x800'
-            },
-            {
-                title: 'Venom Movie Poster',
-                category: 'Entertainment',
-                niche: 'Movies',
-                description: 'Movie fan art with dramatic lighting and character composition.',
-                tools: ['Photoshop'],
-                image: 'Venom Poster By Aceeb Dignitoso.jpg',
-                color: '#9333EA',
-                resolution: '1080x1350'
-            },
-            {
-                title: 'KFC Burger Special',
-                category: 'Food & Beverage',
-                niche: 'Restaurant',
-                description: 'Fast food promotional design with vibrant colors and call-to-action.',
-                tools: ['Photoshop'],
-                image: 'KFC burger poster by aceeb dignitoso.jpg',
-                color: '#E11D48',
-                resolution: '1080x1080'
-            },
-            {
-                title: 'Coffee Promotion',
-                category: 'Food & Beverage',
-                niche: 'Coffee Shop',
-                description: 'Premium coffee advertisement with atmospheric lighting and product focus.',
-                tools: ['Photoshop'],
-                image: 'Coffee Post By Aceeb digitoso.jpg',
-                color: '#F97316',
-                resolution: '1080x1080'
-            },
-            {
-                title: 'Shawarma Wrap Design',
-                category: 'Food & Beverage',
-                niche: 'Restaurant',
-                description: 'Bold food advertisement with creative typography and appetizing product shot.',
-                tools: ['Photoshop'],
-                image: 'Shawarma Wrap poster by Aceeb Dignitoso.jpg',
-                color: '#DC2626',
-                resolution: '1080x1080'
-            },
-            {
-                title: 'Motivational Typography',
-                category: 'Social Graphics',
-                niche: 'Branding',
-                description: 'Bold typographic design with high contrast and strong messaging.',
-                tools: ['Illustrator'],
-                image: 'Motivational post by Aceeb Diginitoso.webp',
-                color: '#EF4444',
-                resolution: '1200x1200'
-            },
-            {
-                title: 'Cricket Match Promo',
-                category: 'Sports',
-                niche: 'Entertainment',
-                description: 'Sports event promotional graphic with team branding and match details.',
-                tools: ['Photoshop'],
-                image: 'MATCH STORY - Copy.jpg',
-                color: '#10B981',
-                resolution: '1080x1920'
+                videoSrc: 'unwatermark_Karly_from_berlin_designer_f59f77f4c1.mp4',
+                name: 'Karley',
+                country: 'Berlin, Germany',
+                flag: '🇩🇪',
+                emoji: '👩‍💻',
+                role: 'Agency Owner',
+                service: 'Brand Design & Strategy',
+                platform: 'Direct',
+                platformColor: '#FF3366',
+                quote: "As an agency owner I'm very picky — Aceeb is the only freelancer who consistently delivers beyond expectations. A true design partner."
             }
         ];
 
-        const categories = [
-            { id: 'all', label: 'All Work', icon: '🎨' },
-            { id: 'Food & Beverage', label: 'Food & Beverage', icon: '🍔' },
-            { id: 'Entertainment', label: 'Entertainment', icon: '🎬' },
-            { id: 'Social Graphics', label: 'Social Media', icon: '📱' },
-            { id: 'Product Design', label: 'Product Design', icon: '✨' },
-            { id: 'Sports', label: 'Sports', icon: '⚽' },
-            { id: 'Gaming', label: 'Gaming', icon: '🎮' },
-            { id: 'Social Media', label: 'Healthcare', icon: '🏥' }
+        /* ── WRITTEN TESTIMONIALS ── */
+        const testimonials = [
+            { name:"Aleksandra Wiśniewska", country:"Warsaw, Poland", flag:"🇵🇱", emoji:"👩‍💼", role:"Marketing Director", text:"Aceeb completely transformed our restaurant's social media presence. The food photography layouts he created boosted our engagement by 340%. Absolutely exceptional quality!", platform:"Fiverr", platformColor:"#1DBF73", service:"Social Media Graphics" },
+            { name:"James Harrington", country:"London, UK", flag:"🇬🇧", emoji:"🧔", role:"Brand Strategist", text:"Working with Aceeb was a game-changer. The brand identity package he delivered for our startup was nothing short of brilliant — sophisticated, memorable, and perfectly aligned.", platform:"Upwork", platformColor:"#6FDA44", service:"Brand Identity" },
+            { name:"Tyler Brooks", country:"Virginia, USA", flag:"🇺🇸", emoji:"👨‍💻", role:"YouTube Creator", text:"My channel grew from 2K to 50K subs after Aceeb redesigned my thumbnails. His understanding of what catches the eye is unreal. Best investment I've made!", platform:"Direct", platformColor:"#FF3366", service:"YouTube Thumbnails" },
+            { name:"Fatima Al-Rashidi", country:"Dubai, UAE", flag:"🇦🇪", emoji:"👩‍⚕️", role:"Healthcare CEO", text:"The Arabic bilingual campaign designs Aceeb produced for our medical clinic were professional beyond words. Both English and Arabic typography were handled with expertise.", platform:"Fiverr", platformColor:"#1DBF73", service:"Healthcare Campaign" },
+            { name:"Marco Pellegrini", country:"Rome, Italy", flag:"🇮🇹", emoji:"👨‍🍳", role:"Restaurant Owner", text:"The burger and pizza promotional posters Aceeb created are displayed in our restaurant and we get compliments every day. Vibrant, professional, and truly our brand!", platform:"Upwork", platformColor:"#6FDA44", service:"Food & Beverage Design" },
+            { name:"Sophie Müller", country:"Berlin, Germany", flag:"🇩🇪", emoji:"👩‍🎨", role:"Creative Director", text:"I've hired many freelance designers but Aceeb stands apart. He thinks like a marketer and designs like an artist. Our campaign had the highest CTR in company history!", platform:"LinkedIn", platformColor:"#0A66C2", service:"Entertainment Graphics" },
+            { name:"Priya Sharma", country:"Mumbai, India", flag:"🇮🇳", emoji:"👩‍💻", role:"E-Commerce Founder", text:"The product photography designs for our leather goods line were stunning. Aceeb has a brilliant eye for premium aesthetic. Our conversion rate jumped by 60% post-rebrand.", platform:"Fiverr", platformColor:"#1DBF73", service:"Product Photography Design" },
+            { name:"Carlos Fernández", country:"Madrid, Spain", flag:"🇪🇸", emoji:"🧑‍🏫", role:"Sports Academy Manager", text:"Our IPL and cricket match banners designed by Aceeb were shared virally across fan groups. The energy in those sports graphics is unmatched. Hired for 3 more projects!", platform:"Direct", platformColor:"#FF3366", service:"Sports Design" },
+            { name:"Yuki Tanaka", country:"Tokyo, Japan", flag:"🇯🇵", emoji:"👩", role:"Influencer & Blogger", text:"Aceeb created a cohesive Instagram feed theme that made my profile look magazine-quality. DMs asking who designed my content tripled. A master of social media aesthetics!", platform:"Instagram", platformColor:"#E1306C", service:"Social Media Branding" },
+            { name:"Lena Johansson", country:"Stockholm, Sweden", flag:"🇸🇪", emoji:"👩‍🦰", role:"Wellness Brand Founder", text:"The healthcare app promotional graphics were clean, trustworthy, and perfectly communicated our brand values. Aceeb understood our medical audience and delivered perfectly.", platform:"Upwork", platformColor:"#6FDA44", service:"Healthcare App Design" }
+        ];
+        const doubledTestimonials = [...testimonials, ...testimonials];
+
+        /* ── PROJECTS ── */
+        const projects = [
+            { title:'Premium Leather Backpack', category:'Product Design', description:'Luxury product showcase with detailed specifications and premium presentation.', tools:['Photoshop','Illustrator'], image:'2200 copy.jpg', color:'#8B4513', resolution:'1080x1080' },
+            { title:'Healthcare Service Campaign', category:'Social Media', description:'Multi-panel healthcare service promotion with Arabic typography and modern design.', tools:['Photoshop','Illustrator'], image:'adel-amer-a5 - Copy.jpg', color:'#1E88E5', resolution:'1080x1080' },
+            { title:'Medical App Promotion', category:'Social Graphics', description:'Healthcare app promotional graphics with clean layouts and professional imagery.', tools:['Photoshop','Illustrator'], image:'adel-amer-a3.jpg', color:'#0288D1', resolution:'1080x1080' },
+            { title:'Starbucks Coffee Ad', category:'Food & Beverage', description:'Brand-aligned coffee advertisement with dynamic product photography and bold graphics.', tools:['Photoshop'], image:'sneha-saraf-insta-post-4.jpg', color:'#00704A', resolution:'1080x1080' },
+            { title:'Ice Cream Promotion', category:'Food & Beverage', description:'Delicious ice cream advertisement with appetizing visuals and promotional pricing.', tools:['Photoshop'], image:'sneha-saraf-assignment-insta-post-1.jpg', color:'#6F4E37', resolution:'1080x1080' },
+            { title:'IPL Cricket Match Live', category:'Sports', description:'Live cricket match promotional banner with player portraits and team branding.', tools:['Photoshop'], image:'MATCH 19 IPL(2025) SRH VS GT.jpg', color:'#FF6B00', resolution:'1920x1080' },
+            { title:'Healthcare Technology', category:'Social Media', description:'Modern healthcare technology campaign with professional medical imagery.', tools:['Photoshop','Illustrator'], image:'adel-amer-a2 - Copy.jpg', color:'#2979FF', resolution:'1080x1080' },
+            { title:'Health Services Package', category:'Social Graphics', description:'Comprehensive health services promotional design with Arabic and English text.', tools:['Photoshop','Illustrator'], image:'adel-amer-a4.jpg', color:'#0277BD', resolution:'1080x1080' },
+            { title:'Wellness App Interface', category:'Product Design', description:'Health and wellness app promotional graphics with calming design and clear messaging.', tools:['Figma','Photoshop'], image:'adel-amer-a6 - Copy.jpg', color:'#26C6DA', resolution:'1080x1080' },
+            { title:'YouTube Thumbnail Design', category:'Social Graphics', description:'Eye-catching YouTube thumbnail with bold text and engaging visual elements.', tools:['Photoshop'], image:'maxresdefault - Copy.jpg', color:'#FF0000', resolution:'1280x720' },
+            { title:'Gaming Channel Banner', category:'Gaming', description:'Dynamic gaming channel artwork with high-energy graphics and branding.', tools:['Photoshop'], image:'gergana-yankova-thumbnail3.jpg', color:'#9146FF', resolution:'1280x720' },
+            { title:'Content Creator Thumbnail', category:'Social Media', description:'Professional content creator thumbnail with attention-grabbing design.', tools:['Photoshop'], image:'maxresdefault (1) - Copy.jpg', color:'#FF6B35', resolution:'1280x720' },
+            { title:'Fashion Editorial Design', category:'Social Graphics', description:'High-fashion editorial layout with sophisticated typography and imagery.', tools:['Photoshop','InDesign'], image:'odev-2 - Copy.jpg', color:'#1A1A1D', resolution:'1080x1350' },
+            { title:'Black Panther Fan Art', category:'Entertainment', description:'Stunning superhero fan art with cinematic composition and dramatic lighting.', tools:['Photoshop'], image:'By Aceeb Dignitoso.jpg', color:'#8E44AD', resolution:'1080x1350' },
+            { title:'Thumbnail Design Guide', category:'Social Graphics', description:'Educational infographic on creating attractive YouTube thumbnails.', tools:['Illustrator','Photoshop'], image:'youtube guide by aceeb dignitoso.webp', color:'#E74C3C', resolution:'1200x1200' },
+            { title:'Sports Movie Poster', category:'Entertainment', description:'Dramatic sports movie promotional poster with bold typography and imagery.', tools:['Photoshop'], image:'Sports banner by dignitoso.jpg', color:'#16A085', resolution:'1080x1350' },
+            { title:'Political Campaign Design', category:'Social Graphics', description:'Professional election campaign poster with Urdu typography and strong visual hierarchy.', tools:['Photoshop','Illustrator'], image:'Political Campaign Design.jpg', color:'#31A8FF', resolution:'1080x1350' },
+            { title:'Healthcare App Campaign', category:'Social Media', description:'Multi-panel healthcare app promotion with Arabic typography and cohesive brand identity.', tools:['Photoshop','Illustrator'], image:'Health Care.jpg', color:'#00B4D8', resolution:'1080x1080' },
+            { title:'Burger Promotion', category:'Food & Beverage', description:'Bold burger advertisement with dynamic typography and appetizing product photography.', tools:['Photoshop'], image:'Burger Post.jpg', color:'#FFB800', resolution:'1080x1080' },
+            { title:'Coffee Facebook Design', category:'Product Design', description:'Premium coffee packaging design with elegant branding and product presentation.', tools:['Photoshop','Illustrator'], image:'coffe.jpg', color:'#6F4E37', resolution:'1920x1080' },
+            { title:'Batman Motivational', category:'Social Graphics', description:'Dramatic motivational poster with cinematic composition and bold typography.', tools:['Photoshop'], image:'Batman Motivational - Copy.jpg', color:'#DC3545', resolution:'1080x1080' },
+            { title:'Grilled Burger Ad', category:'Food & Beverage', description:'Premium burger advertisement with professional food styling and promotional copy.', tools:['Photoshop'], image:'Burger Post - Copy.jpg', color:'#000000', resolution:'1080x1080' },
+            { title:'The Last of Us II', category:'Gaming', description:'Video game promotional artwork with double exposure technique and cinematic feel.', tools:['Photoshop'], image:'Last of Us by Aceeb Dignitoso.jpg', color:'#E8E8E8', resolution:'1080x1080' },
+            { title:'Electric Shaver Product', category:'Product Design', description:'High-end product advertisement with technical specs and premium presentation.', tools:['Photoshop','Illustrator'], image:'Shaving Post By Aceeb Dignitoso.jpg', color:'#0EA5E9', resolution:'1200x800' },
+            { title:'Venom Movie Poster', category:'Entertainment', description:'Movie fan art with dramatic lighting and character composition.', tools:['Photoshop'], image:'Venom Poster By Aceeb Dignitoso.jpg', color:'#9333EA', resolution:'1080x1350' },
+            { title:'KFC Burger Special', category:'Food & Beverage', description:'Fast food promotional design with vibrant colors and call-to-action.', tools:['Photoshop'], image:'KFC burger poster by aceeb dignitoso.jpg', color:'#E11D48', resolution:'1080x1080' },
+            { title:'Coffee Promotion', category:'Food & Beverage', description:'Premium coffee advertisement with atmospheric lighting and product focus.', tools:['Photoshop'], image:'Coffee Post By Aceeb digitoso.jpg', color:'#F97316', resolution:'1080x1080' },
+            { title:'Shawarma Wrap Design', category:'Food & Beverage', description:'Bold food advertisement with creative typography and appetizing product shot.', tools:['Photoshop'], image:'Shawarma Wrap poster by Aceeb Dignitoso.jpg', color:'#DC2626', resolution:'1080x1080' },
+            { title:'Motivational Typography', category:'Social Graphics', description:'Bold typographic design with high contrast and strong messaging.', tools:['Illustrator'], image:'Motivational post by Aceeb Diginitoso.webp', color:'#EF4444', resolution:'1200x1200' },
+            { title:'Cricket Match Promo', category:'Sports', description:'Sports event promotional graphic with team branding and match details.', tools:['Photoshop'], image:'MATCH STORY - Copy.jpg', color:'#10B981', resolution:'1080x1920' }
         ];
 
-        const filteredProjects = activeFilter === 'all' 
-            ? projects 
-            : projects.filter(p => p.category === activeFilter);
+        const categories = [
+            { id:'all', label:'All Work', icon:'🎨' },
+            { id:'Food & Beverage', label:'Food & Beverage', icon:'🍔' },
+            { id:'Entertainment', label:'Entertainment', icon:'🎬' },
+            { id:'Social Graphics', label:'Social Media', icon:'📱' },
+            { id:'Product Design', label:'Product Design', icon:'✨' },
+            { id:'Sports', label:'Sports', icon:'⚽' },
+            { id:'Gaming', label:'Gaming', icon:'🎮' },
+            { id:'Social Media', label:'Healthcare', icon:'🏥' }
+        ];
+        const filteredProjects = activeFilter === 'all' ? projects : projects.filter(p => p.category === activeFilter);
 
         const tools = [
-            { name: 'Photoshop', icon: 'Ps', color: '#31A8FF', description: 'Image editing & manipulation' },
-            { name: 'Illustrator', icon: 'Ai', color: '#FF9A00', description: 'Vector graphics & logos' },
-            { name: 'InDesign', icon: 'Id', color: '#FF3366', description: 'Layout & typography' },
-            { name: 'Figma', icon: 'Fi', color: '#F24E1E', description: 'UI/UX design' },
-            { name: 'XD', icon: 'Xd', color: '#FF61F6', description: 'Prototyping & wireframes' },
-            { name: 'Lightroom', icon: 'Lr', color: '#31A8FF', description: 'Photo editing' }
+            { name:'Photoshop', icon:'Ps', color:'#31A8FF', description:'Image editing & manipulation' },
+            { name:'Illustrator', icon:'Ai', color:'#FF9A00', description:'Vector graphics & logos' },
+            { name:'InDesign', icon:'Id', color:'#FF3366', description:'Layout & typography' },
+            { name:'Figma', icon:'Fi', color:'#F24E1E', description:'UI/UX design' },
+            { name:'XD', icon:'Xd', color:'#FF61F6', description:'Prototyping & wireframes' },
+            { name:'Lightroom', icon:'Lr', color:'#31A8FF', description:'Photo editing' }
         ];
+
+        const navLinks = ['hero','comparison','portfolio','video-testimonials','testimonials','services','tools','contact'];
 
         return (
             <div className="min-h-screen text-white relative overflow-hidden">
-                {/* Animated Adobe line */}
-                <div 
-                    className={`adobe-line ${lineMode}`}
-                    style={{ height: `${scrollProgress}%` }}
-                />
+                {/* Progress line */}
+                <div className={`adobe-line ${lineMode}`} style={{ height: `${scrollProgress}%` }} />
 
-                {/* Creative particles */}
+                {/* Particles */}
                 {particles.map(p => (
-                    <div 
-                        key={p.id}
-                        className="creative-particle text-4xl"
-                        style={{
-                            left: `${p.left}%`,
-                            bottom: 0,
-                            color: p.color,
-                            fontSize: `${p.size}px`,
-                            animationDelay: `${p.delay}s`,
-                            animationDuration: `${p.duration}s`,
-                            opacity: 0.3
-                        }}
-                    >
+                    <div key={p.id} className="creative-particle" style={{ left: `${p.left}%`, bottom: 0, color: p.color, fontSize: `${p.size}px`, animationDelay: `${p.delay}s`, animationDuration: `${p.duration}s`, opacity: 0.3 }}>
                         {p.shape}
                     </div>
                 ))}
 
-                {/* Floating design tools */}
-                <div className="floating-tool text-blue-400" style={{ top: '15%', left: '8%', animationDelay: '0s' }}>
-                    <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/>
-                    </svg>
-                </div>
-                <div className="floating-tool text-orange-400" style={{ top: '25%', right: '12%', animationDelay: '3s', animationDuration: '12s' }}>
-                    <svg className="w-20 h-20" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M17.5 12c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5.67 1.5 1.5 1.5 1.5-.67 1.5-1.5m-3.5 3c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5m-4-1.5c0-.83-.67-1.5-1.5-1.5S7 12.67 7 13.5 7.67 15 8.5 15s1.5-.67 1.5-1.5M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9z"/>
-                    </svg>
-                </div>
-
-                {/* Background grid */}
                 <div className="design-grid fixed inset-0 opacity-20 pointer-events-none" />
 
-                {/* Navigation */}
+                {/* ── NAV ── */}
                 <nav className="fixed top-0 left-0 right-0 z-40 bg-zinc-950/80 backdrop-blur-lg border-b border-blue-900/30">
-                    <div className="max-w-7xl mx-auto px-6 lg:px-12">
-                        <div className="flex items-center justify-between h-20">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+                        <div className="flex items-center justify-between h-16 sm:h-20">
                             <button onClick={() => scrollToSection('hero')} className="text-2xl font-bold font-display">
                                 ACEEB<span className="text-blue-400">.</span>
                             </button>
-                            <div className="hidden md:flex items-center space-x-8">
-                                {['hero', 'comparison', 'portfolio', 'services', 'tools', 'contact'].map(id => (
-                                    <button
-                                        key={id}
-                                        onClick={() => scrollToSection(id)}
-                                        className={`text-sm font-medium capitalize transition-all ${
-                                            activeSection === id 
-                                                ? 'text-blue-400' 
-                                                : 'text-zinc-400 hover:text-white'
-                                        }`}
-                                    >
-                                        {id === 'comparison' ? 'Before/After' : id}
-                                        {activeSection === id && (
-                                            <div className="h-0.5 bg-blue-400 mt-1 glow-hover" />
-                                        )}
+                            <div className="hidden md:flex items-center space-x-5">
+                                {[
+                                    { id:'hero', label:'Home' },
+                                    { id:'comparison', label:'Before/After' },
+                                    { id:'portfolio', label:'Portfolio' },
+                                    { id:'video-testimonials', label:'Client Videos' },
+                                    { id:'testimonials', label:'Reviews' },
+                                    { id:'services', label:'Services' },
+                                    { id:'tools', label:'Tools' },
+                                    { id:'contact', label:'Contact' }
+                                ].map(({ id, label }) => (
+                                    <button key={id} onClick={() => scrollToSection(id)}
+                                        className={`text-sm font-medium transition-all ${activeSection === id ? 'text-blue-400' : 'text-zinc-400 hover:text-white'}`}>
+                                        {label}
+                                        {activeSection === id && <div className="h-0.5 bg-blue-400 mt-1" />}
                                     </button>
                                 ))}
                             </div>
-                            <a 
-                                href="mailto:aceebdignitoso@gmail.com"
-                                className="px-6 py-2 border border-blue-500 text-blue-400 hover:bg-blue-500/20 transition-all text-sm font-semibold glow-hover"
-                            >
-                                Hire Me
-                            </a>
+                            <div className="flex items-center gap-3">
+                                <a href="mailto:aceebdignitoso@gmail.com" className="hidden sm:block px-4 sm:px-6 py-2 border border-blue-500 text-blue-400 hover:bg-blue-500/20 transition-all text-sm font-semibold">
+                                    Hire Me
+                                </a>
+                                <button className="md:hidden p-2 text-zinc-400 hover:text-white" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+                                    {mobileMenuOpen
+                                        ? <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/></svg>
+                                        : <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16"/></svg>
+                                    }
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </nav>
 
-                {/* Hero Section */}
-                <section id="hero" className="min-h-screen flex items-center justify-center pt-20 relative gradient-mesh">
-                    {/* SVG decorative curve */}
+                {/* Mobile Menu */}
+                <div className={`mobile-menu ${mobileMenuOpen ? 'open' : ''}`}>
+                    {['hero','comparison','portfolio','video-testimonials','testimonials','services','tools','contact'].map(id => (
+                        <button key={id} onClick={() => scrollToSection(id)} className="text-2xl font-bold font-display text-white hover:text-blue-400 transition-colors">
+                            {id.replace('-',' ').toUpperCase()}
+                        </button>
+                    ))}
+                    <a href="mailto:aceebdignitoso@gmail.com" className="px-8 py-3 border border-blue-500 text-blue-400 font-bold mt-4">Hire Me</a>
+                </div>
+
+                {/* ── HERO ── */}
+                <section id="hero" className="min-h-screen flex items-center justify-center pt-16 sm:pt-20 relative gradient-mesh px-4">
                     <svg className="absolute inset-0 w-full h-full opacity-10 pointer-events-none" viewBox="0 0 1000 1000">
                         <path className="bezier-curve" d="M 0,500 Q 250,300 500,500 T 1000,500" fill="none" stroke="#31A8FF" strokeWidth="2"/>
-                        <path className="bezier-curve" d="M 0,400 Q 250,600 500,400 T 1000,400" fill="none" stroke="#FF9A00" strokeWidth="2" style={{animationDelay: '5s'}}/>
-                        <path className="bezier-curve" d="M 0,600 Q 250,400 500,600 T 1000,600" fill="none" stroke="#FF3366" strokeWidth="2" style={{animationDelay: '10s'}}/>
+                        <path className="bezier-curve" d="M 0,400 Q 250,600 500,400 T 1000,400" fill="none" stroke="#FF9A00" strokeWidth="2" style={{animationDelay:'5s'}}/>
                     </svg>
-
-                    <div className="max-w-6xl mx-auto px-6 text-center relative z-10 fade-in">
-                        <div className="inline-block px-6 py-3 bg-blue-500/10 border border-blue-500/30 rounded-full mb-8">
-                            <span className="text-blue-400 text-sm font-bold tracking-widest">GRAPHIC DESIGN PORTFOLIO</span>
+                    <div className="max-w-6xl mx-auto text-center relative z-10 fade-in">
+                        <div className="inline-block px-4 sm:px-6 py-2 sm:py-3 bg-blue-500/10 border border-blue-500/30 rounded-full mb-6 sm:mb-8">
+                            <span className="text-blue-400 text-xs sm:text-sm font-bold tracking-widest">GRAPHIC DESIGN PORTFOLIO</span>
                         </div>
-                        
-                        <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight text-hero font-display">
-                            Design That
-                            <br />
+                        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight text-hero font-display">
+                            Design That<br/>
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-orange-400 to-pink-500">
                                 Speaks Volumes
                             </span>
                         </h1>
-                        
-                        <p className="text-xl md:text-2xl text-zinc-400 max-w-3xl mx-auto mb-12">
+                        <p className="text-lg sm:text-xl md:text-2xl text-zinc-400 max-w-3xl mx-auto mb-10 sm:mb-12">
                             Creating visual identities, stunning social graphics, and memorable brand experiences across food, entertainment, healthcare, and lifestyle brands.
                         </p>
-
-                        {/* Rotating color palette */}
-                        <div className="flex justify-center gap-4 mb-12 overflow-hidden">
-                            <div className="flex gap-4 color-palette">
-                                {['#31A8FF', '#FF9A00', '#FF3366', '#00E4BB', '#9999FF', '#F24E1E', '#31A8FF', '#FF9A00', '#FF3366', '#00E4BB'].map((color, i) => (
-                                    <div 
-                                        key={i}
-                                        className="w-16 h-16 rounded-lg flex-shrink-0 glow-hover cursor-pointer"
-                                        style={{ backgroundColor: color, boxShadow: `0 4px 20px ${color}40` }}
-                                    />
+                        <div className="flex justify-center gap-3 sm:gap-4 mb-10 sm:mb-12 overflow-hidden">
+                            <div className="flex gap-3 sm:gap-4 color-palette">
+                                {['#31A8FF','#FF9A00','#FF3366','#00E4BB','#9999FF','#F24E1E','#31A8FF','#FF9A00','#FF3366','#00E4BB'].map((color, i) => (
+                                    <div key={i} className="w-12 h-12 sm:w-16 sm:h-16 rounded-lg flex-shrink-0" style={{ backgroundColor: color, boxShadow: `0 4px 20px ${color}40` }} />
                                 ))}
                             </div>
                         </div>
-                        
-                        <div className="flex flex-wrap gap-6 justify-center">
-                            <button 
-                                onClick={() => scrollToSection('comparison')}
-                                className="px-10 py-5 bg-blue-500 hover:bg-blue-600 text-white font-bold text-lg transition-all hover:scale-105 glow-hover"
-                            >
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                            <button onClick={() => scrollToSection('comparison')} className="px-8 sm:px-10 py-4 sm:py-5 bg-blue-500 hover:bg-blue-600 text-white font-bold text-base sm:text-lg transition-all hover:scale-105">
                                 See Before/After
                             </button>
-                            <button 
-                                onClick={() => scrollToSection('portfolio')}
-                                className="px-10 py-5 border-2 border-blue-500 text-blue-400 font-bold text-lg hover:bg-blue-500/20 transition-all"
-                            >
+                            <button onClick={() => scrollToSection('portfolio')} className="px-8 sm:px-10 py-4 sm:py-5 border-2 border-blue-500 text-blue-400 font-bold text-base sm:text-lg hover:bg-blue-500/20 transition-all">
                                 View Portfolio
                             </button>
                         </div>
                     </div>
                 </section>
 
-                {/* BEFORE/AFTER COMPARISON SECTION */}
-                <section id="comparison" className="py-32 border-t border-blue-900/30 relative">
-                    <div className="absolute inset-0 gradient-mesh opacity-30" />
-                    
-                    <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
-                        <div className="text-center mb-16 fade-in">
-                            <div className="inline-block px-4 py-2 bg-orange-500/10 border border-orange-500/30 rounded-full mb-4">
-                                <span className="text-orange-400 text-xs font-bold tracking-widest">DESIGN TRANSFORMATION</span>
+                {/* ── SERVICES INTRO (new section before Before/After) ── */}
+                <section id="services-intro" className="py-20 sm:py-28 border-t border-blue-900/30 relative">
+                    <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center, rgba(49,168,255,0.07) 0%, transparent 70%)' }} />
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+                        <div className="text-center mb-14 fade-in">
+                            <div className="inline-block px-4 py-2 bg-pink-500/10 border border-pink-500/30 rounded-full mb-4">
+                                <span className="text-pink-400 text-xs font-bold tracking-widest">WHAT I DO</span>
                             </div>
-                            <h2 className="text-5xl md:text-6xl font-bold mb-6 font-display">
-                                Before
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-blue-400"> & </span>
-                                After
+                            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-5 font-display">
+                                From Concept to
+                                <br/>
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-orange-400 to-yellow-400">
+                                    Captivating Design
+                                </span>
                             </h2>
-                            <p className="text-xl text-zinc-400 max-w-2xl mx-auto mb-4">
-                                Drag the slider to see the transformation. Watch raw concept evolve into polished promotional design.
-                            </p>
-                            <p className="text-sm text-zinc-500 max-w-xl mx-auto">
-                                💡 <strong>Tip:</strong> Click and drag the slider, or tap and swipe on mobile
+                            <p className="text-lg text-zinc-400 max-w-2xl mx-auto">
+                                Every brand deserves visuals that stop the scroll, spark emotion, and convert. Here's how I make that happen.
                             </p>
                         </div>
 
-                        <BeforeAfterComparison 
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {[
+                                { icon:'🍔', title:'Food & Beverage', color:'#FF9A00', desc:'Mouth-watering menu designs, food ads, and restaurant branding that makes customers hungry before they walk in.', tags:['Menu Design','Food Ads','Restaurant Branding'] },
+                                { icon:'📱', title:'Social Media Graphics', color:'#31A8FF', desc:'Scroll-stopping posts, stories, and campaigns for Instagram, Facebook, YouTube, and beyond.', tags:['Instagram','YouTube','Campaigns'] },
+                                { icon:'🏥', title:'Healthcare & Medical', color:'#00E4BB', desc:'Professional, clean, and trust-inspiring designs for clinics, apps, and medical brands — in multiple languages.', tags:['Clinic Branding','App Promo','Bilingual'] },
+                                { icon:'🎬', title:'Entertainment & Gaming', color:'#9333EA', desc:'Cinematic posters, gaming thumbnails, sports event graphics, and fan art that command attention.', tags:['Movie Posters','Game Art','Sports'] },
+                                { icon:'✨', title:'Brand Identity', color:'#FF3366', desc:'Full brand systems — logos, typography, color palettes, and style guides built to last and to impress.', tags:['Logo','Style Guide','Color Systems'] },
+                                { icon:'🛍️', title:'Product Design', color:'#F97316', desc:'Premium product showcases, e-commerce visuals, and packaging designs that make products impossible to ignore.', tags:['E-Commerce','Packaging','Showcase'] }
+                            ].map((s, i) => (
+                                <div key={i} className="fade-in group relative border border-zinc-800 bg-zinc-900/40 p-7 rounded-2xl overflow-hidden hover:border-zinc-600 transition-all duration-500 hover:-translate-y-3" style={{ transitionDelay: `${i * 80}ms` }}>
+                                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: `radial-gradient(ellipse at 0% 0%, ${s.color}15 0%, transparent 60%)` }} />
+                                    <div className="text-4xl mb-4">{s.icon}</div>
+                                    <h3 className="text-xl font-bold mb-2 group-hover:text-white transition-colors" style={{ color: s.color }}>{s.title}</h3>
+                                    <p className="text-zinc-400 text-sm leading-relaxed mb-4">{s.desc}</p>
+                                    <div className="flex flex-wrap gap-2">
+                                        {s.tags.map((tag, j) => (
+                                            <span key={j} className="text-xs px-2 py-1 rounded bg-zinc-800 text-zinc-400 border border-zinc-700">{tag}</span>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* CTA strip */}
+                        <div className="mt-16 fade-in">
+                            <div className="border border-blue-500/30 bg-blue-500/5 rounded-2xl p-8 sm:p-12 text-center" style={{ background: 'linear-gradient(135deg, rgba(49,168,255,0.06) 0%, rgba(255,51,102,0.06) 100%)' }}>
+                                <div className="flex justify-center gap-6 sm:gap-12 mb-6 flex-wrap">
+                                    {[['30+','Projects Delivered'],['50+','Happy Clients'],['12+','Countries'],['5.0★','Average Rating']].map(([n,l], i)=>(
+                                        <div key={i} className="text-center">
+                                            <div className="font-display text-3xl sm:text-4xl text-blue-400">{n}</div>
+                                            <div className="text-xs text-zinc-500 mt-1 font-semibold tracking-wide uppercase">{l}</div>
+                                        </div>
+                                    ))}
+                                </div>
+                                <p className="text-zinc-400 mb-6 max-w-xl mx-auto">Ready to take your brand to the next level? Let's create something unforgettable together.</p>
+                                <button onClick={() => scrollToSection('contact')} className="px-10 py-4 bg-gradient-to-r from-blue-500 to-pink-500 hover:from-blue-600 hover:to-pink-600 text-white font-bold text-base transition-all hover:scale-105 rounded-sm">
+                                    Let's Work Together
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* ── BEFORE / AFTER ── */}
+                <section id="comparison" className="py-20 sm:py-32 border-t border-blue-900/30 relative">
+                    <div className="absolute inset-0 gradient-mesh opacity-30" />
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+                        <div className="text-center mb-12 sm:mb-16 fade-in">
+                            <div className="inline-block px-4 py-2 bg-orange-500/10 border border-orange-500/30 rounded-full mb-4">
+                                <span className="text-orange-400 text-xs font-bold tracking-widest">DESIGN TRANSFORMATION</span>
+                            </div>
+                            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 font-display">
+                                Before <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-blue-400">&</span> After
+                            </h2>
+                            <p className="text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto mb-4">
+                                Drag the slider to see the transformation. Watch raw concept evolve into polished promotional design.
+                            </p>
+                        </div>
+                        <BeforeAfterComparison
                             beforeImage="Edited and enchanced by aceeb dignitoso.jpg"
                             afterImage="Virtual Screen shot of game.jpg"
                         />
-
-                        <div className="mt-12 text-center fade-in">
-                            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                                <div className="border border-pink-500/30 bg-zinc-900/50 p-8 rounded-lg">
-                                    <div className="text-pink-400 text-4xl mb-4">📸</div>
-                                    <h3 className="text-xl font-bold mb-3 text-pink-400">Before</h3>
-                                    <p className="text-zinc-400 text-sm">
-                                        Raw promotional artwork from Stalker 2: Heart of Chornobyl, showcasing atmospheric character design and environmental storytelling.
-                                    </p>
+                        <div className="mt-10 sm:mt-12 text-center fade-in">
+                            <div className="grid sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                                <div className="border border-pink-500/30 bg-zinc-900/50 p-6 sm:p-8 rounded-lg">
+                                    <div className="text-pink-400 text-3xl sm:text-4xl mb-3 sm:mb-4">📸</div>
+                                    <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-pink-400">Before</h3>
+                                    <p className="text-zinc-400 text-sm">Raw promotional artwork from Stalker 2: Heart of Chornobyl, showcasing atmospheric character design and environmental storytelling.</p>
                                 </div>
-                                <div className="border border-blue-500/30 bg-zinc-900/50 p-8 rounded-lg">
-                                    <div className="text-blue-400 text-4xl mb-4">✨</div>
-                                    <h3 className="text-xl font-bold mb-3 text-blue-400">After</h3>
-                                    <p className="text-zinc-400 text-sm">
-                                        Enhanced pre-order promotional design with typography, bonus content details, and structured information hierarchy for marketing campaign.
-                                    </p>
+                                <div className="border border-blue-500/30 bg-zinc-900/50 p-6 sm:p-8 rounded-lg">
+                                    <div className="text-blue-400 text-3xl sm:text-4xl mb-3 sm:mb-4">✨</div>
+                                    <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-blue-400">After</h3>
+                                    <p className="text-zinc-400 text-sm">Enhanced pre-order promotional design with typography, bonus content details, and structured information hierarchy for marketing campaign.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                {/* Portfolio Grid */}
-                <section id="portfolio" className="py-32 border-t border-blue-900/30 relative">
-                    <div className="max-w-7xl mx-auto px-6 lg:px-12">
-                        <div className="text-center mb-12 fade-in">
+                {/* ── PORTFOLIO ── */}
+                <section id="portfolio" className="py-20 sm:py-32 border-t border-blue-900/30 relative">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+                        <div className="text-center mb-10 sm:mb-12 fade-in">
                             <div className="inline-block px-4 py-2 bg-blue-500/10 border border-blue-500/30 rounded-full mb-4">
                                 <span className="text-blue-400 text-xs font-bold tracking-widest">FEATURED WORK</span>
                             </div>
-                            <h2 className="text-5xl md:text-6xl font-bold mb-6 font-display">
-                                Portfolio
-                            </h2>
-                            <p className="text-xl text-zinc-400 max-w-2xl mx-auto">
+                            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 font-display">Portfolio</h2>
+                            <p className="text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto">
                                 30+ projects showcasing diverse design work across branding, social media, food & beverage, healthcare, and entertainment
                             </p>
                         </div>
-
-                        {/* Category Filters */}
-                        <div className="flex flex-wrap justify-center gap-4 mb-12 fade-in">
+                        <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-10 sm:mb-12 fade-in">
                             {categories.map(cat => (
-                                <button
-                                    key={cat.id}
-                                    onClick={() => setActiveFilter(cat.id)}
-                                    className={`filter-btn px-6 py-3 rounded-full font-semibold text-sm ${
-                                        activeFilter === cat.id ? 'active' : 'bg-zinc-800/50 text-zinc-300'
-                                    }`}
-                                >
-                                    <span className="mr-2">{cat.icon}</span>
-                                    {cat.label}
+                                <button key={cat.id} onClick={() => setActiveFilter(cat.id)}
+                                    className={`filter-btn px-4 sm:px-6 py-2 sm:py-3 rounded-full font-semibold text-xs sm:text-sm ${activeFilter === cat.id ? 'active' : 'bg-zinc-800/50 text-zinc-300'}`}>
+                                    <span className="mr-1 sm:mr-2">{cat.icon}</span>{cat.label}
                                 </button>
                             ))}
                         </div>
-
-                        {/* Masonry Grid */}
                         <div className="masonry-grid">
                             {filteredProjects.map((project, i) => (
-                                <div 
-                                    key={i}
-                                    className="masonry-item fade-in project-card group border border-zinc-800 cursor-pointer"
+                                <div key={i} className="masonry-item fade-in project-card group border border-zinc-800 cursor-pointer"
                                     style={{ transitionDelay: `${i * 50}ms` }}
-                                    onClick={() => window.openLightbox(project.image)}
-                                >
+                                    onClick={() => window.openLightbox(project.image)}>
                                     <div className="relative overflow-hidden">
-                                        <img 
-                                            src={project.image} 
-                                            alt={project.title}
-                                            className="w-full h-auto object-cover"
-                                            loading="lazy"
-                                            decoding="async"
-                                        />
+                                        <img src={project.image} alt={project.title} className="w-full h-auto object-cover" loading="lazy" decoding="async" />
                                         <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                                        <div 
-                                            className="absolute top-4 right-4 px-3 py-1 text-white text-xs font-bold rounded backdrop-blur-sm"
-                                            style={{ backgroundColor: `${project.color}80` }}
-                                        >
-                                            {project.category}
-                                        </div>
-                                        <div className="absolute bottom-4 left-4 right-4 text-xs text-zinc-400 opacity-0 group-hover:opacity-100 transition-opacity">
-                                            📐 {project.resolution}
-                                        </div>
+                                        <div className="absolute top-4 right-4 px-3 py-1 text-white text-xs font-bold rounded backdrop-blur-sm" style={{ backgroundColor: `${project.color}80` }}>{project.category}</div>
+                                        <div className="absolute bottom-4 left-4 right-4 text-xs text-zinc-400 opacity-0 group-hover:opacity-100 transition-opacity">📐 {project.resolution}</div>
                                     </div>
-
-                                    <div className="p-6 space-y-3">
-                                        <h3 className="text-xl font-bold group-hover:text-blue-400 transition-colors">
-                                            {project.title}
-                                        </h3>
+                                    <div className="p-4 sm:p-6 space-y-3">
+                                        <h3 className="text-lg sm:text-xl font-bold group-hover:text-blue-400 transition-colors">{project.title}</h3>
                                         <p className="text-zinc-400 text-sm">{project.description}</p>
-                                        
                                         <div className="flex flex-wrap gap-2 pt-2">
                                             {project.tools.map((tool, j) => (
-                                                <span 
-                                                    key={j}
-                                                    className="px-3 py-1 text-xs bg-zinc-800 text-zinc-300 border border-zinc-700 rounded"
-                                                >
-                                                    {tool}
-                                                </span>
+                                                <span key={j} className="px-2 sm:px-3 py-1 text-xs bg-zinc-800 text-zinc-300 border border-zinc-700 rounded">{tool}</span>
                                             ))}
                                         </div>
                                     </div>
                                 </div>
                             ))}
                         </div>
-
                         {filteredProjects.length === 0 && (
-                            <div className="text-center py-20">
-                                <p className="text-2xl text-zinc-500">No projects found in this category</p>
-                            </div>
+                            <div className="text-center py-20"><p className="text-2xl text-zinc-500">No projects found in this category</p></div>
                         )}
                     </div>
                 </section>
 
-                {/* Services */}
-                <section id="services" className="py-32 border-t border-blue-900/30 relative">
+                {/* ── VIDEO TESTIMONIALS (new "What Clients Say") ── */}
+                <section id="video-testimonials" className="video-testimonials-section py-20 sm:py-32 border-t border-blue-900/30">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+                        <div className="text-center mb-14 fade-in">
+                            <div className="inline-block px-4 py-2 bg-green-500/10 border border-green-500/30 rounded-full mb-4">
+                                <span className="text-green-400 text-xs font-bold tracking-widest">REAL CLIENT VIDEOS</span>
+                            </div>
+                            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-5 font-display">
+                                What Clients
+                                <br/>
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-blue-400 to-pink-400">
+                                    Say About Me
+                                </span>
+                            </h2>
+                            <p className="text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto">
+                                Don't just take my word for it — hear directly from clients around the world who trusted me with their brand.
+                            </p>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {videoTestimonials.map((t, i) => (
+                                <VideoTestimonialCard key={i} {...t} />
+                            ))}
+                        </div>
+
+                        {/* Trust indicators row */}
+                        <div className="mt-14 fade-in">
+                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                                {[
+                                    { icon:'🌍', label:'Clients from 12+ countries', sub:'Japan, France, Germany & more' },
+                                    { icon:'⭐', label:'5.0 star average rating', sub:'Across all platforms' },
+                                    { icon:'🔁', label:'80% repeat clients', sub:'They keep coming back' },
+                                    { icon:'⚡', label:'Fast delivery, zero drama', sub:'Always on time' }
+                                ].map((item, i) => (
+                                    <div key={i} className="border border-zinc-800 bg-zinc-900/40 p-5 rounded-xl text-center hover:border-zinc-600 transition-all fade-in" style={{ transitionDelay: `${i*80}ms` }}>
+                                        <div className="text-3xl mb-2">{item.icon}</div>
+                                        <div className="text-sm font-bold text-white mb-1">{item.label}</div>
+                                        <div className="text-xs text-zinc-500">{item.sub}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* ── WRITTEN TESTIMONIALS ── */}
+                <section id="testimonials" className="testimonials-section py-20 sm:py-32 border-t border-blue-900/30">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 mb-12 sm:mb-16">
+                        <div className="text-center fade-in">
+                            <div className="inline-block px-4 py-2 bg-orange-500/10 border border-orange-500/30 rounded-full mb-4">
+                                <span className="text-orange-400 text-xs font-bold tracking-widest">CLIENT REVIEWS</span>
+                            </div>
+                            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 font-display">
+                                Loved by Clients<br/>
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-400 to-pink-500">
+                                    Worldwide
+                                </span>
+                            </h2>
+                            <p className="text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto mb-10">
+                                Real reviews from real clients across the globe — from Warsaw to Tokyo, London to Dubai.
+                            </p>
+                            <div className="stats-bar mb-10 fade-in">
+                                {[['50+','Happy Clients'],['5.0','Average Rating'],['12+','Countries'],['100%','Satisfaction']].map(([n,l],i)=>(
+                                    <div key={i} className="stat-item">
+                                        <div className="stat-number">{n}</div>
+                                        <div style={{ fontSize: 13, color: 'rgba(255,255,255,.5)', marginTop: 4, fontWeight: 600 }}>{l}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="testimonials-scroll-container overflow-hidden">
+                        <div className="testimonial-track py-4">
+                            {doubledTestimonials.map((t, i) => (
+                                <TestimonialCard key={i} {...t} />
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="text-center mt-12 sm:mt-16 px-4 fade-in">
+                        <p className="text-zinc-500 text-sm mb-4">Join 50+ satisfied clients worldwide</p>
+                        <button onClick={() => scrollToSection('contact')}
+                            className="px-8 sm:px-10 py-4 sm:py-5 bg-gradient-to-r from-blue-500 to-orange-500 hover:from-blue-600 hover:to-orange-600 text-white font-bold text-base sm:text-lg transition-all hover:scale-105">
+                            Start Your Project
+                        </button>
+                    </div>
+                </section>
+
+                {/* ── SERVICES ── */}
+                <section id="services" className="py-20 sm:py-32 border-t border-blue-900/30 relative">
                     <div className="absolute inset-0 gradient-mesh opacity-50" />
-                    
-                    <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
-                        <div className="text-center mb-20 fade-in">
-                            <h2 className="text-5xl md:text-6xl font-bold mb-6 font-display">
-                                What I
-                                <br />
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+                        <div className="text-center mb-16 sm:mb-20 fade-in">
+                            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 font-display">
+                                What I<br/>
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-pink-500">Create</span>
                             </h2>
                         </div>
-
-                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                             {[
-                                { title: 'Food & Beverage', icon: '🍔', items: ['Menu designs', 'Product ads', 'Social posts', 'Packaging'] },
-                                { title: 'Social Media', icon: '📱', items: ['Instagram posts', 'Story designs', 'Campaign graphics', 'Brand content'] },
-                                { title: 'Entertainment', icon: '🎬', items: ['Movie posters', 'Gaming graphics', 'Sports promos', 'Event designs'] },
-                                { title: 'Brand Design', icon: '✨', items: ['Logo design', 'Brand identity', 'Typography', 'Color systems'] }
+                                { title:'Food & Beverage', icon:'🍔', items:['Menu designs','Product ads','Social posts','Packaging'] },
+                                { title:'Social Media', icon:'📱', items:['Instagram posts','Story designs','Campaign graphics','Brand content'] },
+                                { title:'Entertainment', icon:'🎬', items:['Movie posters','Gaming graphics','Sports promos','Event designs'] },
+                                { title:'Brand Design', icon:'✨', items:['Logo design','Brand identity','Typography','Color systems'] }
                             ].map((service, i) => (
-                                <div 
-                                    key={i}
-                                    className="fade-in group border border-zinc-800 bg-zinc-900/50 p-8 hover:border-blue-500/50 transition-all duration-500 hover:-translate-y-2"
-                                    style={{ transitionDelay: `${i * 100}ms` }}
-                                >
-                                    <div className="text-5xl mb-4">{service.icon}</div>
-                                    <h3 className="text-2xl font-bold mb-4 group-hover:text-blue-400 transition-colors">
-                                        {service.title}
-                                    </h3>
+                                <div key={i} className="fade-in group border border-zinc-800 bg-zinc-900/50 p-6 sm:p-8 hover:border-blue-500/50 transition-all duration-500 hover:-translate-y-2" style={{ transitionDelay: `${i * 100}ms` }}>
+                                    <div className="text-4xl sm:text-5xl mb-3 sm:mb-4">{service.icon}</div>
+                                    <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 group-hover:text-blue-400 transition-colors">{service.title}</h3>
                                     <ul className="space-y-2">
                                         {service.items.map((item, j) => (
                                             <li key={j} className="text-zinc-400 text-sm flex items-center">
-                                                <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-3" />
-                                                {item}
+                                                <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-3 flex-shrink-0"/>{item}
                                             </li>
                                         ))}
                                     </ul>
@@ -1359,39 +1154,24 @@
                     </div>
                 </section>
 
-                {/* Tools */}
-                <section id="tools" className="py-32 border-t border-blue-900/30 relative">
-                    <div className="max-w-7xl mx-auto px-6 lg:px-12">
-                        <div className="text-center mb-20 fade-in">
-                            <h2 className="text-5xl md:text-6xl font-bold mb-6 font-display">
-                                Creative
-                                <br />
+                {/* ── TOOLS ── */}
+                <section id="tools" className="py-20 sm:py-32 border-t border-blue-900/30 relative">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+                        <div className="text-center mb-16 sm:mb-20 fade-in">
+                            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 font-display">
+                                Creative<br/>
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-blue-400">Arsenal</span>
                             </h2>
-                            <p className="text-xl text-zinc-400 max-w-2xl mx-auto">
-                                Professional mastery of industry-leading design tools
-                            </p>
+                            <p className="text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto">Professional mastery of industry-leading design tools</p>
                         </div>
-
-                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                             {tools.map((tool, i) => (
-                                <div 
-                                    key={i}
-                                    className="fade-in software-badge group border border-zinc-800 bg-zinc-900/50 p-8 hover:border-blue-500/50 transition-all duration-500 hover:-translate-y-2"
-                                    style={{ transitionDelay: `${i * 100}ms` }}
-                                >
-                                    <div 
-                                        className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6 text-white text-3xl font-bold shadow-2xl glow-hover"
-                                        style={{ 
-                                            backgroundColor: tool.color,
-                                            boxShadow: `0 10px 40px ${tool.color}40`
-                                        }}
-                                    >
+                                <div key={i} className="fade-in software-badge group border border-zinc-800 bg-zinc-900/50 p-6 sm:p-8 hover:border-blue-500/50 transition-all duration-500 hover:-translate-y-2" style={{ transitionDelay: `${i * 100}ms` }}>
+                                    <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center mb-4 sm:mb-6 text-white text-2xl sm:text-3xl font-bold shadow-2xl"
+                                        style={{ backgroundColor: tool.color, boxShadow: `0 10px 40px ${tool.color}40` }}>
                                         {tool.icon}
                                     </div>
-                                    <h3 className="text-2xl font-bold mb-2 group-hover:text-blue-400 transition-colors">
-                                        {tool.name}
-                                    </h3>
+                                    <h3 className="text-xl sm:text-2xl font-bold mb-2 group-hover:text-blue-400 transition-colors">{tool.name}</h3>
                                     <p className="text-zinc-400 text-sm">{tool.description}</p>
                                 </div>
                             ))}
@@ -1399,58 +1179,39 @@
                     </div>
                 </section>
 
-                {/* Contact */}
-                <section id="contact" className="py-32 border-t border-blue-900/30 relative">
-                    <div className="max-w-4xl mx-auto px-6 text-center fade-in">
-                        <div className="inline-block px-6 py-3 bg-blue-500/10 border border-blue-500/30 rounded-full mb-8">
-                            <span className="text-blue-400 text-sm font-bold tracking-widest">GET IN TOUCH</span>
+                {/* ── CONTACT ── */}
+                <section id="contact" className="py-20 sm:py-32 border-t border-blue-900/30 relative">
+                    <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center fade-in">
+                        <div className="inline-block px-4 sm:px-6 py-2 sm:py-3 bg-blue-500/10 border border-blue-500/30 rounded-full mb-6 sm:mb-8">
+                            <span className="text-blue-400 text-xs sm:text-sm font-bold tracking-widest">GET IN TOUCH</span>
                         </div>
-                        
-                        <h2 className="text-5xl md:text-6xl font-bold mb-6 font-display">
-                            Let's Create
-                            <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-orange-400 to-pink-500">
-                                Something Beautiful
-                            </span>
+                        <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 font-display">
+                            Let's Create<br/>
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-orange-400 to-pink-500">Something Beautiful</span>
                         </h2>
-                        
-                        <p className="text-xl text-zinc-400 mb-12 max-w-2xl mx-auto">
+                        <p className="text-lg sm:text-xl text-zinc-400 mb-10 sm:mb-12 max-w-2xl mx-auto">
                             Need social media graphics, food photography design, or brand identity? Let's collaborate on your next project.
                         </p>
-
-                        <div className="grid md:grid-cols-3 gap-6 mb-12">
+                        <div className="grid sm:grid-cols-3 gap-4 sm:gap-6 mb-10 sm:mb-12">
                             {[
-                                { icon: '📧', label: 'Email', value: 'aceebdignitoso@gmail.com', href: 'mailto:aceebdignitoso@gmail.com' },
-                                { icon: '💬', label: 'WhatsApp', value: '+92 334 6419 135', href: 'https://wa.me/+923346419135' },
-                                { icon: '💼', label: 'LinkedIn', value: 'Connect', href: 'https://www.linkedin.com/in/therealhaseebrehman/' }
+                                { icon:'📧', label:'Email', value:'aceebdignitoso@gmail.com', href:'mailto:aceebdignitoso@gmail.com' },
+                                { icon:'💬', label:'WhatsApp', value:'+92 334 6419 135', href:'https://wa.me/+923346419135' },
+                                { icon:'💼', label:'LinkedIn', value:'Connect', href:'https://www.linkedin.com/in/therealhaseebrehman/' }
                             ].map((contact, i) => (
-                                <a
-                                    key={i}
-                                    href={contact.href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="border border-zinc-800 bg-zinc-900/50 p-6 hover:border-blue-500/50 transition-all duration-300 hover:-translate-y-2 block"
-                                >
-                                    <div className="text-4xl mb-3">{contact.icon}</div>
-                                    <div className="text-sm text-zinc-500 mb-1">{contact.label}</div>
-                                    <div className="text-sm font-semibold text-blue-400">{contact.value}</div>
+                                <a key={i} href={contact.href} target="_blank" rel="noopener noreferrer"
+                                    className="border border-zinc-800 bg-zinc-900/50 p-5 sm:p-6 hover:border-blue-500/50 transition-all duration-300 hover:-translate-y-2 block rounded-xl">
+                                    <div className="text-3xl sm:text-4xl mb-2 sm:mb-3">{contact.icon}</div>
+                                    <div className="text-xs sm:text-sm text-zinc-500 mb-1">{contact.label}</div>
+                                    <div className="text-xs sm:text-sm font-semibold text-blue-400 break-all">{contact.value}</div>
                                 </a>
                             ))}
                         </div>
-
-                        <div className="flex flex-wrap gap-6 justify-center">
-                            <a 
-                                href="mailto:aceebdignitoso@gmail.com"
-                                className="px-10 py-5 bg-blue-500 hover:bg-blue-600 text-white font-bold text-lg transition-all hover:scale-105"
-                            >
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                            <a href="mailto:aceebdignitoso@gmail.com" className="px-8 sm:px-10 py-4 sm:py-5 bg-blue-500 hover:bg-blue-600 text-white font-bold text-base sm:text-lg transition-all hover:scale-105 text-center">
                                 Start a Project
                             </a>
-                            <a 
-                                href="https://wa.me/+923346419135"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="px-10 py-5 border-2 border-blue-500 text-blue-400 font-bold text-lg hover:bg-blue-500/20 transition-all"
-                            >
+                            <a href="https://wa.me/+923346419135" target="_blank" rel="noopener noreferrer"
+                                className="px-8 sm:px-10 py-4 sm:py-5 border-2 border-blue-500 text-blue-400 font-bold text-base sm:text-lg hover:bg-blue-500/20 transition-all text-center">
                                 WhatsApp Me
                             </a>
                         </div>
@@ -1458,14 +1219,10 @@
                 </section>
 
                 {/* Footer */}
-                <footer className="border-t border-blue-900/30 py-12">
-                    <div className="max-w-7xl mx-auto px-6 text-center">
-                        <div className="text-2xl font-bold mb-4 font-display">
-                            ACEEB<span className="text-blue-400">.</span>
-                        </div>
-                        <p className="text-zinc-500 text-sm">
-                            © 2026 Aceeb Dignitoso. All rights reserved.
-                        </p>
+                <footer className="border-t border-blue-900/30 py-10 sm:py-12">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+                        <div className="text-2xl font-bold mb-4 font-display">ACEEB<span className="text-blue-400">.</span></div>
+                        <p className="text-zinc-500 text-sm">© 2026 Aceeb Dignitoso. All rights reserved.</p>
                     </div>
                 </footer>
             </div>
