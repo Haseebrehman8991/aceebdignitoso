@@ -22,7 +22,6 @@
         }
         .font-display { font-family: 'Bebas Neue', cursive; }
 
-        /* ── scroll progress line ── */
         .adobe-line {
             position: fixed; top: 0; right: 0; width: 4px; height: 0%;
             z-index: 9999; transition: background .3s ease;
@@ -90,14 +89,12 @@
         .bezier-curve{stroke-dasharray:5,5;animation:dash 20s linear infinite;}
         @keyframes dash{to{stroke-dashoffset:-100;}}
 
-        /* ── Lightbox ── */
         .lightbox{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,.95);z-index:10000;align-items:center;justify-content:center;opacity:0;transition:opacity .3s ease;}
         .lightbox.active{display:flex;opacity:1;}
         .lightbox img{max-width:90vw;max-height:90vh;object-fit:contain;box-shadow:0 0 100px rgba(49,168,255,.5);}
         .lightbox-close{position:absolute;top:20px;right:40px;font-size:40px;color:white;cursor:pointer;z-index:10001;transition:all .3s ease;}
         .lightbox-close:hover{color:#31A8FF;transform:scale(1.2);}
 
-        /* ── Masonry ── */
         .masonry-grid{column-count:1;column-gap:1.5rem;}
         @media(min-width:640px){.masonry-grid{column-count:2;}}
         @media(min-width:1024px){.masonry-grid{column-count:3;}}
@@ -106,7 +103,6 @@
         @keyframes text-scale{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.05);opacity:.8;}}
         .text-hero{animation:text-scale 4s ease-in-out infinite;}
 
-        /* ── Before/After ── */
         .comparison-container{position:relative;width:100%;max-width:1200px;margin:0 auto;overflow:hidden;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5);user-select:none;-webkit-user-select:none;touch-action:pan-y pinch-zoom;}
         .comparison-wrapper{position:relative;width:100%;padding-bottom:56.25%;}
         .comparison-image{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;pointer-events:none;}
@@ -121,205 +117,38 @@
         .comparison-label.after{right:20px;background:linear-gradient(135deg,rgba(49,168,255,.9),rgba(30,150,255,.9));}
         @keyframes pulse-glow{0%,100%{box-shadow:0 0 20px rgba(49,168,255,.8),0 4px 20px rgba(0,0,0,.4);}50%{box-shadow:0 0 40px rgba(49,168,255,1),0 4px 20px rgba(0,0,0,.4);}}
 
-        /* ── VIDEO TESTIMONIALS ── */
-        .video-testimonials-section {
-            position: relative;
-            overflow: hidden;
-        }
-        .video-testimonials-section::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(ellipse at 20% 40%, rgba(49,168,255,.1) 0%, transparent 50%),
-                        radial-gradient(ellipse at 80% 60%, rgba(255,51,102,.1) 0%, transparent 50%);
-            pointer-events: none;
-        }
+        .video-testimonials-section { position: relative; overflow: hidden; }
+        .video-testimonials-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 20% 40%, rgba(49,168,255,.1) 0%, transparent 50%), radial-gradient(ellipse at 80% 60%, rgba(255,51,102,.1) 0%, transparent 50%); pointer-events: none; }
 
-        .video-card {
-            position: relative;
-            border-radius: 20px;
-            overflow: hidden;
-            background: linear-gradient(145deg, #111118 0%, #1a1a2e 100%);
-            border: 1px solid rgba(49,168,255,.18);
-            transition: all .5s cubic-bezier(.23,1,.32,1);
-            cursor: pointer;
-        }
-        .video-card:hover {
-            transform: translateY(-12px) scale(1.02);
-            border-color: rgba(49,168,255,.5);
-            box-shadow: 0 30px 80px rgba(49,168,255,.25), 0 0 0 1px rgba(49,168,255,.3);
-        }
-        .video-card video {
-            width: 100%;
-            display: block;
-            border-radius: 16px 16px 0 0;
-            transition: transform .5s ease;
-        }
-        .video-card:hover video {
-            transform: scale(1.04);
-        }
-        .video-thumb-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(10,10,15,1) 0%, rgba(10,10,15,.4) 40%, transparent 70%);
-            pointer-events: none;
-            border-radius: 20px;
-        }
-        .play-btn {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -60%);
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            background: rgba(49,168,255,.85);
-            backdrop-filter: blur(8px);
-            border: 2px solid rgba(255,255,255,.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all .3s ease;
-            pointer-events: none;
-        }
-        .video-card:hover .play-btn {
-            background: rgba(49,168,255,1);
-            transform: translate(-50%, -60%) scale(1.1);
-            box-shadow: 0 0 30px rgba(49,168,255,.7);
-        }
-        .play-btn-playing {
-            background: rgba(255,51,102,.85) !important;
-        }
-        .video-card-info {
-            padding: 1.5rem;
-            position: relative;
-        }
-        .client-country-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 12px;
-            background: rgba(255,255,255,.05);
-            border: 1px solid rgba(255,255,255,.1);
-            border-radius: 100px;
-            font-size: 12px;
-            color: rgba(255,255,255,.65);
-            font-weight: 600;
-            letter-spacing: .5px;
-            margin-bottom: .75rem;
-        }
-        .client-service-tag {
-            display: inline-block;
-            font-size: 11px;
-            color: #31A8FF;
-            font-weight: 700;
-            letter-spacing: .5px;
-            background: rgba(49,168,255,.1);
-            padding: 3px 10px;
-            border-radius: 100px;
-            border: 1px solid rgba(49,168,255,.2);
-            margin-bottom: .75rem;
-        }
-        .video-avatar-ring {
-            position: relative;
-            width: 48px;
-            height: 48px;
-            flex-shrink: 0;
-        }
-        .video-avatar-ring::before {
-            content: '';
-            position: absolute;
-            inset: -3px;
-            border-radius: 50%;
-            background: conic-gradient(#31A8FF, #FF9A00, #FF3366, #31A8FF);
-            animation: ring-spin 4s linear infinite;
-        }
+        .video-card { position: relative; border-radius: 20px; overflow: hidden; background: linear-gradient(145deg, #111118 0%, #1a1a2e 100%); border: 1px solid rgba(49,168,255,.18); transition: all .5s cubic-bezier(.23,1,.32,1); cursor: pointer; }
+        .video-card:hover { transform: translateY(-12px) scale(1.02); border-color: rgba(49,168,255,.5); box-shadow: 0 30px 80px rgba(49,168,255,.25), 0 0 0 1px rgba(49,168,255,.3); }
+        .video-card video { width: 100%; display: block; border-radius: 16px 16px 0 0; transition: transform .5s ease; }
+        .video-card:hover video { transform: scale(1.04); }
+        .video-thumb-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,10,15,1) 0%, rgba(10,10,15,.4) 40%, transparent 70%); pointer-events: none; border-radius: 20px; }
+        .play-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -60%); width: 64px; height: 64px; border-radius: 50%; background: rgba(49,168,255,.85); backdrop-filter: blur(8px); border: 2px solid rgba(255,255,255,.3); display: flex; align-items: center; justify-content: center; transition: all .3s ease; pointer-events: none; }
+        .video-card:hover .play-btn { background: rgba(49,168,255,1); transform: translate(-50%, -60%) scale(1.1); box-shadow: 0 0 30px rgba(49,168,255,.7); }
+        .play-btn-playing { background: rgba(255,51,102,.85) !important; }
+        .video-card-info { padding: 1.5rem; position: relative; }
+        .client-country-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); border-radius: 100px; font-size: 12px; color: rgba(255,255,255,.65); font-weight: 600; letter-spacing: .5px; margin-bottom: .75rem; }
+        .client-service-tag { display: inline-block; font-size: 11px; color: #31A8FF; font-weight: 700; letter-spacing: .5px; background: rgba(49,168,255,.1); padding: 3px 10px; border-radius: 100px; border: 1px solid rgba(49,168,255,.2); margin-bottom: .75rem; }
+        .video-avatar-ring { position: relative; width: 48px; height: 48px; flex-shrink: 0; }
+        .video-avatar-ring::before { content: ''; position: absolute; inset: -3px; border-radius: 50%; background: conic-gradient(#31A8FF, #FF9A00, #FF3366, #31A8FF); animation: ring-spin 4s linear infinite; }
         @keyframes ring-spin{to{transform:rotate(360deg);}}
-        .video-avatar-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #2a2a3e, #1a1a2e);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            z-index: 1;
-            border: 2px solid #0a0a0f;
-        }
-        .verified-dot {
-            position: absolute;
-            bottom: -2px;
-            right: -2px;
-            width: 16px;
-            height: 16px;
-            background: #31A8FF;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2;
-            border: 2px solid #0a0a0f;
-        }
+        .video-avatar-inner { position: relative; width: 100%; height: 100%; border-radius: 50%; background: linear-gradient(135deg, #2a2a3e, #1a1a2e); display: flex; align-items: center; justify-content: center; font-size: 22px; z-index: 1; border: 2px solid #0a0a0f; }
+        .verified-dot { position: absolute; bottom: -2px; right: -2px; width: 16px; height: 16px; background: #31A8FF; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 2; border: 2px solid #0a0a0f; }
 
-        /* Stars */
         .stars-row { display: flex; gap: 3px; }
         .star-icon { color: #FFB800; font-size: 14px; filter: drop-shadow(0 1px 4px rgba(255,184,0,.6)); }
 
-        /* ── WRITTEN TESTIMONIALS (scroll) ── */
-        .testimonials-section {
-            position: relative;
-            overflow: hidden;
-        }
-        .testimonials-section::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(ellipse at 10% 30%,rgba(49,168,255,.12) 0%,transparent 50%),
-                        radial-gradient(ellipse at 90% 70%,rgba(255,51,102,.12) 0%,transparent 50%),
-                        radial-gradient(ellipse at 50% 50%,rgba(255,154,0,.08) 0%,transparent 60%);
-            pointer-events: none;
-        }
-        .testimonial-track {
-            display: flex;
-            gap: 2rem;
-            animation: scroll-testimonials 40s linear infinite;
-            width: max-content;
-        }
+        .testimonials-section { position: relative; overflow: hidden; }
+        .testimonials-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 10% 30%,rgba(49,168,255,.12) 0%,transparent 50%), radial-gradient(ellipse at 90% 70%,rgba(255,51,102,.12) 0%,transparent 50%), radial-gradient(ellipse at 50% 50%,rgba(255,154,0,.08) 0%,transparent 60%); pointer-events: none; }
+        .testimonial-track { display: flex; gap: 2rem; animation: scroll-testimonials 40s linear infinite; width: max-content; }
         .testimonial-track:hover{animation-play-state:paused;}
         @keyframes scroll-testimonials{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
 
-        .testimonial-card {
-            position: relative;
-            width: 360px;
-            flex-shrink: 0;
-            background: linear-gradient(145deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);
-            border: 1px solid rgba(49,168,255,.2);
-            border-radius: 20px;
-            padding: 2rem;
-            transition: all .4s cubic-bezier(.23,1,.32,1);
-            transform-style: preserve-3d;
-            cursor: default;
-            box-shadow: 0 4px 24px rgba(0,0,0,.4),0 1px 0 rgba(255,255,255,.05) inset,0 -1px 0 rgba(0,0,0,.3) inset;
-        }
-        .testimonial-card:hover {
-            transform: translateY(-12px) rotateX(4deg) rotateY(-2deg);
-            box-shadow: 0 30px 80px rgba(49,168,255,.25),0 0 0 1px rgba(49,168,255,.4),0 1px 0 rgba(255,255,255,.1) inset;
-            border-color: rgba(49,168,255,.5);
-        }
-        .testimonial-card::before {
-            content: '"';
-            position: absolute;
-            top: -10px;
-            right: 24px;
-            font-size: 120px;
-            font-family: 'Bebas Neue', cursive;
-            color: rgba(49,168,255,.1);
-            line-height: 1;
-            pointer-events: none;
-            user-select: none;
-        }
+        .testimonial-card { position: relative; width: 360px; flex-shrink: 0; background: linear-gradient(145deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%); border: 1px solid rgba(49,168,255,.2); border-radius: 20px; padding: 2rem; transition: all .4s cubic-bezier(.23,1,.32,1); transform-style: preserve-3d; cursor: default; box-shadow: 0 4px 24px rgba(0,0,0,.4),0 1px 0 rgba(255,255,255,.05) inset,0 -1px 0 rgba(0,0,0,.3) inset; }
+        .testimonial-card:hover { transform: translateY(-12px) rotateX(4deg) rotateY(-2deg); box-shadow: 0 30px 80px rgba(49,168,255,.25),0 0 0 1px rgba(49,168,255,.4),0 1px 0 rgba(255,255,255,.1) inset; border-color: rgba(49,168,255,.5); }
+        .testimonial-card::before { content: '"'; position: absolute; top: -10px; right: 24px; font-size: 120px; font-family: 'Bebas Neue', cursive; color: rgba(49,168,255,.1); line-height: 1; pointer-events: none; user-select: none; }
 
         .stars-3d { display: flex; gap: 4px; perspective: 200px; }
         .star-3d { position: relative; width: 28px; height: 28px; animation: star-float 3s ease-in-out infinite; }
@@ -329,20 +158,7 @@
         .testimonial-card:hover .star-3d{animation:star-spin .6s ease-in-out;}
         @keyframes star-spin{0%{transform:rotateY(0deg) scale(1);}50%{transform:rotateY(180deg) scale(1.3);}100%{transform:rotateY(360deg) scale(1);}}
 
-        .country-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 12px;
-            background: rgba(255,255,255,.06);
-            border: 1px solid rgba(255,255,255,.12);
-            border-radius: 100px;
-            font-size: 12px;
-            color: rgba(255,255,255,.7);
-            font-weight: 600;
-            letter-spacing: .5px;
-            backdrop-filter: blur(8px);
-        }
+        .country-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 100px; font-size: 12px; color: rgba(255,255,255,.7); font-weight: 600; letter-spacing: .5px; backdrop-filter: blur(8px); }
         .avatar-ring { position: relative; width: 52px; height: 52px; flex-shrink: 0; }
         .avatar-ring::before { content: ''; position: absolute; inset: -3px; border-radius: 50%; background: conic-gradient(#31A8FF,#FF9A00,#FF3366,#31A8FF); animation: ring-spin 4s linear infinite; }
         .avatar-inner { position: relative; width: 100%; height: 100%; border-radius: 50%; background: linear-gradient(135deg,#2a2a3e,#1a1a2e); display: flex; align-items: center; justify-content: center; font-size: 22px; z-index: 1; border: 2px solid #0a0a0f; }
@@ -361,9 +177,174 @@
 
         .platform-badge { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; opacity: .8; }
 
-        /* Mobile nav */
         .mobile-menu { display: none; position: fixed; inset: 0; background: rgba(10,10,15,.98); z-index: 9998; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; backdrop-filter: blur(20px); }
         .mobile-menu.open { display: flex; }
+
+        /* ══════════════════════════════════════
+           PRICING SECTION STYLES
+        ══════════════════════════════════════ */
+        #pricing {
+            position: relative;
+            overflow: hidden;
+            padding: 100px 20px 120px;
+            border-top: 1px solid rgba(49,168,255,.15);
+        }
+
+        /* Canvas bg */
+        #pricingCanvas {
+            position: absolute;
+            inset: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Mustache man */
+        .mustache-man {
+            position: absolute;
+            bottom: 0; right: 0;
+            width: min(380px, 38vw);
+            opacity: .14;
+            pointer-events: none;
+            z-index: 1;
+            transform-origin: bottom right;
+            animation: man-breathe 6s ease-in-out infinite;
+        }
+        @keyframes man-breathe{0%,100%{transform:scale(1) translateY(0);}50%{transform:scale(1.015) translateY(-8px);}}
+
+        /* 3D Logo */
+        .logo-3d-wrap { display: flex; align-items: center; justify-content: center; margin-bottom: 2rem; }
+        .logo-3d {
+            position: relative; width: 90px; height: 90px;
+            transform-style: preserve-3d;
+            animation: logo-spin 8s ease-in-out infinite;
+        }
+        @keyframes logo-spin {
+            0%,100%{transform:rotateY(0deg) rotateX(8deg);}
+            25%{transform:rotateY(22deg) rotateX(4deg);}
+            50%{transform:rotateY(0deg) rotateX(-8deg);}
+            75%{transform:rotateY(-22deg) rotateX(4deg);}
+        }
+        .logo-face {
+            position: absolute; inset: 0;
+            border-radius: 22px;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.4rem; color: #fff; letter-spacing: 1px;
+        }
+        .logo-face.front {
+            background: linear-gradient(135deg,#0d7a8a 0%,#0ea5c1 100%);
+            transform: translateZ(10px);
+            box-shadow: 0 0 40px rgba(14,165,193,.7), inset 0 1px 0 rgba(255,255,255,.25);
+            border: 1px solid rgba(255,255,255,.15);
+        }
+        .logo-face.back { background: linear-gradient(135deg,#085f6e,#0d7a8a); transform: translateZ(-10px) rotateY(180deg); }
+        .logo-face.top { background: linear-gradient(90deg,#0a6a78,#0d7a8a); height: 20px; top: 0; bottom: auto; border-radius: 22px 22px 0 0; transform: rotateX(90deg) translateZ(45px); }
+        .logo-face.bottom { background: #074f5b; height: 20px; bottom: 0; top: auto; border-radius: 0 0 22px 22px; transform: rotateX(-90deg) translateZ(45px); }
+        .logo-glow {
+            position: absolute; inset: -20px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(14,165,193,.4) 0%, transparent 70%);
+            animation: glow-pulse 3s ease-in-out infinite;
+            pointer-events: none;
+        }
+        @keyframes glow-pulse{0%,100%{opacity:.6;transform:scale(1);}50%{opacity:1;transform:scale(1.15);}}
+
+        /* Pricing inner */
+        .pricing-inner { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; }
+
+        .pricing-badge {
+            display: inline-block; padding: 6px 18px;
+            background: rgba(255,184,0,.1); border: 1px solid rgba(255,184,0,.3);
+            border-radius: 100px; color: #FFB800;
+            font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+            margin-bottom: 1.25rem;
+        }
+        .pricing-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: clamp(3rem, 8vw, 6rem); line-height: 1; margin-bottom: 1.25rem;
+        }
+        .pricing-title-grad {
+            background: linear-gradient(135deg,#FFB800,#FF6B00,#FF3366);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+
+        /* Tabs */
+        .pricing-tabs { display: flex; gap: .75rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
+        .ptab {
+            padding: 10px 26px;
+            border: 2px solid rgba(255,255,255,.12); background: transparent;
+            color: rgba(255,255,255,.5); font-family: 'Urbanist', sans-serif;
+            font-size: .875rem; font-weight: 700; letter-spacing: .5px;
+            cursor: pointer; border-radius: 100px; transition: all .3s ease;
+        }
+        .ptab:hover { border-color: rgba(14,165,193,.5); color: #fff; }
+        .ptab.active {
+            background: linear-gradient(135deg,#0d7a8a,#0ea5c1);
+            border-color: transparent; color: #fff;
+            box-shadow: 0 8px 30px rgba(14,165,193,.4);
+        }
+
+        /* Table */
+        .pricing-table-wrap { overflow-x: auto; border-radius: 20px; border: 1px solid rgba(255,255,255,.08); }
+        .pricing-table { width: 100%; border-collapse: collapse; min-width: 680px; background: rgba(255,255,255,.02); }
+
+        .pricing-table thead tr th { padding: 22px 24px; text-align: left; font-size: .8rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,.08); }
+        .th-service { color: rgba(255,255,255,.4); }
+        .th-basic { background: rgba(255,255,255,.03); color: #a8b2c0; text-align: center; border-left: 1px solid rgba(255,255,255,.06); }
+        .th-standard { background: rgba(14,165,193,.06); color: #0ea5c1; text-align: center; border-left: 1px solid rgba(14,165,193,.15); }
+        .th-premium { background: linear-gradient(180deg,rgba(255,184,0,.1) 0%,rgba(255,107,0,.06) 100%); color: #FFB800; text-align: center; border-left: 1px solid rgba(255,184,0,.2); }
+
+        .popular-pill {
+            display: inline-block; padding: 2px 10px;
+            background: linear-gradient(135deg,#FFB800,#FF6B00);
+            color: #000; font-size: 9px; font-weight: 800; border-radius: 100px; margin-left: 6px;
+            animation: pill-bounce .8s ease-in-out infinite alternate;
+        }
+        @keyframes pill-bounce{from{transform:translateY(0);}to{transform:translateY(-3px);}}
+
+        .pricing-table tbody tr { border-bottom: 1px solid rgba(255,255,255,.05); transition: background .25s; }
+        .pricing-table tbody tr:hover { background: rgba(255,255,255,.025); }
+        .pricing-table tbody tr:last-child { border-bottom: none; }
+        .pricing-table tbody td { padding: 18px 24px; font-size: .875rem; vertical-align: top; line-height: 1.6; }
+
+        .td-service { font-weight: 700; color: #fff; font-size: .9rem; min-width: 180px; }
+        .td-basic { text-align: center; color: rgba(255,255,255,.6); background: rgba(255,255,255,.015); border-left: 1px solid rgba(255,255,255,.06); }
+        .td-standard { text-align: center; color: rgba(255,255,255,.8); background: rgba(14,165,193,.03); border-left: 1px solid rgba(14,165,193,.1); }
+        .td-premium { text-align: center; color: #fff; background: rgba(255,184,0,.04); border-left: 1px solid rgba(255,184,0,.1); font-weight: 600; }
+
+        .cell-val { font-weight: 800; font-size: 1rem; display: block; margin-bottom: 4px; }
+        .cell-val.basic-val { color: #a8b2c0; }
+        .cell-val.std-val { color: #0ea5c1; }
+        .cell-val.prem-val { background: linear-gradient(135deg,#FFB800,#FF6B00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .cell-meta { font-size: .78rem; color: rgba(255,255,255,.4); display: block; }
+
+        .fmt-badge { display: inline-block; padding: 2px 7px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); border-radius: 4px; font-size: 10px; font-weight: 700; color: rgba(255,255,255,.7); margin: 2px; }
+        .fmt-badge.gold { background: rgba(255,184,0,.12); border-color: rgba(255,184,0,.3); color: #FFB800; }
+
+        .payment-row td { background: rgba(14,165,193,.04); font-size: .8rem; font-weight: 800; color: #0ea5c1; letter-spacing: .5px; }
+
+        .pricing-note { margin-top: 2rem; padding: 18px 24px; border: 1px solid rgba(255,184,0,.2); border-radius: 14px; background: rgba(255,184,0,.04); display: flex; align-items: center; gap: 14px; font-size: .85rem; color: rgba(255,255,255,.65); }
+        .pricing-note span { font-size: 1.5rem; }
+
+        .pricing-cta { margin-top: 3.5rem; text-align: center; }
+        .pricing-cta p { color: rgba(255,255,255,.4); font-size: .9rem; margin-bottom: 1.25rem; }
+        .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .btn-pricing-primary {
+            padding: 16px 42px;
+            background: linear-gradient(135deg,#0d7a8a,#0ea5c1);
+            color: #fff; font-family: 'Urbanist', sans-serif; font-weight: 800;
+            font-size: 1rem; border: none; cursor: pointer; transition: all .3s;
+            letter-spacing: .5px; box-shadow: 0 10px 40px rgba(14,165,193,.35);
+            text-decoration: none; display: inline-block;
+        }
+        .btn-pricing-primary:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 16px 50px rgba(14,165,193,.5); }
+        .btn-pricing-outline {
+            padding: 16px 42px; background: transparent; color: #FFB800;
+            font-family: 'Urbanist', sans-serif; font-weight: 800;
+            font-size: 1rem; border: 2px solid rgba(255,184,0,.5);
+            cursor: pointer; transition: all .3s; letter-spacing: .5px;
+            text-decoration: none; display: inline-block;
+        }
+        .btn-pricing-outline:hover { background: rgba(255,184,0,.08); transform: translateY(-3px); border-color: #FFB800; }
 
         @media(max-width:768px) {
             .comparison-label { font-size: 11px; padding: 6px 12px; top: 12px; }
@@ -371,6 +352,7 @@
             .comparison-slider::before{width:40px;height:40px;}.comparison-slider::after{font-size:16px;}
             .testimonial-card { width: 300px; padding: 1.5rem; }
             .stats-bar{gap:1rem;}.stat-number{font-size:2rem;}
+            .mustache-man { width: min(200px, 50vw); opacity: .08; }
         }
         @media(max-width:480px) {
             .testimonial-card{width:260px;padding:1.25rem;}
@@ -404,21 +386,16 @@
 <script type="text/babel">
     const { useState, useEffect, useRef } = React;
 
-    /* ─────────────────────────────────────────────
-       BEFORE / AFTER
-    ───────────────────────────────────────────── */
     const BeforeAfterComparison = ({ beforeImage, afterImage }) => {
         const [sliderPosition, setSliderPosition] = useState(50);
         const [isDragging, setIsDragging] = useState(false);
         const containerRef = useRef(null);
-
         const handleMove = (clientX) => {
             if (!containerRef.current) return;
             const rect = containerRef.current.getBoundingClientRect();
             const pct = ((clientX - rect.left) / rect.width) * 100;
             setSliderPosition(Math.min(Math.max(pct, 0), 100));
         };
-
         useEffect(() => {
             const handleMouseMove = (e) => { if (isDragging) handleMove(e.clientX); };
             const handleTouchMove = (e) => { if (isDragging) { e.preventDefault(); handleMove(e.touches[0].clientX); } };
@@ -436,7 +413,6 @@
                 document.removeEventListener('touchend', handleEnd);
             };
         }, [isDragging]);
-
         return (
             <div ref={containerRef} className="comparison-container"
                 onMouseDown={() => setIsDragging(true)}
@@ -456,9 +432,6 @@
         );
     };
 
-    /* ─────────────────────────────────────────────
-       3D STAR
-    ───────────────────────────────────────────── */
     const Star3D = () => (
         <div className="star-3d">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -476,149 +449,320 @@
         </div>
     );
 
-    /* ─────────────────────────────────────────────
-       VIDEO TESTIMONIAL CARD
-    ───────────────────────────────────────────── */
     const VideoTestimonialCard = ({ videoSrc, name, country, flag, emoji, role, service, quote, platform, platformColor }) => {
         const videoRef = useRef(null);
         const [playing, setPlaying] = useState(false);
-
         const togglePlay = () => {
             if (!videoRef.current) return;
-            if (playing) {
-                videoRef.current.pause();
-                setPlaying(false);
-            } else {
-                videoRef.current.play();
-                setPlaying(true);
-            }
+            if (playing) { videoRef.current.pause(); setPlaying(false); }
+            else { videoRef.current.play(); setPlaying(true); }
         };
-
         return (
             <div className="video-card fade-in" onClick={togglePlay}>
                 <div style={{ position: 'relative', borderRadius: '20px 20px 0 0', overflow: 'hidden', background: '#000' }}>
-                    <video
-                        ref={videoRef}
-                        src={videoSrc}
-                        loop
-                        playsInline
-                        preload="metadata"
+                    <video ref={videoRef} src={videoSrc} loop playsInline preload="metadata"
                         style={{ width: '100%', display: 'block', aspectRatio: '9/16', objectFit: 'cover', maxHeight: 400 }}
-                        onEnded={() => setPlaying(false)}
-                    />
+                        onEnded={() => setPlaying(false)} />
                     <div className="video-thumb-overlay" />
                     <div className={`play-btn ${playing ? 'play-btn-playing' : ''}`}>
                         {playing
                             ? <svg width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-                            : <svg width="20" height="20" fill="white" viewBox="0 0 24 24" style={{ marginLeft: 3 }}><path d="M8 5v14l11-7z"/></svg>
-                        }
+                            : <svg width="20" height="20" fill="white" viewBox="0 0 24 24" style={{ marginLeft: 3 }}><path d="M8 5v14l11-7z"/></svg>}
                     </div>
-                    {/* Stars overlay on video */}
                     <div style={{ position: 'absolute', bottom: 16, left: 16, display: 'flex', gap: 3 }}>
-                        {[...Array(5)].map((_, i) => (
-                            <span key={i} className="star-icon">★</span>
-                        ))}
+                        {[...Array(5)].map((_, i) => (<span key={i} className="star-icon">★</span>))}
                     </div>
-                    {/* Platform badge */}
-                    <span className="platform-badge" style={{ position: 'absolute', top: 14, right: 14, background: `${platformColor}22`, color: platformColor, border: `1px solid ${platformColor}44` }}>
-                        {platform}
-                    </span>
+                    <span className="platform-badge" style={{ position: 'absolute', top: 14, right: 14, background: `${platformColor}22`, color: platformColor, border: `1px solid ${platformColor}44` }}>{platform}</span>
                 </div>
-
                 <div className="video-card-info">
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
                         <div className="video-avatar-ring">
                             <div className="video-avatar-inner">{emoji}</div>
-                            <div className="verified-dot">
-                                <svg width="8" height="8" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-                            </div>
+                            <div className="verified-dot"><svg width="8" height="8" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
                         </div>
                         <div>
                             <div style={{ fontWeight: 800, fontSize: 16, color: 'white', lineHeight: 1.2 }}>{name}</div>
                             <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', marginTop: 2 }}>{role}</div>
                         </div>
                     </div>
-
-                    <div style={{ marginBottom: '0.5rem' }}>
-                        <span className="client-country-badge">
-                            <span style={{ fontSize: 16 }}>{flag}</span>
-                            <span>{country}</span>
-                        </span>
-                    </div>
-
-                    <div style={{ marginBottom: '0.75rem' }}>
-                        <span className="client-service-tag">{service}</span>
-                    </div>
-
-                    <p style={{ fontSize: 13, lineHeight: 1.7, color: 'rgba(255,255,255,0.72)', fontStyle: 'italic' }}>
-                        "{quote}"
-                    </p>
-
+                    <div style={{ marginBottom: '0.5rem' }}><span className="client-country-badge"><span style={{ fontSize: 16 }}>{flag}</span><span>{country}</span></span></div>
+                    <div style={{ marginBottom: '0.75rem' }}><span className="client-service-tag">{service}</span></div>
+                    <p style={{ fontSize: 13, lineHeight: 1.7, color: 'rgba(255,255,255,0.72)', fontStyle: 'italic' }}>"{quote}"</p>
                     <div style={{ marginTop: '1rem', borderTop: '1px solid rgba(255,255,255,0.07)', paddingTop: '0.875rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', fontWeight: 600 }}>
-                            {playing ? '▶ Playing review...' : 'Tap to watch review'}
-                        </div>
-                        <div style={{ display: 'flex', gap: 3 }}>
-                            {[...Array(5)].map((_,i)=>(
-                                <div key={i} style={{ width: 6, height: 6, borderRadius: '50%', background: 'linear-gradient(135deg,#FFE566,#FF9A00)' }} />
-                            ))}
-                        </div>
+                        <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', fontWeight: 600 }}>{playing ? '▶ Playing review...' : 'Tap to watch review'}</div>
+                        <div style={{ display: 'flex', gap: 3 }}>{[...Array(5)].map((_,i)=><div key={i} style={{ width: 6, height: 6, borderRadius: '50%', background: 'linear-gradient(135deg,#FFE566,#FF9A00)' }} />)}</div>
                     </div>
                 </div>
             </div>
         );
     };
 
-    /* ─────────────────────────────────────────────
-       WRITTEN TESTIMONIAL CARD
-    ───────────────────────────────────────────── */
     const TestimonialCard = ({ name, country, flag, emoji, role, text, platform, platformColor, service }) => (
         <div className="testimonial-card">
             <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '1rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '.75rem' }}>
                     <div className="avatar-ring">
                         <div className="avatar-inner">{emoji}</div>
-                        <div className="verified-badge">
-                            <svg width="10" height="10" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
-                        </div>
+                        <div className="verified-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
                     </div>
                     <div>
                         <div style={{ fontWeight: 700, fontSize: 15, color: 'white', lineHeight: 1.2 }}>{name}</div>
                         <div style={{ fontSize: 12, color: 'rgba(255,255,255,.5)', marginTop: 2 }}>{role}</div>
                     </div>
                 </div>
-                <span className="platform-badge" style={{ background: `${platformColor}22`, color: platformColor, border: `1px solid ${platformColor}44` }}>
-                    {platform}
-                </span>
+                <span className="platform-badge" style={{ background: `${platformColor}22`, color: platformColor, border: `1px solid ${platformColor}44` }}>{platform}</span>
             </div>
-            <div className="stars-3d" style={{ marginBottom: '1rem' }}>
-                <Star3D/><Star3D/><Star3D/><Star3D/><Star3D/>
-            </div>
+            <div className="stars-3d" style={{ marginBottom: '1rem' }}><Star3D/><Star3D/><Star3D/><Star3D/><Star3D/></div>
             <div style={{ marginBottom: '.75rem' }}>
-                <span style={{ fontSize: 11, color: '#31A8FF', fontWeight: 700, letterSpacing: '.5px', background: 'rgba(49,168,255,.1)', padding: '3px 10px', borderRadius: 100, border: '1px solid rgba(49,168,255,.2)' }}>
-                    {service}
-                </span>
+                <span style={{ fontSize: 11, color: '#31A8FF', fontWeight: 700, letterSpacing: '.5px', background: 'rgba(49,168,255,.1)', padding: '3px 10px', borderRadius: 100, border: '1px solid rgba(49,168,255,.2)' }}>{service}</span>
             </div>
-            <p style={{ fontSize: 14, lineHeight: 1.7, color: 'rgba(255,255,255,.75)', marginBottom: '1.25rem', position: 'relative', zIndex: 1 }}>
-                {text}
-            </p>
+            <p style={{ fontSize: 14, lineHeight: 1.7, color: 'rgba(255,255,255,.75)', marginBottom: '1.25rem', position: 'relative', zIndex: 1 }}>{text}</p>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid rgba(255,255,255,.08)', paddingTop: '.875rem' }}>
-                <div className="country-badge">
-                    <span style={{ fontSize: 16 }}>{flag}</span>
-                    <span>{country}</span>
-                </div>
-                <div style={{ display: 'flex', gap: 2 }}>
-                    {[...Array(5)].map((_,i)=>(
-                        <div key={i} style={{ width: 6, height: 6, borderRadius: '50%', background: 'linear-gradient(135deg,#FFE566,#FF9A00)' }} />
-                    ))}
-                </div>
+                <div className="country-badge"><span style={{ fontSize: 16 }}>{flag}</span><span>{country}</span></div>
+                <div style={{ display: 'flex', gap: 2 }}>{[...Array(5)].map((_,i)=><div key={i} style={{ width: 6, height: 6, borderRadius: '50%', background: 'linear-gradient(135deg,#FFE566,#FF9A00)' }} />)}</div>
             </div>
         </div>
     );
 
-    /* ─────────────────────────────────────────────
-       MAIN APP
-    ───────────────────────────────────────────── */
+    /* ─── PRICING SECTION (React) ─── */
+    const PricingSection = () => {
+        const [activeTab, setActiveTab] = useState('social');
+        useEffect(() => {
+            // Init canvas after mount
+            const canvas = document.getElementById('pricingCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let W, H, items=[], animId;
+            function resize(){
+                W = canvas.width  = canvas.parentElement.offsetWidth;
+                H = canvas.height = canvas.parentElement.offsetHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+            const coinColors=['#FFB800','#FF6B00','#FFE566','#FFA500','#FFCC00'];
+            function mkItem(){
+                const type = Math.random()<.55 ? 'coin' : 'bill';
+                return { type, x:Math.random()*W, y:-80,
+                    r: type==='coin' ? 10+Math.random()*16 : 0,
+                    w: type==='bill' ? 55+Math.random()*30 : 0,
+                    h: type==='bill' ? 26+Math.random()*12 : 0,
+                    vy:1.2+Math.random()*2.2, vx:(Math.random()-.5)*1.1,
+                    rot:Math.random()*Math.PI*2, rotV:(Math.random()-.5)*.04,
+                    color:coinColors[Math.floor(Math.random()*coinColors.length)],
+                    alpha:.12+Math.random()*.22, shadow:Math.random()>.5 };
+            }
+            for(let i=0;i<42;i++){const it=mkItem();it.y=Math.random()*H;items.push(it);}
+            function drawCoin(it){
+                ctx.save(); ctx.translate(it.x,it.y); ctx.rotate(it.rot); ctx.globalAlpha=it.alpha;
+                if(it.shadow){ctx.shadowColor=it.color;ctx.shadowBlur=18;}
+                const scaleY=.38+.62*Math.abs(Math.sin(it.rot));
+                ctx.scale(1,scaleY);
+                const grad=ctx.createRadialGradient(-it.r*.3,-it.r*.3,it.r*.05,0,0,it.r);
+                grad.addColorStop(0,'#fff9'); grad.addColorStop(.4,it.color); grad.addColorStop(1,'#8B5A00');
+                ctx.beginPath(); ctx.arc(0,0,it.r,0,Math.PI*2); ctx.fillStyle=grad; ctx.fill();
+                ctx.strokeStyle='rgba(255,255,255,.3)'; ctx.lineWidth=1.5; ctx.stroke();
+                ctx.scale(1,1/scaleY);
+                ctx.fillStyle='rgba(0,0,0,.45)'; ctx.font=`bold ${it.r*.9}px Arial`;
+                ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText('$',0,0);
+                ctx.restore();
+            }
+            function drawBill(it){
+                ctx.save(); ctx.translate(it.x,it.y); ctx.rotate(it.rot); ctx.globalAlpha=it.alpha;
+                if(it.shadow){ctx.shadowColor='#22c55e';ctx.shadowBlur=14;}
+                const hw=it.w/2, hh=it.h/2;
+                const bg=ctx.createLinearGradient(-hw,-hh,hw,hh);
+                bg.addColorStop(0,'#16a34a'); bg.addColorStop(.5,'#22c55e'); bg.addColorStop(1,'#15803d');
+                ctx.beginPath(); ctx.roundRect(-hw,-hh,it.w,it.h,5); ctx.fillStyle=bg; ctx.fill();
+                ctx.strokeStyle='rgba(255,255,255,.25)'; ctx.lineWidth=1;
+                ctx.beginPath(); ctx.roundRect(-hw+3,-hh+3,it.w-6,it.h-6,3); ctx.stroke();
+                ctx.fillStyle='rgba(255,255,255,.6)'; ctx.font=`bold ${it.h*.55}px Arial`;
+                ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText('$$',0,0);
+                ctx.restore();
+            }
+            function frame(){
+                ctx.clearRect(0,0,W,H);
+                items.forEach(it=>{
+                    it.y+=it.vy; it.x+=it.vx; it.rot+=it.rotV;
+                    if(it.y>H+100){Object.assign(it,mkItem());it.y=-80;}
+                    it.type==='coin' ? drawCoin(it) : drawBill(it);
+                });
+                animId = requestAnimationFrame(frame);
+            }
+            frame();
+            return () => { cancelAnimationFrame(animId); window.removeEventListener('resize',resize); };
+        }, []);
+
+        const socialRows = [
+            { service:'📱 Social Media Post Design', basic:['2 Posts','2 Revisions · 1 Day'], std:['5 Posts','3 Revisions · 2 Days'], prem:['10 Posts','Unlimited Revisions · 3 Days'] },
+            { service:'🎬 Short Video Cover / Thumbnail', basic:['2 Designs','2 Revisions · 1 Day'], std:['5 Designs','3 Revisions · 2 Days'], prem:['10 Designs','Unlimited Revisions · 3 Days'] },
+            { service:'📣 Marketing Advertisement Designs', basic:['2 Ad Creatives','2 Revisions · 2 Days'], std:['4 Ad Creatives','3 Revisions · 3 Days'], prem:['8 Ad Creatives','Unlimited Revisions · 4 Days'] },
+            { service:'🏳️ Banner Design (Campaign/Website)', basic:['1 Banner','2 Revisions · 1 Day'], std:['3 Banners','3 Revisions · 2 Days'], prem:['6 Banners','Unlimited Revisions · 3 Days'] },
+            { service:'▶️ Thumbnail Designs (Video Content)', basic:['2 Thumbnails','2 Revisions · 2 Days'], std:['5 Thumbnails','3 Revisions · 3 Days'], prem:['10 Thumbnails','Unlimited Revisions · 4 Days'] },
+            { service:'🖼️ Mockups Included', basic:['Basic Preview Mockup',''], std:['2 Professional Mockups',''], prem:['4 Professional Mockups',''] },
+        ];
+        const linkedinRows = [
+            { service:'🎨 Logo Design', basic:['1 Concept','2 Revisions · 2 Days'], std:['2 Concepts','4 Revisions · 2 Days'], prem:['4 Concepts','Unlimited Revisions · 3 Days'] },
+            { service:'💼 LinkedIn Banner / Cover', basic:['1 Design','2 Revisions · 1 Day'], std:['2 Designs','3 Revisions · 1 Day'], prem:['3 Designs','Unlimited Revisions · 2 Days'] },
+            { service:'🖼️ Featured Image / Post Thumbnail', basic:['1 Image','2 Revisions · 1 Day'], std:['3 Images','3 Revisions · 2 Days'], prem:['5 Images','Unlimited Revisions · 2 Days'] },
+            { service:'📲 Social Media Posts', basic:['3 Posts','2 Revisions · 2 Days'], std:['6 Posts','3 Revisions · 3 Days'], prem:['12 Posts','Unlimited Revisions · 4 Days'] },
+            { service:'📣 Advertisement Images', basic:['2 Ad Creatives','2 Revisions · 2 Days'], std:['4 Ad Creatives','3 Revisions · 3 Days'], prem:['8 Ad Creatives','Unlimited Revisions · 4 Days'] },
+            { service:'▶️ YouTube Thumbnails', basic:['2 Thumbnails','2 Revisions · 2 Days'], std:['5 Thumbnails','3 Revisions · 3 Days'], prem:['10 Thumbnails','Unlimited Revisions · 4 Days'] },
+            { service:'🖼️ Mockups Included', basic:['Preview Mockup',''], std:['2 Professional Mockups',''], prem:['4 Professional Mockups',''] },
+        ];
+
+        const rows = activeTab === 'social' ? socialRows : linkedinRows;
+
+        return (
+            <section id="pricing">
+                <canvas id="pricingCanvas"></canvas>
+
+                {/* Mustache man */}
+                <svg className="mustache-man" viewBox="0 0 320 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="80" y="230" width="160" height="230" rx="18" fill="white"/>
+                    <polygon points="155,240 165,240 170,320 160,330 150,320" fill="#0d7a8a"/>
+                    <ellipse cx="160" cy="175" rx="65" ry="75" fill="white"/>
+                    <ellipse cx="160" cy="110" rx="66" ry="28" fill="#1a1a1a"/>
+                    <circle cx="138" cy="170" r="10" fill="#111"/><circle cx="182" cy="170" r="10" fill="#111"/>
+                    <circle cx="141" cy="167" r="3" fill="white"/><circle cx="185" cy="167" r="3" fill="white"/>
+                    <ellipse cx="160" cy="187" rx="8" ry="6" fill="#e0c8b0"/>
+                    {/* Big epic mustache */}
+                    <path d="M114 203 Q128 193 144 204 Q154 212 160 209 Q166 212 176 204 Q192 193 206 203 Q198 216 186 212 Q175 208 168 215 Q163 218 160 217 Q157 218 152 215 Q145 208 134 212 Q122 216 114 203Z" fill="#1a1a1a"/>
+                    <path d="M114 203 Q103 188 98 176 Q95 167 104 170 Q113 173 114 203" fill="#1a1a1a"/>
+                    <path d="M206 203 Q217 188 222 176 Q225 167 216 170 Q207 173 206 203" fill="#1a1a1a"/>
+                    {/* ATM card right hand */}
+                    <rect x="218" y="295" width="82" height="52" rx="7" fill="#FFB800" transform="rotate(-16 218 295)"/>
+                    <rect x="223" y="303" width="62" height="10" rx="3" fill="#FF6B00" transform="rotate(-16 223 303)"/>
+                    <rect x="225" y="320" width="32" height="5" rx="2" fill="rgba(0,0,0,.25)" transform="rotate(-16 225 320)"/>
+                    <text x="228" y="333" fontSize="7" fill="rgba(0,0,0,.5)" transform="rotate(-16 228 333)" fontFamily="monospace">ACEEB ****</text>
+                    <path d="M240 268 Q268 276 258 308" stroke="white" strokeWidth="22" strokeLinecap="round" fill="none"/>
+                    {/* Cash left hand */}
+                    <path d="M80 268 Q52 273 64 312" stroke="white" strokeWidth="22" strokeLinecap="round" fill="none"/>
+                    <rect x="24" y="296" width="58" height="38" rx="5" fill="#22c55e" transform="rotate(12 24 296)"/>
+                    <rect x="20" y="300" width="58" height="38" rx="5" fill="#16a34a" transform="rotate(6 20 300)"/>
+                    <rect x="16" y="304" width="58" height="38" rx="5" fill="#4ade80"/>
+                    <text x="20" y="328" fontSize="13" fill="white" fontWeight="bold">$$$</text>
+                    {/* Legs & shoes */}
+                    <rect x="108" y="445" width="44" height="72" rx="10" fill="white"/>
+                    <rect x="168" y="445" width="44" height="72" rx="10" fill="white"/>
+                    <ellipse cx="130" cy="514" rx="32" ry="12" fill="#1a1a1a"/>
+                    <ellipse cx="190" cy="514" rx="32" ry="12" fill="#1a1a1a"/>
+                    <path d="M140 235 L160 282 L128 270Z" fill="#e8e8e8"/>
+                    <path d="M180 235 L160 282 L192 270Z" fill="#e8e8e8"/>
+                </svg>
+
+                <div className="pricing-inner">
+                    {/* 3D Logo */}
+                    <div className="logo-3d-wrap">
+                        <div style={{ position: 'relative' }}>
+                            <div className="logo-glow"></div>
+                            <div className="logo-3d">
+                                <div className="logo-face front">AD</div>
+                                <div className="logo-face back">AD</div>
+                                <div className="logo-face top"></div>
+                                <div className="logo-face bottom"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Header */}
+                    <div style={{ textAlign: 'center', marginBottom: '3rem' }} className="fade-in">
+                        <div className="pricing-badge">💰 Investment Plans</div>
+                        <h2 className="pricing-title">
+                            Transparent<br/>
+                            <span className="pricing-title-grad">Pricing</span>
+                        </h2>
+                        <p style={{ color: 'rgba(255,255,255,.5)', fontSize: '1.1rem', maxWidth: 520, lineHeight: 1.7, margin: '0 auto' }}>
+                            Flexible packages for every budget. All plans include professional mockups, unlimited support during delivery, and a 100% satisfaction guarantee.
+                        </p>
+                    </div>
+
+                    {/* Tabs */}
+                    <div className="pricing-tabs fade-in">
+                        <button className={`ptab ${activeTab==='social' ? 'active' : ''}`} onClick={()=>setActiveTab('social')}>
+                            📱 Social Media & Marketing
+                        </button>
+                        <button className={`ptab ${activeTab==='linkedin' ? 'active' : ''}`} onClick={()=>setActiveTab('linkedin')}>
+                            💼 LinkedIn & Brand
+                        </button>
+                    </div>
+
+                    {/* Table */}
+                    <div className="pricing-table-wrap fade-in">
+                        <table className="pricing-table">
+                            <thead>
+                                <tr>
+                                    <th className="th-service">Service</th>
+                                    <th className="th-basic">Basic</th>
+                                    <th className="th-standard">Standard</th>
+                                    <th className="th-premium">
+                                        Premium <span className="popular-pill">★ POPULAR</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {rows.map((row, i) => (
+                                    <tr key={i}>
+                                        <td className="td-service">{row.service}</td>
+                                        <td className="td-basic">
+                                            <span className="cell-val basic-val">{row.basic[0]}</span>
+                                            {row.basic[1] && <span className="cell-meta">{row.basic[1]}</span>}
+                                        </td>
+                                        <td className="td-standard">
+                                            <span className="cell-val std-val">{row.std[0]}</span>
+                                            {row.std[1] && <span className="cell-meta">{row.std[1]}</span>}
+                                        </td>
+                                        <td className="td-premium">
+                                            <span className="cell-val prem-val">{row.prem[0]}</span>
+                                            {row.prem[1] && <span className="cell-meta">{row.prem[1]}</span>}
+                                        </td>
+                                    </tr>
+                                ))}
+                                {/* File formats */}
+                                <tr>
+                                    <td className="td-service">📁 File Formats</td>
+                                    <td className="td-basic">
+                                        <span className="fmt-badge">JPG</span><span className="fmt-badge">PNG</span>
+                                    </td>
+                                    <td className="td-standard">
+                                        <span className="fmt-badge">JPG</span><span className="fmt-badge">PNG</span><span className="fmt-badge">PDF</span>
+                                    </td>
+                                    <td className="td-premium">
+                                        <span className="fmt-badge gold">JPG</span><span className="fmt-badge gold">PNG</span><span className="fmt-badge gold">PDF</span><span className="fmt-badge gold">AI</span><span className="fmt-badge gold">PSD</span>
+                                    </td>
+                                </tr>
+                                {/* Payment */}
+                                <tr className="payment-row">
+                                    <td className="td-service" style={{ color: '#0ea5c1' }}>💳 Upfront Payment</td>
+                                    <td className="td-basic" style={{ color: '#0ea5c1', textAlign: 'center', fontWeight: 800 }}>50% Upfront</td>
+                                    <td className="td-standard" style={{ color: '#0ea5c1', textAlign: 'center', fontWeight: 800 }}>50% Upfront</td>
+                                    <td className="td-premium" style={{ color: '#FFB800', textAlign: 'center', fontWeight: 800 }}>50% Upfront</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {/* Note */}
+                    <div className="pricing-note fade-in">
+                        <span>💡</span>
+                        <div>
+                            <strong style={{ color: '#FFB800' }}>Custom project?</strong> All packages can be tailored to your exact needs. Rush delivery (24h) available. <strong>Reach out for a custom quote!</strong>
+                        </div>
+                    </div>
+
+                    {/* CTA */}
+                    <div className="pricing-cta fade-in">
+                        <p>Ready to invest in your brand? Let's get started today.</p>
+                        <div className="cta-btns">
+                            <a href="mailto:aceebdignitoso@gmail.com" className="btn-pricing-primary">📧 Get a Custom Quote</a>
+                            <a href="https://wa.me/+923346419135" target="_blank" rel="noopener noreferrer" className="btn-pricing-outline">💬 WhatsApp Me</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+    };
+
+    /* ─── MAIN APP ─── */
     const GraphicDesignPortfolio = () => {
         const [scrollProgress, setScrollProgress] = useState(0);
         const [activeSection, setActiveSection] = useState('hero');
@@ -636,15 +780,13 @@
                 else if (progress < 50) setLineMode('ai-mode');
                 else if (progress < 75) setLineMode('id-mode');
                 else setLineMode('ps-mode');
-
-                const sections = ['hero','services-intro','comparison','portfolio','video-testimonials','testimonials','services','tools','contact'];
+                const sections = ['hero','services-intro','comparison','portfolio','video-testimonials','testimonials','services','tools','pricing','contact'];
                 const current = sections.find(id => {
                     const el = document.getElementById(id);
                     if (el) { const rect = el.getBoundingClientRect(); return rect.top <= 150 && rect.bottom >= 150; }
                     return false;
                 });
                 if (current) setActiveSection(current);
-
                 document.querySelectorAll('.fade-in').forEach(el => {
                     const rect = el.getBoundingClientRect();
                     if (rect.top < window.innerHeight - 100) el.classList.add('visible');
@@ -671,47 +813,12 @@
             setMobileMenuOpen(false);
         };
 
-        /* ── VIDEO TESTIMONIALS DATA ── */
         const videoTestimonials = [
-            {
-                videoSrc: 'unwatermark_Man_managing_store_posts_a066098416.mp4',
-                name: 'Kun Hyen',
-                country: 'Japan',
-                flag: '🇯🇵',
-                emoji: '🧑‍💼',
-                role: 'Store Manager',
-                service: 'Product Store Posts',
-                platform: 'Fiverr',
-                platformColor: '#1DBF73',
-                quote: "The store posts Aceeb created were exactly what our brand needed. Clean, professional, and drove real engagement. Highly recommended!"
-            },
-            {
-                videoSrc: 'unwatermark_Designer_recommended_for_brand_29a697c180.mp4',
-                name: 'Gimi',
-                country: 'France',
-                flag: '🇫🇷',
-                emoji: '👩‍🎨',
-                role: 'Brand Creative',
-                service: 'Social Media Post Design',
-                platform: 'Upwork',
-                platformColor: '#6FDA44',
-                quote: "Aceeb is the designer I recommend to everyone working on brand identity. His eye for detail and creativity is absolutely top tier."
-            },
-            {
-                videoSrc: 'unwatermark_Karly_from_berlin_designer_f59f77f4c1.mp4',
-                name: 'Karley',
-                country: 'Berlin, Germany',
-                flag: '🇩🇪',
-                emoji: '👩‍💻',
-                role: 'Agency Owner',
-                service: 'Brand Design & Strategy',
-                platform: 'Direct',
-                platformColor: '#FF3366',
-                quote: "As an agency owner I'm very picky — Aceeb is the only freelancer who consistently delivers beyond expectations. A true design partner."
-            }
+            { videoSrc:'unwatermark_Man_managing_store_posts_a066098416.mp4', name:'Kun Hyen', country:'Japan', flag:'🇯🇵', emoji:'🧑‍💼', role:'Store Manager', service:'Product Store Posts', platform:'Fiverr', platformColor:'#1DBF73', quote:"The store posts Aceeb created were exactly what our brand needed. Clean, professional, and drove real engagement. Highly recommended!" },
+            { videoSrc:'unwatermark_Designer_recommended_for_brand_29a697c180.mp4', name:'Gimi', country:'France', flag:'🇫🇷', emoji:'👩‍🎨', role:'Brand Creative', service:'Social Media Post Design', platform:'Upwork', platformColor:'#6FDA44', quote:"Aceeb is the designer I recommend to everyone working on brand identity. His eye for detail and creativity is absolutely top tier." },
+            { videoSrc:'unwatermark_Karly_from_berlin_designer_f59f77f4c1.mp4', name:'Karley', country:'Berlin, Germany', flag:'🇩🇪', emoji:'👩‍💻', role:'Agency Owner', service:'Brand Design & Strategy', platform:'Direct', platformColor:'#FF3366', quote:"As an agency owner I'm very picky — Aceeb is the only freelancer who consistently delivers beyond expectations. A true design partner." }
         ];
 
-        /* ── WRITTEN TESTIMONIALS ── */
         const testimonials = [
             { name:"Aleksandra Wiśniewska", country:"Warsaw, Poland", flag:"🇵🇱", emoji:"👩‍💼", role:"Marketing Director", text:"Aceeb completely transformed our restaurant's social media presence. The food photography layouts he created boosted our engagement by 340%. Absolutely exceptional quality!", platform:"Fiverr", platformColor:"#1DBF73", service:"Social Media Graphics" },
             { name:"James Harrington", country:"London, UK", flag:"🇬🇧", emoji:"🧔", role:"Brand Strategist", text:"Working with Aceeb was a game-changer. The brand identity package he delivered for our startup was nothing short of brilliant — sophisticated, memorable, and perfectly aligned.", platform:"Upwork", platformColor:"#6FDA44", service:"Brand Identity" },
@@ -726,7 +833,6 @@
         ];
         const doubledTestimonials = [...testimonials, ...testimonials];
 
-        /* ── PROJECTS ── */
         const projects = [
             { title:'Premium Leather Backpack', category:'Product Design', description:'Luxury product showcase with detailed specifications and premium presentation.', tools:['Photoshop','Illustrator'], image:'2200 copy.jpg', color:'#8B4513', resolution:'1080x1080' },
             { title:'Healthcare Service Campaign', category:'Social Media', description:'Multi-panel healthcare service promotion with Arabic typography and modern design.', tools:['Photoshop','Illustrator'], image:'adel-amer-a5 - Copy.jpg', color:'#1E88E5', resolution:'1080x1080' },
@@ -781,56 +887,48 @@
             { name:'Lightroom', icon:'Lr', color:'#31A8FF', description:'Photo editing' }
         ];
 
-        const navLinks = ['hero','comparison','portfolio','video-testimonials','testimonials','services','tools','contact'];
+        const navLinks = [
+            { id:'hero', label:'Home' },
+            { id:'comparison', label:'Before/After' },
+            { id:'portfolio', label:'Portfolio' },
+            { id:'video-testimonials', label:'Client Videos' },
+            { id:'testimonials', label:'Reviews' },
+            { id:'services', label:'Services' },
+            { id:'tools', label:'Tools' },
+            { id:'pricing', label:'Pricing' },
+            { id:'contact', label:'Contact' }
+        ];
 
         return (
             <div className="min-h-screen text-white relative overflow-hidden">
-                {/* Progress line */}
                 <div className={`adobe-line ${lineMode}`} style={{ height: `${scrollProgress}%` }} />
-
-                {/* Particles */}
                 {particles.map(p => (
-                    <div key={p.id} className="creative-particle" style={{ left: `${p.left}%`, bottom: 0, color: p.color, fontSize: `${p.size}px`, animationDelay: `${p.delay}s`, animationDuration: `${p.duration}s`, opacity: 0.3 }}>
-                        {p.shape}
-                    </div>
+                    <div key={p.id} className="creative-particle" style={{ left:`${p.left}%`, bottom:0, color:p.color, fontSize:`${p.size}px`, animationDelay:`${p.delay}s`, animationDuration:`${p.duration}s`, opacity:0.3 }}>{p.shape}</div>
                 ))}
-
                 <div className="design-grid fixed inset-0 opacity-20 pointer-events-none" />
 
-                {/* ── NAV ── */}
+                {/* NAV */}
                 <nav className="fixed top-0 left-0 right-0 z-40 bg-zinc-950/80 backdrop-blur-lg border-b border-blue-900/30">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
                         <div className="flex items-center justify-between h-16 sm:h-20">
                             <button onClick={() => scrollToSection('hero')} className="text-2xl font-bold font-display">
                                 ACEEB<span className="text-blue-400">.</span>
                             </button>
-                            <div className="hidden md:flex items-center space-x-5">
-                                {[
-                                    { id:'hero', label:'Home' },
-                                    { id:'comparison', label:'Before/After' },
-                                    { id:'portfolio', label:'Portfolio' },
-                                    { id:'video-testimonials', label:'Client Videos' },
-                                    { id:'testimonials', label:'Reviews' },
-                                    { id:'services', label:'Services' },
-                                    { id:'tools', label:'Tools' },
-                                    { id:'contact', label:'Contact' }
-                                ].map(({ id, label }) => (
+                            <div className="hidden md:flex items-center space-x-4">
+                                {navLinks.map(({ id, label }) => (
                                     <button key={id} onClick={() => scrollToSection(id)}
-                                        className={`text-sm font-medium transition-all ${activeSection === id ? 'text-blue-400' : 'text-zinc-400 hover:text-white'}`}>
+                                        className={`text-sm font-medium transition-all ${activeSection===id ? 'text-blue-400' : 'text-zinc-400 hover:text-white'}`}>
                                         {label}
-                                        {activeSection === id && <div className="h-0.5 bg-blue-400 mt-1" />}
+                                        {activeSection===id && <div className="h-0.5 bg-blue-400 mt-1" />}
                                     </button>
                                 ))}
                             </div>
                             <div className="flex items-center gap-3">
-                                <a href="mailto:aceebdignitoso@gmail.com" className="hidden sm:block px-4 sm:px-6 py-2 border border-blue-500 text-blue-400 hover:bg-blue-500/20 transition-all text-sm font-semibold">
-                                    Hire Me
-                                </a>
+                                <a href="mailto:aceebdignitoso@gmail.com" className="hidden sm:block px-4 sm:px-6 py-2 border border-blue-500 text-blue-400 hover:bg-blue-500/20 transition-all text-sm font-semibold">Hire Me</a>
                                 <button className="md:hidden p-2 text-zinc-400 hover:text-white" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
                                     {mobileMenuOpen
                                         ? <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/></svg>
-                                        : <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16"/></svg>
-                                    }
+                                        : <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16"/></svg>}
                                 </button>
                             </div>
                         </div>
@@ -839,15 +937,13 @@
 
                 {/* Mobile Menu */}
                 <div className={`mobile-menu ${mobileMenuOpen ? 'open' : ''}`}>
-                    {['hero','comparison','portfolio','video-testimonials','testimonials','services','tools','contact'].map(id => (
-                        <button key={id} onClick={() => scrollToSection(id)} className="text-2xl font-bold font-display text-white hover:text-blue-400 transition-colors">
-                            {id.replace('-',' ').toUpperCase()}
-                        </button>
+                    {navLinks.map(({id,label}) => (
+                        <button key={id} onClick={() => scrollToSection(id)} className="text-2xl font-bold font-display text-white hover:text-blue-400 transition-colors">{label.toUpperCase()}</button>
                     ))}
                     <a href="mailto:aceebdignitoso@gmail.com" className="px-8 py-3 border border-blue-500 text-blue-400 font-bold mt-4">Hire Me</a>
                 </div>
 
-                {/* ── HERO ── */}
+                {/* HERO */}
                 <section id="hero" className="min-h-screen flex items-center justify-center pt-16 sm:pt-20 relative gradient-mesh px-4">
                     <svg className="absolute inset-0 w-full h-full opacity-10 pointer-events-none" viewBox="0 0 1000 1000">
                         <path className="bezier-curve" d="M 0,500 Q 250,300 500,500 T 1000,500" fill="none" stroke="#31A8FF" strokeWidth="2"/>
@@ -859,9 +955,7 @@
                         </div>
                         <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight text-hero font-display">
                             Design That<br/>
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-orange-400 to-pink-500">
-                                Speaks Volumes
-                            </span>
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-orange-400 to-pink-500">Speaks Volumes</span>
                         </h1>
                         <p className="text-lg sm:text-xl md:text-2xl text-zinc-400 max-w-3xl mx-auto mb-10 sm:mb-12">
                             Creating visual identities, stunning social graphics, and memorable brand experiences across food, entertainment, healthcare, and lifestyle brands.
@@ -869,22 +963,18 @@
                         <div className="flex justify-center gap-3 sm:gap-4 mb-10 sm:mb-12 overflow-hidden">
                             <div className="flex gap-3 sm:gap-4 color-palette">
                                 {['#31A8FF','#FF9A00','#FF3366','#00E4BB','#9999FF','#F24E1E','#31A8FF','#FF9A00','#FF3366','#00E4BB'].map((color, i) => (
-                                    <div key={i} className="w-12 h-12 sm:w-16 sm:h-16 rounded-lg flex-shrink-0" style={{ backgroundColor: color, boxShadow: `0 4px 20px ${color}40` }} />
+                                    <div key={i} className="w-12 h-12 sm:w-16 sm:h-16 rounded-lg flex-shrink-0" style={{ backgroundColor:color, boxShadow:`0 4px 20px ${color}40` }} />
                                 ))}
                             </div>
                         </div>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <button onClick={() => scrollToSection('comparison')} className="px-8 sm:px-10 py-4 sm:py-5 bg-blue-500 hover:bg-blue-600 text-white font-bold text-base sm:text-lg transition-all hover:scale-105">
-                                See Before/After
-                            </button>
-                            <button onClick={() => scrollToSection('portfolio')} className="px-8 sm:px-10 py-4 sm:py-5 border-2 border-blue-500 text-blue-400 font-bold text-base sm:text-lg hover:bg-blue-500/20 transition-all">
-                                View Portfolio
-                            </button>
+                            <button onClick={() => scrollToSection('comparison')} className="px-8 sm:px-10 py-4 sm:py-5 bg-blue-500 hover:bg-blue-600 text-white font-bold text-base sm:text-lg transition-all hover:scale-105">See Before/After</button>
+                            <button onClick={() => scrollToSection('portfolio')} className="px-8 sm:px-10 py-4 sm:py-5 border-2 border-blue-500 text-blue-400 font-bold text-base sm:text-lg hover:bg-blue-500/20 transition-all">View Portfolio</button>
                         </div>
                     </div>
                 </section>
 
-                {/* ── SERVICES INTRO (new section before Before/After) ── */}
+                {/* SERVICES INTRO */}
                 <section id="services-intro" className="py-20 sm:py-28 border-t border-blue-900/30 relative">
                     <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center, rgba(49,168,255,0.07) 0%, transparent 70%)' }} />
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
@@ -893,45 +983,33 @@
                                 <span className="text-pink-400 text-xs font-bold tracking-widest">WHAT I DO</span>
                             </div>
                             <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-5 font-display">
-                                From Concept to
-                                <br/>
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-orange-400 to-yellow-400">
-                                    Captivating Design
-                                </span>
+                                From Concept to<br/>
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-orange-400 to-yellow-400">Captivating Design</span>
                             </h2>
-                            <p className="text-lg text-zinc-400 max-w-2xl mx-auto">
-                                Every brand deserves visuals that stop the scroll, spark emotion, and convert. Here's how I make that happen.
-                            </p>
+                            <p className="text-lg text-zinc-400 max-w-2xl mx-auto">Every brand deserves visuals that stop the scroll, spark emotion, and convert.</p>
                         </div>
-
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             {[
-                                { icon:'🍔', title:'Food & Beverage', color:'#FF9A00', desc:'Mouth-watering menu designs, food ads, and restaurant branding that makes customers hungry before they walk in.', tags:['Menu Design','Food Ads','Restaurant Branding'] },
-                                { icon:'📱', title:'Social Media Graphics', color:'#31A8FF', desc:'Scroll-stopping posts, stories, and campaigns for Instagram, Facebook, YouTube, and beyond.', tags:['Instagram','YouTube','Campaigns'] },
-                                { icon:'🏥', title:'Healthcare & Medical', color:'#00E4BB', desc:'Professional, clean, and trust-inspiring designs for clinics, apps, and medical brands — in multiple languages.', tags:['Clinic Branding','App Promo','Bilingual'] },
-                                { icon:'🎬', title:'Entertainment & Gaming', color:'#9333EA', desc:'Cinematic posters, gaming thumbnails, sports event graphics, and fan art that command attention.', tags:['Movie Posters','Game Art','Sports'] },
-                                { icon:'✨', title:'Brand Identity', color:'#FF3366', desc:'Full brand systems — logos, typography, color palettes, and style guides built to last and to impress.', tags:['Logo','Style Guide','Color Systems'] },
-                                { icon:'🛍️', title:'Product Design', color:'#F97316', desc:'Premium product showcases, e-commerce visuals, and packaging designs that make products impossible to ignore.', tags:['E-Commerce','Packaging','Showcase'] }
+                                { icon:'🍔', title:'Food & Beverage', color:'#FF9A00', desc:'Mouth-watering menu designs, food ads, and restaurant branding.', tags:['Menu Design','Food Ads','Restaurant Branding'] },
+                                { icon:'📱', title:'Social Media Graphics', color:'#31A8FF', desc:'Scroll-stopping posts, stories, and campaigns for Instagram, Facebook, YouTube.', tags:['Instagram','YouTube','Campaigns'] },
+                                { icon:'🏥', title:'Healthcare & Medical', color:'#00E4BB', desc:'Professional, clean designs for clinics, apps, and medical brands.', tags:['Clinic Branding','App Promo','Bilingual'] },
+                                { icon:'🎬', title:'Entertainment & Gaming', color:'#9333EA', desc:'Cinematic posters, gaming thumbnails, sports event graphics.', tags:['Movie Posters','Game Art','Sports'] },
+                                { icon:'✨', title:'Brand Identity', color:'#FF3366', desc:'Full brand systems — logos, typography, color palettes, and style guides.', tags:['Logo','Style Guide','Color Systems'] },
+                                { icon:'🛍️', title:'Product Design', color:'#F97316', desc:'Premium product showcases, e-commerce visuals, and packaging designs.', tags:['E-Commerce','Packaging','Showcase'] }
                             ].map((s, i) => (
-                                <div key={i} className="fade-in group relative border border-zinc-800 bg-zinc-900/40 p-7 rounded-2xl overflow-hidden hover:border-zinc-600 transition-all duration-500 hover:-translate-y-3" style={{ transitionDelay: `${i * 80}ms` }}>
-                                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: `radial-gradient(ellipse at 0% 0%, ${s.color}15 0%, transparent 60%)` }} />
+                                <div key={i} className="fade-in group relative border border-zinc-800 bg-zinc-900/40 p-7 rounded-2xl overflow-hidden hover:border-zinc-600 transition-all duration-500 hover:-translate-y-3" style={{ transitionDelay:`${i*80}ms` }}>
+                                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background:`radial-gradient(ellipse at 0% 0%, ${s.color}15 0%, transparent 60%)` }} />
                                     <div className="text-4xl mb-4">{s.icon}</div>
-                                    <h3 className="text-xl font-bold mb-2 group-hover:text-white transition-colors" style={{ color: s.color }}>{s.title}</h3>
+                                    <h3 className="text-xl font-bold mb-2 group-hover:text-white transition-colors" style={{ color:s.color }}>{s.title}</h3>
                                     <p className="text-zinc-400 text-sm leading-relaxed mb-4">{s.desc}</p>
-                                    <div className="flex flex-wrap gap-2">
-                                        {s.tags.map((tag, j) => (
-                                            <span key={j} className="text-xs px-2 py-1 rounded bg-zinc-800 text-zinc-400 border border-zinc-700">{tag}</span>
-                                        ))}
-                                    </div>
+                                    <div className="flex flex-wrap gap-2">{s.tags.map((tag,j)=><span key={j} className="text-xs px-2 py-1 rounded bg-zinc-800 text-zinc-400 border border-zinc-700">{tag}</span>)}</div>
                                 </div>
                             ))}
                         </div>
-
-                        {/* CTA strip */}
                         <div className="mt-16 fade-in">
-                            <div className="border border-blue-500/30 bg-blue-500/5 rounded-2xl p-8 sm:p-12 text-center" style={{ background: 'linear-gradient(135deg, rgba(49,168,255,0.06) 0%, rgba(255,51,102,0.06) 100%)' }}>
+                            <div className="border border-blue-500/30 bg-blue-500/5 rounded-2xl p-8 sm:p-12 text-center" style={{ background:'linear-gradient(135deg,rgba(49,168,255,.06) 0%,rgba(255,51,102,.06) 100%)' }}>
                                 <div className="flex justify-center gap-6 sm:gap-12 mb-6 flex-wrap">
-                                    {[['30+','Projects Delivered'],['50+','Happy Clients'],['12+','Countries'],['5.0★','Average Rating']].map(([n,l], i)=>(
+                                    {[['30+','Projects Delivered'],['50+','Happy Clients'],['12+','Countries'],['5.0★','Average Rating']].map(([n,l],i)=>(
                                         <div key={i} className="text-center">
                                             <div className="font-display text-3xl sm:text-4xl text-blue-400">{n}</div>
                                             <div className="text-xs text-zinc-500 mt-1 font-semibold tracking-wide uppercase">{l}</div>
@@ -939,15 +1017,13 @@
                                     ))}
                                 </div>
                                 <p className="text-zinc-400 mb-6 max-w-xl mx-auto">Ready to take your brand to the next level? Let's create something unforgettable together.</p>
-                                <button onClick={() => scrollToSection('contact')} className="px-10 py-4 bg-gradient-to-r from-blue-500 to-pink-500 hover:from-blue-600 hover:to-pink-600 text-white font-bold text-base transition-all hover:scale-105 rounded-sm">
-                                    Let's Work Together
-                                </button>
+                                <button onClick={() => scrollToSection('contact')} className="px-10 py-4 bg-gradient-to-r from-blue-500 to-pink-500 hover:from-blue-600 hover:to-pink-600 text-white font-bold text-base transition-all hover:scale-105 rounded-sm">Let's Work Together</button>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                {/* ── BEFORE / AFTER ── */}
+                {/* BEFORE/AFTER */}
                 <section id="comparison" className="py-20 sm:py-32 border-t border-blue-900/30 relative">
                     <div className="absolute inset-0 gradient-mesh opacity-30" />
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
@@ -958,32 +1034,27 @@
                             <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 font-display">
                                 Before <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-blue-400">&</span> After
                             </h2>
-                            <p className="text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto mb-4">
-                                Drag the slider to see the transformation. Watch raw concept evolve into polished promotional design.
-                            </p>
+                            <p className="text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto mb-4">Drag the slider to see the transformation.</p>
                         </div>
-                        <BeforeAfterComparison
-                            beforeImage="Edited and enchanced by aceeb dignitoso.jpg"
-                            afterImage="Virtual Screen shot of game.jpg"
-                        />
+                        <BeforeAfterComparison beforeImage="Edited and enchanced by aceeb dignitoso.jpg" afterImage="Virtual Screen shot of game.jpg" />
                         <div className="mt-10 sm:mt-12 text-center fade-in">
                             <div className="grid sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
                                 <div className="border border-pink-500/30 bg-zinc-900/50 p-6 sm:p-8 rounded-lg">
                                     <div className="text-pink-400 text-3xl sm:text-4xl mb-3 sm:mb-4">📸</div>
                                     <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-pink-400">Before</h3>
-                                    <p className="text-zinc-400 text-sm">Raw promotional artwork from Stalker 2: Heart of Chornobyl, showcasing atmospheric character design and environmental storytelling.</p>
+                                    <p className="text-zinc-400 text-sm">Raw promotional artwork from Stalker 2: Heart of Chornobyl, showcasing atmospheric character design.</p>
                                 </div>
                                 <div className="border border-blue-500/30 bg-zinc-900/50 p-6 sm:p-8 rounded-lg">
                                     <div className="text-blue-400 text-3xl sm:text-4xl mb-3 sm:mb-4">✨</div>
                                     <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-blue-400">After</h3>
-                                    <p className="text-zinc-400 text-sm">Enhanced pre-order promotional design with typography, bonus content details, and structured information hierarchy for marketing campaign.</p>
+                                    <p className="text-zinc-400 text-sm">Enhanced pre-order promotional design with typography, bonus content, and structured information hierarchy.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                {/* ── PORTFOLIO ── */}
+                {/* PORTFOLIO */}
                 <section id="portfolio" className="py-20 sm:py-32 border-t border-blue-900/30 relative">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
                         <div className="text-center mb-10 sm:mb-12 fade-in">
@@ -991,14 +1062,12 @@
                                 <span className="text-blue-400 text-xs font-bold tracking-widest">FEATURED WORK</span>
                             </div>
                             <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 font-display">Portfolio</h2>
-                            <p className="text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto">
-                                30+ projects showcasing diverse design work across branding, social media, food & beverage, healthcare, and entertainment
-                            </p>
+                            <p className="text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto">30+ projects across branding, social media, food & beverage, healthcare, and entertainment</p>
                         </div>
                         <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-10 sm:mb-12 fade-in">
                             {categories.map(cat => (
                                 <button key={cat.id} onClick={() => setActiveFilter(cat.id)}
-                                    className={`filter-btn px-4 sm:px-6 py-2 sm:py-3 rounded-full font-semibold text-xs sm:text-sm ${activeFilter === cat.id ? 'active' : 'bg-zinc-800/50 text-zinc-300'}`}>
+                                    className={`filter-btn px-4 sm:px-6 py-2 sm:py-3 rounded-full font-semibold text-xs sm:text-sm ${activeFilter===cat.id ? 'active' : 'bg-zinc-800/50 text-zinc-300'}`}>
                                     <span className="mr-1 sm:mr-2">{cat.icon}</span>{cat.label}
                                 </button>
                             ))}
@@ -1006,33 +1075,29 @@
                         <div className="masonry-grid">
                             {filteredProjects.map((project, i) => (
                                 <div key={i} className="masonry-item fade-in project-card group border border-zinc-800 cursor-pointer"
-                                    style={{ transitionDelay: `${i * 50}ms` }}
+                                    style={{ transitionDelay:`${i*50}ms` }}
                                     onClick={() => window.openLightbox(project.image)}>
                                     <div className="relative overflow-hidden">
                                         <img src={project.image} alt={project.title} className="w-full h-auto object-cover" loading="lazy" decoding="async" />
                                         <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                                        <div className="absolute top-4 right-4 px-3 py-1 text-white text-xs font-bold rounded backdrop-blur-sm" style={{ backgroundColor: `${project.color}80` }}>{project.category}</div>
+                                        <div className="absolute top-4 right-4 px-3 py-1 text-white text-xs font-bold rounded backdrop-blur-sm" style={{ backgroundColor:`${project.color}80` }}>{project.category}</div>
                                         <div className="absolute bottom-4 left-4 right-4 text-xs text-zinc-400 opacity-0 group-hover:opacity-100 transition-opacity">📐 {project.resolution}</div>
                                     </div>
                                     <div className="p-4 sm:p-6 space-y-3">
                                         <h3 className="text-lg sm:text-xl font-bold group-hover:text-blue-400 transition-colors">{project.title}</h3>
                                         <p className="text-zinc-400 text-sm">{project.description}</p>
                                         <div className="flex flex-wrap gap-2 pt-2">
-                                            {project.tools.map((tool, j) => (
-                                                <span key={j} className="px-2 sm:px-3 py-1 text-xs bg-zinc-800 text-zinc-300 border border-zinc-700 rounded">{tool}</span>
-                                            ))}
+                                            {project.tools.map((tool,j)=><span key={j} className="px-2 sm:px-3 py-1 text-xs bg-zinc-800 text-zinc-300 border border-zinc-700 rounded">{tool}</span>)}
                                         </div>
                                     </div>
                                 </div>
                             ))}
                         </div>
-                        {filteredProjects.length === 0 && (
-                            <div className="text-center py-20"><p className="text-2xl text-zinc-500">No projects found in this category</p></div>
-                        )}
+                        {filteredProjects.length === 0 && <div className="text-center py-20"><p className="text-2xl text-zinc-500">No projects found</p></div>}
                     </div>
                 </section>
 
-                {/* ── VIDEO TESTIMONIALS (new "What Clients Say") ── */}
+                {/* VIDEO TESTIMONIALS */}
                 <section id="video-testimonials" className="video-testimonials-section py-20 sm:py-32 border-t border-blue-900/30">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
                         <div className="text-center mb-14 fade-in">
@@ -1040,36 +1105,21 @@
                                 <span className="text-green-400 text-xs font-bold tracking-widest">REAL CLIENT VIDEOS</span>
                             </div>
                             <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-5 font-display">
-                                What Clients
-                                <br/>
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-blue-400 to-pink-400">
-                                    Say About Me
-                                </span>
+                                What Clients<br/>
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-blue-400 to-pink-400">Say About Me</span>
                             </h2>
-                            <p className="text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto">
-                                Don't just take my word for it — hear directly from clients around the world who trusted me with their brand.
-                            </p>
+                            <p className="text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto">Don't just take my word for it — hear directly from clients around the world.</p>
                         </div>
-
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {videoTestimonials.map((t, i) => (
-                                <VideoTestimonialCard key={i} {...t} />
-                            ))}
+                            {videoTestimonials.map((t,i) => <VideoTestimonialCard key={i} {...t} />)}
                         </div>
-
-                        {/* Trust indicators row */}
                         <div className="mt-14 fade-in">
                             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                                {[
-                                    { icon:'🌍', label:'Clients from 12+ countries', sub:'Japan, France, Germany & more' },
-                                    { icon:'⭐', label:'5.0 star average rating', sub:'Across all platforms' },
-                                    { icon:'🔁', label:'80% repeat clients', sub:'They keep coming back' },
-                                    { icon:'⚡', label:'Fast delivery, zero drama', sub:'Always on time' }
-                                ].map((item, i) => (
-                                    <div key={i} className="border border-zinc-800 bg-zinc-900/40 p-5 rounded-xl text-center hover:border-zinc-600 transition-all fade-in" style={{ transitionDelay: `${i*80}ms` }}>
-                                        <div className="text-3xl mb-2">{item.icon}</div>
-                                        <div className="text-sm font-bold text-white mb-1">{item.label}</div>
-                                        <div className="text-xs text-zinc-500">{item.sub}</div>
+                                {[['🌍','Clients from 12+ countries','Japan, France, Germany & more'],['⭐','5.0 star average rating','Across all platforms'],['🔁','80% repeat clients','They keep coming back'],['⚡','Fast delivery, zero drama','Always on time']].map((item,i)=>(
+                                    <div key={i} className="border border-zinc-800 bg-zinc-900/40 p-5 rounded-xl text-center hover:border-zinc-600 transition-all fade-in" style={{ transitionDelay:`${i*80}ms` }}>
+                                        <div className="text-3xl mb-2">{item[0]}</div>
+                                        <div className="text-sm font-bold text-white mb-1">{item[1]}</div>
+                                        <div className="text-xs text-zinc-500">{item[2]}</div>
                                     </div>
                                 ))}
                             </div>
@@ -1077,7 +1127,7 @@
                     </div>
                 </section>
 
-                {/* ── WRITTEN TESTIMONIALS ── */}
+                {/* WRITTEN TESTIMONIALS */}
                 <section id="testimonials" className="testimonials-section py-20 sm:py-32 border-t border-blue-900/30">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 mb-12 sm:mb-16">
                         <div className="text-center fade-in">
@@ -1086,49 +1136,39 @@
                             </div>
                             <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 font-display">
                                 Loved by Clients<br/>
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-400 to-pink-500">
-                                    Worldwide
-                                </span>
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-400 to-pink-500">Worldwide</span>
                             </h2>
-                            <p className="text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto mb-10">
-                                Real reviews from real clients across the globe — from Warsaw to Tokyo, London to Dubai.
-                            </p>
+                            <p className="text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto mb-10">Real reviews from real clients — from Warsaw to Tokyo, London to Dubai.</p>
                             <div className="stats-bar mb-10 fade-in">
                                 {[['50+','Happy Clients'],['5.0','Average Rating'],['12+','Countries'],['100%','Satisfaction']].map(([n,l],i)=>(
                                     <div key={i} className="stat-item">
                                         <div className="stat-number">{n}</div>
-                                        <div style={{ fontSize: 13, color: 'rgba(255,255,255,.5)', marginTop: 4, fontWeight: 600 }}>{l}</div>
+                                        <div style={{ fontSize:13, color:'rgba(255,255,255,.5)', marginTop:4, fontWeight:600 }}>{l}</div>
                                     </div>
                                 ))}
                             </div>
                         </div>
                     </div>
-
                     <div className="testimonials-scroll-container overflow-hidden">
                         <div className="testimonial-track py-4">
-                            {doubledTestimonials.map((t, i) => (
-                                <TestimonialCard key={i} {...t} />
-                            ))}
+                            {doubledTestimonials.map((t,i) => <TestimonialCard key={i} {...t} />)}
                         </div>
                     </div>
-
                     <div className="text-center mt-12 sm:mt-16 px-4 fade-in">
                         <p className="text-zinc-500 text-sm mb-4">Join 50+ satisfied clients worldwide</p>
-                        <button onClick={() => scrollToSection('contact')}
-                            className="px-8 sm:px-10 py-4 sm:py-5 bg-gradient-to-r from-blue-500 to-orange-500 hover:from-blue-600 hover:to-orange-600 text-white font-bold text-base sm:text-lg transition-all hover:scale-105">
+                        <button onClick={() => scrollToSection('contact')} className="px-8 sm:px-10 py-4 sm:py-5 bg-gradient-to-r from-blue-500 to-orange-500 hover:from-blue-600 hover:to-orange-600 text-white font-bold text-base sm:text-lg transition-all hover:scale-105">
                             Start Your Project
                         </button>
                     </div>
                 </section>
 
-                {/* ── SERVICES ── */}
+                {/* SERVICES */}
                 <section id="services" className="py-20 sm:py-32 border-t border-blue-900/30 relative">
                     <div className="absolute inset-0 gradient-mesh opacity-50" />
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
                         <div className="text-center mb-16 sm:mb-20 fade-in">
                             <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 font-display">
-                                What I<br/>
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-pink-500">Create</span>
+                                What I<br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-pink-500">Create</span>
                             </h2>
                         </div>
                         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
@@ -1137,12 +1177,12 @@
                                 { title:'Social Media', icon:'📱', items:['Instagram posts','Story designs','Campaign graphics','Brand content'] },
                                 { title:'Entertainment', icon:'🎬', items:['Movie posters','Gaming graphics','Sports promos','Event designs'] },
                                 { title:'Brand Design', icon:'✨', items:['Logo design','Brand identity','Typography','Color systems'] }
-                            ].map((service, i) => (
-                                <div key={i} className="fade-in group border border-zinc-800 bg-zinc-900/50 p-6 sm:p-8 hover:border-blue-500/50 transition-all duration-500 hover:-translate-y-2" style={{ transitionDelay: `${i * 100}ms` }}>
+                            ].map((service,i) => (
+                                <div key={i} className="fade-in group border border-zinc-800 bg-zinc-900/50 p-6 sm:p-8 hover:border-blue-500/50 transition-all duration-500 hover:-translate-y-2" style={{ transitionDelay:`${i*100}ms` }}>
                                     <div className="text-4xl sm:text-5xl mb-3 sm:mb-4">{service.icon}</div>
                                     <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 group-hover:text-blue-400 transition-colors">{service.title}</h3>
                                     <ul className="space-y-2">
-                                        {service.items.map((item, j) => (
+                                        {service.items.map((item,j)=>(
                                             <li key={j} className="text-zinc-400 text-sm flex items-center">
                                                 <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-3 flex-shrink-0"/>{item}
                                             </li>
@@ -1154,23 +1194,20 @@
                     </div>
                 </section>
 
-                {/* ── TOOLS ── */}
+                {/* TOOLS */}
                 <section id="tools" className="py-20 sm:py-32 border-t border-blue-900/30 relative">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
                         <div className="text-center mb-16 sm:mb-20 fade-in">
                             <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 font-display">
-                                Creative<br/>
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-blue-400">Arsenal</span>
+                                Creative<br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-blue-400">Arsenal</span>
                             </h2>
                             <p className="text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto">Professional mastery of industry-leading design tools</p>
                         </div>
                         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-                            {tools.map((tool, i) => (
-                                <div key={i} className="fade-in software-badge group border border-zinc-800 bg-zinc-900/50 p-6 sm:p-8 hover:border-blue-500/50 transition-all duration-500 hover:-translate-y-2" style={{ transitionDelay: `${i * 100}ms` }}>
+                            {tools.map((tool,i) => (
+                                <div key={i} className="fade-in software-badge group border border-zinc-800 bg-zinc-900/50 p-6 sm:p-8 hover:border-blue-500/50 transition-all duration-500 hover:-translate-y-2" style={{ transitionDelay:`${i*100}ms` }}>
                                     <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center mb-4 sm:mb-6 text-white text-2xl sm:text-3xl font-bold shadow-2xl"
-                                        style={{ backgroundColor: tool.color, boxShadow: `0 10px 40px ${tool.color}40` }}>
-                                        {tool.icon}
-                                    </div>
+                                        style={{ backgroundColor:tool.color, boxShadow:`0 10px 40px ${tool.color}40` }}>{tool.icon}</div>
                                     <h3 className="text-xl sm:text-2xl font-bold mb-2 group-hover:text-blue-400 transition-colors">{tool.name}</h3>
                                     <p className="text-zinc-400 text-sm">{tool.description}</p>
                                 </div>
@@ -1179,7 +1216,10 @@
                     </div>
                 </section>
 
-                {/* ── CONTACT ── */}
+                {/* ══════ PRICING SECTION ══════ */}
+                <PricingSection />
+
+                {/* CONTACT */}
                 <section id="contact" className="py-20 sm:py-32 border-t border-blue-900/30 relative">
                     <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center fade-in">
                         <div className="inline-block px-4 sm:px-6 py-2 sm:py-3 bg-blue-500/10 border border-blue-500/30 rounded-full mb-6 sm:mb-8">
@@ -1189,15 +1229,13 @@
                             Let's Create<br/>
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-orange-400 to-pink-500">Something Beautiful</span>
                         </h2>
-                        <p className="text-lg sm:text-xl text-zinc-400 mb-10 sm:mb-12 max-w-2xl mx-auto">
-                            Need social media graphics, food photography design, or brand identity? Let's collaborate on your next project.
-                        </p>
+                        <p className="text-lg sm:text-xl text-zinc-400 mb-10 sm:mb-12 max-w-2xl mx-auto">Need social media graphics, food photography design, or brand identity? Let's collaborate.</p>
                         <div className="grid sm:grid-cols-3 gap-4 sm:gap-6 mb-10 sm:mb-12">
                             {[
                                 { icon:'📧', label:'Email', value:'aceebdignitoso@gmail.com', href:'mailto:aceebdignitoso@gmail.com' },
                                 { icon:'💬', label:'WhatsApp', value:'+92 334 6419 135', href:'https://wa.me/+923346419135' },
                                 { icon:'💼', label:'LinkedIn', value:'Connect', href:'https://www.linkedin.com/in/therealhaseebrehman/' }
-                            ].map((contact, i) => (
+                            ].map((contact,i) => (
                                 <a key={i} href={contact.href} target="_blank" rel="noopener noreferrer"
                                     className="border border-zinc-800 bg-zinc-900/50 p-5 sm:p-6 hover:border-blue-500/50 transition-all duration-300 hover:-translate-y-2 block rounded-xl">
                                     <div className="text-3xl sm:text-4xl mb-2 sm:mb-3">{contact.icon}</div>
@@ -1207,13 +1245,8 @@
                             ))}
                         </div>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <a href="mailto:aceebdignitoso@gmail.com" className="px-8 sm:px-10 py-4 sm:py-5 bg-blue-500 hover:bg-blue-600 text-white font-bold text-base sm:text-lg transition-all hover:scale-105 text-center">
-                                Start a Project
-                            </a>
-                            <a href="https://wa.me/+923346419135" target="_blank" rel="noopener noreferrer"
-                                className="px-8 sm:px-10 py-4 sm:py-5 border-2 border-blue-500 text-blue-400 font-bold text-base sm:text-lg hover:bg-blue-500/20 transition-all text-center">
-                                WhatsApp Me
-                            </a>
+                            <a href="mailto:aceebdignitoso@gmail.com" className="px-8 sm:px-10 py-4 sm:py-5 bg-blue-500 hover:bg-blue-600 text-white font-bold text-base sm:text-lg transition-all hover:scale-105 text-center">Start a Project</a>
+                            <a href="https://wa.me/+923346419135" target="_blank" rel="noopener noreferrer" className="px-8 sm:px-10 py-4 sm:py-5 border-2 border-blue-500 text-blue-400 font-bold text-base sm:text-lg hover:bg-blue-500/20 transition-all text-center">WhatsApp Me</a>
                         </div>
                     </div>
                 </section>
