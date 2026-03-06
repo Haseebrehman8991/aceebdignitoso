@@ -358,6 +358,15 @@
             .testimonial-card{width:260px;padding:1.25rem;}
             .testimonials-scroll-container::before,.testimonials-scroll-container::after{width:60px;}
         }
+        /* ── LAZY LOAD ── */
+        @keyframes shimmer {
+            0%   { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        .lazy-img { display: block; width: 100%; }
+        .lazy-img.loaded { opacity: 1 !important; filter: blur(0) !important; }
+        .lazy-shimmer { transition: opacity .4s ease; }
+        .lazy-shimmer.hidden { opacity: 0; pointer-events: none; }
     </style>
 </head>
 <body>
@@ -863,7 +872,15 @@
             { title:'Coffee Promotion', category:'Food & Beverage', description:'Premium coffee advertisement with atmospheric lighting and product focus.', tools:['Photoshop'], image:'Coffee Post By Aceeb digitoso.jpg', color:'#F97316', resolution:'1080x1080' },
             { title:'Shawarma Wrap Design', category:'Food & Beverage', description:'Bold food advertisement with creative typography and appetizing product shot.', tools:['Photoshop'], image:'Shawarma Wrap poster by Aceeb Dignitoso.jpg', color:'#DC2626', resolution:'1080x1080' },
             { title:'Motivational Typography', category:'Social Graphics', description:'Bold typographic design with high contrast and strong messaging.', tools:['Illustrator'], image:'Motivational post by Aceeb Diginitoso.webp', color:'#EF4444', resolution:'1200x1200' },
-            { title:'Cricket Match Promo', category:'Sports', description:'Sports event promotional graphic with team branding and match details.', tools:['Photoshop'], image:'MATCH STORY - Copy.jpg', color:'#10B981', resolution:'1080x1920' }
+            { title:'Cricket Match Promo', category:'Sports', description:'Sports event promotional graphic with team branding and match details.', tools:['Photoshop'], image:'MATCH STORY - Copy.jpg', color:'#10B981', resolution:'1080x1920' },
+            { title:'Pink Garlic – One Bowl Many Emotions', category:'Food & Beverage', description:'Premium Indian restaurant social post with moody atmospheric lighting, bold serif typography, and delivery platform badges for Pink Garlic Malta.', tools:['Photoshop','Illustrator'], image:'ACEEB DIGNITOSO BEHANCE (7).jpg', color:'#C2185B', resolution:'1080x1080' },
+            { title:'Pink Garlic – Comfort in Every Bite', category:'Food & Beverage', description:'Rice & curry promotional post featuring circular inset product layout and elegant gradient typography for Pink Garlic Contemporary Indian Restaurant.', tools:['Photoshop'], image:'ACEEB DIGNITOSO BEHANCE (4).jpg', color:'#FF7043', resolution:'1080x1080' },
+            { title:'Pink Garlic – Plain Curry & Rice Bowl', category:'Food & Beverage', description:'Full-bleed editorial food ad with lifestyle photography, dual-column copywriting, and cinematic steam effect for Pink Garlic Malta.', tools:['Photoshop','Illustrator'], image:'ACEEB DIGNITOSO BEHANCE (2).jpg', color:'#8D6E63', resolution:'1080x1080' },
+            { title:'Cookies – Seu Sabor Preferido', category:'Food & Beverage', description:'Vibrant yellow-burst cookie brand post with playful cutout-style layout, floating product elements, and Portuguese tagline.', tools:['Photoshop'], image:'ACEEB DIGINITOSO BEHANCE (6).png', color:'#F9A825', resolution:'1080x1350' },
+            { title:'Signature Wraps – Food Menu Post', category:'Food & Beverage', description:'Bold orange-gradient wrap menu post with structured food menu panel, price badge, and strong display typography.', tools:['Photoshop','Illustrator'], image:'ACEEB DIGNITOSO BEHANCE (10).png', color:'#E65100', resolution:'1080x1080' },
+            { title:'Cheese Burger – Save 30% Ad', category:'Food & Beverage', description:'Dark dramatic burger promotional post with gold typography, price badge, discount label, and layered lighting effects.', tools:['Photoshop'], image:'ACEEB DIGNITOSO BEHANCE (1).png', color:'#F9A825', resolution:'1080x1080' },
+            { title:'Your Food Ready – Biryani Menu', category:'Food & Beverage', description:'Red-energy food menu post with bold script headline, hand-holding biryani bowl hero shot, and detailed menu list layout.', tools:['Photoshop'], image:'ACEEB DIGNITOSO BEHANCE (4).png', color:'#C62828', resolution:'1080x1080' },
+            { title:'Jumbo Stack Big Burger', category:'Food & Beverage', description:'Rustic textured burger ad with half-cut hero product, distressed display font, and clean call-to-action on warm orange background.', tools:['Photoshop','Illustrator'], image:'ACEEB DIGNITOSO BEHANCE (8).png', color:'#BF360C', resolution:'1080x1080' }
         ];
 
         const categories = [
@@ -1075,10 +1092,18 @@
                         <div className="masonry-grid">
                             {filteredProjects.map((project, i) => (
                                 <div key={i} className="masonry-item fade-in project-card group border border-zinc-800 cursor-pointer"
-                                    style={{ transitionDelay:`${i*50}ms` }}
+                                    style={{ transitionDelay:`${Math.min(i,10)*50}ms` }}
                                     onClick={() => window.openLightbox(project.image)}>
-                                    <div className="relative overflow-hidden">
-                                        <img src={project.image} alt={project.title} className="w-full h-auto object-cover" loading="lazy" decoding="async" />
+                                    <div className="relative overflow-hidden lazy-img-wrap" style={{ minHeight: 200, background: '#1a1a24' }}>
+                                        <img
+                                            data-src={project.image}
+                                            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3C/svg%3E"
+                                            alt={project.title}
+                                            className="lazy-img w-full h-auto object-cover"
+                                            style={{ filter:'blur(0px)', transition:'filter .4s ease, opacity .4s ease', opacity: 0 }}
+                                        />
+                                        {/* shimmer placeholder */}
+                                        <div className="lazy-shimmer absolute inset-0" style={{ background:'linear-gradient(90deg,#1a1a24 25%,#252535 50%,#1a1a24 75%)', backgroundSize:'200% 100%', animation:'shimmer 1.5s infinite' }} />
                                         <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                                         <div className="absolute top-4 right-4 px-3 py-1 text-white text-xs font-bold rounded backdrop-blur-sm" style={{ backgroundColor:`${project.color}80` }}>{project.category}</div>
                                         <div className="absolute bottom-4 left-4 right-4 text-xs text-zinc-400 opacity-0 group-hover:opacity-100 transition-opacity">📐 {project.resolution}</div>
@@ -1263,6 +1288,71 @@
     };
 
     ReactDOM.render(<GraphicDesignPortfolio />, document.getElementById('root'));
+</script>
+<script>
+/* ══ INTERSECTION OBSERVER LAZY LOADER ══
+   Watches all .lazy-img elements. When they enter the viewport,
+   swaps data-src → src, fades them in, hides the shimmer.
+   Re-runs on React re-renders via MutationObserver.
+*/
+(function() {
+    function initLazyLoad() {
+        if (!('IntersectionObserver' in window)) {
+            // Fallback: just load everything immediately
+            document.querySelectorAll('img.lazy-img[data-src]').forEach(img => {
+                img.src = img.dataset.src;
+                img.removeAttribute('data-src');
+                img.classList.add('loaded');
+                const shimmer = img.closest('.lazy-img-wrap')?.querySelector('.lazy-shimmer');
+                if (shimmer) shimmer.classList.add('hidden');
+            });
+            return;
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                const img = entry.target;
+                if (!img.dataset.src) return;
+
+                const src = img.dataset.src;
+                img.removeAttribute('data-src');
+
+                const tempImg = new Image();
+                tempImg.onload = () => {
+                    img.src = src;
+                    img.classList.add('loaded');
+                    const wrap = img.closest('.lazy-img-wrap');
+                    if (wrap) {
+                        const shimmer = wrap.querySelector('.lazy-shimmer');
+                        if (shimmer) shimmer.classList.add('hidden');
+                    }
+                };
+                tempImg.onerror = () => {
+                    img.src = src; // still set it even on error
+                    img.classList.add('loaded');
+                };
+                tempImg.src = src;
+
+                observer.unobserve(img);
+            });
+        }, {
+            rootMargin: '200px 0px', // start loading 200px before entering viewport
+            threshold: 0
+        });
+
+        document.querySelectorAll('img.lazy-img[data-src]').forEach(img => observer.observe(img));
+    }
+
+    // Initial run
+    initLazyLoad();
+
+    // Re-run when React re-renders the DOM (e.g. filter tab change)
+    const mutationObserver = new MutationObserver(() => {
+        initLazyLoad();
+    });
+    mutationObserver.observe(document.body, { childList: true, subtree: true });
+})();
 </script>
 </body>
 </html>
