@@ -2,12 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="p:domain_verify" content="82598ff780305a00fc38b79cfed8ae49"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aceeb Dignitoso - Senior Full-Stack Developer | React, Node.js Expert</title>
     <meta name="description" content="Senior Full-Stack Developer with 3+ years experience.">
-    <link rel="preconnect" href="https://cdn.tailwindcss.com">
-    <link rel="preconnect" href="https://unpkg.com">
+    <!-- SEO & Social Meta -->
+    <meta name="description" content="Aceeb Dignitoso – Full-Stack Developer & Designer. React, Next.js, WordPress, WooCommerce, Graphic Design, SEO. Available worldwide.">
+    <meta name="keywords" content="full stack developer Pakistan, WordPress developer, React developer, Next.js developer, WooCommerce, graphic design, SEO specialist, freelance developer, Aceeb Dignitoso, Nexform Agency">
+    <meta name="author" content="Aceeb Dignitoso">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Aceeb Dignitoso – Full-Stack Developer & Designer">
+    <meta property="og:description" content="React, Next.js, WordPress, WooCommerce, Graphic Design & SEO. Available for freelance worldwide.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aceebdignitoso.vercel.app">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Aceeb Dignitoso – Full-Stack Developer & Designer">
+    <link rel="canonical" href="https://aceebdignitoso.vercel.app">
+    <!-- Performance: preconnect CDNs -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    <link rel="dns-prefetch" href="https://unpkg.com">
+    <!-- Scripts (React & Babel must be sync for JSX to compile) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -59,6 +74,8 @@
         .section-bg-shape { animation:bg-float-section 15s ease-in-out infinite; }
         .lazy-img { opacity:0; transition:opacity .5s ease; background:#18181b; }
         .lazy-img.loaded { opacity:1; }
+        /* Always show images — don't hide behind lazy opacity */
+        .lazy-img { opacity:1 !important; }
         .wp-card-img { transition:transform .7s ease; }
         .wp-card:hover .wp-card-img { transform:scale(1.05); }
         .wp-overlay { opacity:0; transition:opacity .4s ease; }
@@ -87,7 +104,7 @@
         .reel-spin { animation:reel-spin 6s linear infinite; transform-origin:center; }
         @keyframes filmstrip-slide { from{transform:translateX(0)} to{transform:translateX(-50%)} }
         .filmstrip { animation:filmstrip-slide 8s linear infinite; }
-        .expertise-card-new { position:relative; border:1px solid rgba(63,63,70,1); background:linear-gradient(160deg,rgba(24,24,27,.95) 0%,rgba(9,9,11,.98) 100%); overflow:hidden; transition:all .5s cubic-bezier(.34,1.1,.64,1); }
+        .expertise-card-new { position:relative; border:1px solid rgba(63,63,70,1); background:linear-gradient(160deg,rgba(24,24,27,.95) 0%,rgba(9,9,11,.98) 100%); overflow:hidden; transition:all .5s cubic-bezier(.34,1.1,.64,1); width:100%; max-width:100%; box-sizing:border-box; }
         .expertise-card-new:hover { border-color:rgba(251,191,36,.5); transform:translateY(-8px); box-shadow:0 30px 80px rgba(251,191,36,.12),0 0 0 1px rgba(251,191,36,.2); }
         .expertise-card-new::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(251,191,36,.06),transparent); opacity:0; transition:opacity .5s; }
         .expertise-card-new:hover::before { opacity:1; }
@@ -96,9 +113,80 @@
         @keyframes marquee-left { from{transform:translateX(0)} to{transform:translateX(-50%)} }
         .marquee-track { animation:marquee-left 12s linear infinite; display:flex; gap:24px; white-space:nowrap; }
         .marquee-track:hover { animation-play-state:paused; }
+        /* Expertise card mobile containment */
+        .expertise-card-new { contain:paint; }
+        @media (max-width:767px) {
+            .expertise-card-new { max-width:100vw !important; overflow:hidden !important; }
+            .expertise-card-new .marquee-track { gap:16px; }
+            .skill-tag { font-size:.65rem !important; padding:4px 8px !important; white-space:nowrap; }
+            /* Expertise section grid — single col, contained */
+            #expertise > div > div.grid { grid-template-columns:1fr !important; gap:20px !important; }
+            #expertise .max-w-7xl { padding-left:16px !important; padding-right:16px !important; }
+            /* Tools row wrap */
+            .expertise-tools-row { flex-wrap:wrap !important; justify-content:center !important; }
+            .expertise-tools-row > div { flex:0 0 calc(33.33% - 12px); }
+        }
         @keyframes badge-shimmer { 0%,100%{box-shadow:0 0 0 0 rgba(251,191,36,0)} 50%{box-shadow:0 0 20px 4px rgba(251,191,36,.15)} }
         .badge-glow { animation:badge-shimmer 3s ease-in-out infinite; }
         @media (prefers-reduced-motion:reduce) { *{animation-duration:.01ms !important;animation-iteration-count:1 !important;} }
+        /* === WHATSAPP FLOATING BUTTON === */
+        .wa-float-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9998;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #25D366;
+            color: #fff;
+            padding: 13px 18px 13px 14px;
+            border-radius: 50px;
+            box-shadow: 0 4px 24px rgba(37,211,102,.5), 0 2px 8px rgba(0,0,0,.3);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: .82rem;
+            letter-spacing: .03em;
+            transition: all .3s cubic-bezier(.34,1.56,.64,1);
+            border: none;
+            cursor: pointer;
+            overflow: visible;
+        }
+        .wa-float-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 36px rgba(37,211,102,.6), 0 4px 12px rgba(0,0,0,.3);
+        }
+        .wa-float-btn svg { flex-shrink: 0; }
+        .wa-float-label { white-space: nowrap; }
+        @keyframes wa-ripple {
+            0% { transform: scale(1); opacity: .5; }
+            100% { transform: scale(2.2); opacity: 0; }
+        }
+        .wa-ripple {
+            position: absolute;
+            inset: 0;
+            border-radius: 50px;
+            border: 2px solid rgba(37,211,102,.7);
+            animation: wa-ripple 2s ease-out infinite;
+            pointer-events: none;
+        }
+        .wa-ripple-2 { animation-delay: .6s; }
+        @media (max-width: 380px) {
+            .wa-float-btn { padding: 13px; border-radius: 50%; bottom: 16px; right: 16px; }
+            .wa-float-label { display: none; }
+        }
+        /* === MOBILE RESPONSIVE FIXES === */
+        #about .photo-col { display: block !important; visibility: visible !important; }
+        .photo-col { display: block !important; }
+        html, body { overflow-x: hidden; }
+        @media (max-width: 640px) {
+            h1 { font-size: clamp(2.4rem, 10vw, 4.5rem) !important; line-height: 1.1 !important; }
+            h2 { font-size: clamp(1.6rem, 7vw, 2.5rem) !important; }
+            .c-heading { font-size: clamp(1.8rem, 8vw, 3rem) !important; }
+            .c-cards { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
+            .c-card { padding: 16px 12px !important; }
+        }
+
 
         /* ─── SCROLL ZOOM ─── */
         .scroll-zoom-wrapper { overflow:hidden; position:relative; }
@@ -147,9 +235,15 @@
         /* ─── SOCIAL CARDS ─── */
         @keyframes scroll-hint-arrow { 0%,100%{opacity:.5;transform:translateX(0)} 50%{opacity:1;transform:translateX(6px)} }
         .scroll-hint-arrow { animation:scroll-hint-arrow 1.4s ease-in-out infinite; }
-        .social-cards-track { display:flex; gap:16px; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; padding:12px 4px 24px; scrollbar-width:none; cursor:grab; }
+        /* Old drag track - keep for compat */
+        .social-cards-track { display:flex; gap:16px; overflow-x:auto; -webkit-overflow-scrolling:touch; padding:12px 4px 24px; scrollbar-width:none; cursor:grab; }
         .social-cards-track::-webkit-scrollbar { display:none; }
-        .social-cards-track.dragging { cursor:grabbing; scroll-snap-type:none; }
+        /* NEW: Auto-scroll infinite marquee */
+        @keyframes social-auto-scroll { 0%{ transform:translateX(0); } 100%{ transform:translateX(-50%); } }
+        .social-cards-auto-outer { overflow:hidden; position:relative; padding:12px 0 24px; mask-image:linear-gradient(90deg,transparent 0%,black 5%,black 95%,transparent 100%); -webkit-mask-image:linear-gradient(90deg,transparent 0%,black 5%,black 95%,transparent 100%); }
+        .social-cards-auto-track { display:flex; gap:16px; width:max-content; animation:social-auto-scroll 28s linear infinite; }
+        .social-cards-auto-track:hover { animation-play-state:paused; }
+        @media (prefers-reduced-motion:reduce) { .social-cards-auto-track { animation:none; } }
         .social-card { flex-shrink:0; width:220px; scroll-snap-align:start; border-radius:16px; overflow:hidden; position:relative; border:1px solid rgba(255,255,255,.06); background:rgba(9,9,11,.9); transition:transform .35s cubic-bezier(.34,1.56,.64,1),box-shadow .35s ease; }
         .social-card:hover { transform:translateY(-8px) scale(1.02); }
         .social-card-inner { padding:22px 18px 18px; position:relative; z-index:1; }
@@ -272,8 +366,10 @@
         @media (max-width:767px) {
             /* About */
             .about-3d-shapes-container { opacity:.3 !important; }
-            #about .grid { grid-template-columns:1fr !important; gap:40px !important; }
-            #about .photo-col { max-width:280px; margin:0 auto; }
+            #about .photo-col { display:block !important; visibility:visible !important; width:100% !important; max-width:100% !important; }
+            /* Below sm (640px): cap photo so it doesn't fill entire screen */
+            #about .photo-col > div { max-height:360px !important; padding-bottom:0 !important; height:360px !important; }
+            #about .photo-col > div img { object-position:center 20% !important; }
 
             /* Hero text */
             h1 { font-size:3rem !important; }
@@ -284,8 +380,11 @@
 
             /* Expertise */
             #expertise .grid.md\:grid-cols-2 { grid-template-columns:1fr !important; }
-            .expertise-card-new { width:100% !important; }
+            .expertise-card-new { width:100% !important; max-width:100% !important; box-sizing:border-box !important; }
             .expertise-card-new:hover { transform:none; }
+            #expertise .grid { grid-template-columns:1fr !important; }
+            .expertise-tools-row > div { min-width:0; }
+            .skill-tag { font-size:.65rem !important; padding:4px 10px !important; }
 
             /* Ticker — smaller on mobile */
             .ticker-section { padding:48px 0; }
@@ -449,22 +548,66 @@
     };
 
     const PhotoShowcase=()=>{
-        const photoRef=useRef(null);const[mp,setMp]=useState({x:.5,y:.5});const[particles,setParticles]=useState([]);
-        useEffect(()=>{const arr=Array.from({length:12},(_,i)=>({id:i,x:Math.random()*100,y:Math.random()*100,size:Math.random()*4+1,sx:(Math.random()-.5)*.5,sy:(Math.random()-.5)*.5}));setParticles(arr);const iv=setInterval(()=>setParticles(p=>p.map(x=>({...x,x:(x.x+x.sx+100)%100,y:(x.y+x.sy+100)%100}))),80);return()=>clearInterval(iv);},[]);
+        const photoRef=useRef(null);
+        const[mp,setMp]=useState({x:.5,y:.5});
+        const[particles,setParticles]=useState([]);
+        useEffect(()=>{
+            const arr=Array.from({length:12},(_,i)=>({id:i,x:Math.random()*100,y:Math.random()*100,size:Math.random()*4+2,sx:(Math.random()-.5)*.5,sy:(Math.random()-.5)*.5}));
+            setParticles(arr);
+            const iv=setInterval(()=>setParticles(p=>p.map(x=>({...x,x:(x.x+x.sx+100)%100,y:(x.y+x.sy+100)%100}))),80);
+            return()=>clearInterval(iv);
+        },[]);
         return(
-            <div className="relative w-full h-full group perspective-1000">
-                <div className="absolute inset-0 overflow-hidden pointer-events-none">{particles.map(p=><div key={p.id} className="absolute rounded-full opacity-60 blur-sm" style={{left:`${p.x}%`,top:`${p.y}%`,width:`${p.size}px`,height:`${p.size}px`,backgroundColor:'#fbbf24',boxShadow:`0 0 ${p.size*2}px rgba(251,191,36,.8)`}}/>)}</div>
-                <div ref={photoRef} onMouseMove={e=>{const r=photoRef.current.getBoundingClientRect();setMp({x:(e.clientX-r.left)/r.width,y:(e.clientY-r.top)/r.height});}} onMouseLeave={()=>setMp({x:.5,y:.5})} className="relative aspect-[4/5] transform-gpu transition-transform duration-200 ease-out" style={{transform:`perspective(1000px) rotateX(${(mp.y-.5)*-10}deg) rotateY(${(mp.x-.5)*10}deg) translateZ(20px)`,transformStyle:'preserve-3d'}}>
-                    <div className="absolute inset-0 overflow-hidden pointer-events-none z-10"><div className="absolute w-full h-32 bg-gradient-to-b from-transparent via-amber-400/30 to-transparent blur-xl animate-scan"/></div>
-                    <div className="absolute inset-0 bg-zinc-900 border-2 border-zinc-800 group-hover:border-amber-400/50 transition-all duration-500 overflow-hidden">
-                        <img src="Gemini_Generated_Image_raz00rraz00rraz0.png" alt="Aceeb Dignitoso" className="lazy-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" onLoad={e=>e.target.classList.add('loaded')}/>
-                        <div className="absolute top-0 left-0 w-12 h-12 md:w-16 md:h-16 border-t-4 border-l-4 border-amber-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500"/>
-                        <div className="absolute top-0 right-0 w-12 h-12 md:w-16 md:h-16 border-t-4 border-r-4 border-amber-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500"/>
-                        <div className="absolute bottom-0 left-0 w-12 h-12 md:w-16 md:h-16 border-b-4 border-l-4 border-amber-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500"/>
-                        <div className="absolute bottom-0 right-0 w-12 h-12 md:w-16 md:h-16 border-b-4 border-r-4 border-amber-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500"/>
+            <div className="relative w-full group" style={{paddingBottom:'100%',background:'#111113',border:'2px solid rgba(63,63,70,0.8)',overflow:'hidden',width:'100%',maxWidth:'100%'}}>
+                {/* Particles */}
+                <div className="absolute inset-0 pointer-events-none" style={{zIndex:1}}>
+                    {particles.map(p=>(
+                        <div key={p.id} className="absolute rounded-full" style={{left:`${p.x}%`,top:`${p.y}%`,width:`${p.size}px`,height:`${p.size}px`,backgroundColor:'#fbbf24',opacity:.5,filter:`blur(${p.size}px)`,boxShadow:`0 0 ${p.size*3}px rgba(251,191,36,.6)`}}/>
+                    ))}
+                </div>
+                {/* Photo */}
+                <div
+                    ref={photoRef}
+                    className="absolute inset-0"
+                    style={{zIndex:2,transition:'transform .2s ease-out',transform:`perspective(800px) rotateX(${(mp.y-.5)*-8}deg) rotateY(${(mp.x-.5)*8}deg)`}}
+                    onMouseMove={e=>{const r=photoRef.current.getBoundingClientRect();setMp({x:(e.clientX-r.left)/r.width,y:(e.clientY-r.top)/r.height});}}
+                    onMouseLeave={()=>setMp({x:.5,y:.5})}
+                >
+                    <img
+                        src="Gemini_Generated_Image_raz00rraz00rraz0.png"
+                        alt="Aceeb Dignitoso - Full Stack Developer"
+                        style={{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover',objectPosition:'center 20%',display:'block'}}
+                        loading="eager"
+                        decoding="async"
+                        onError={e=>{
+                            e.target.style.display='none';
+                            e.target.parentNode.querySelector('.photo-fallback').style.display='flex';
+                        }}
+                    />
+                    {/* Fallback shown when image missing/broken */}
+                    <div className="photo-fallback" style={{display:'none',position:'absolute',inset:0,flexDirection:'column',alignItems:'center',justifyContent:'center',background:'linear-gradient(160deg,#18181b 0%,#09090b 100%)',gap:'16px'}}>
+                        <div style={{width:'90px',height:'90px',borderRadius:'50%',background:'linear-gradient(135deg,#fbbf24,#f59e0b)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'2.5rem',fontWeight:900,color:'#09090b',boxShadow:'0 0 40px rgba(251,191,36,0.4)'}}>A</div>
+                        <div style={{textAlign:'center'}}>
+                            <div style={{fontWeight:800,fontSize:'1rem',color:'#f4f4f5',letterSpacing:'0.05em'}}>ACEEB DIGNITOSO</div>
+                            <div style={{fontSize:'0.7rem',color:'#71717a',marginTop:'4px',letterSpacing:'0.1em'}}>FULL-STACK DEVELOPER</div>
+                        </div>
+                        <div style={{padding:'6px 16px',border:'1px solid rgba(251,191,36,0.4)',color:'#fbbf24',fontSize:'0.65rem',fontWeight:700,letterSpacing:'0.15em',borderRadius:'4px'}}>REPLACE WITH YOUR PHOTO</div>
                     </div>
-                    <div className="absolute -bottom-4 -right-4 md:-bottom-6 md:-right-6 w-24 h-24 md:w-32 md:h-32 bg-zinc-950 border-2 border-amber-400 flex items-center justify-center transform rotate-12 group-hover:rotate-0 group-hover:scale-110 transition-all duration-500 z-20">
-                        <div className="text-center"><div className="text-xl md:text-2xl font-bold text-amber-400"><CountUp end={3} suffix="+"/></div><div className="text-xs text-zinc-400">Years</div></div>
+                    {/* Scan line */}
+                    <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{zIndex:3}}>
+                        <div className="absolute w-full" style={{height:'80px',background:'linear-gradient(to bottom,transparent,rgba(251,191,36,.25),transparent)',filter:'blur(12px)',animation:'scan 4s ease-in-out infinite'}}/>
+                    </div>
+                    {/* Corner accents */}
+                    <div className="absolute top-0 left-0 border-t-4 border-l-4 border-amber-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{width:'48px',height:'48px'}}/>
+                    <div className="absolute top-0 right-0 border-t-4 border-r-4 border-amber-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{width:'48px',height:'48px'}}/>
+                    <div className="absolute bottom-0 left-0 border-b-4 border-l-4 border-amber-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{width:'48px',height:'48px'}}/>
+                    <div className="absolute bottom-0 right-0 border-b-4 border-r-4 border-amber-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{width:'48px',height:'48px'}}/>
+                </div>
+                {/* Years badge */}
+                <div className="absolute z-10 bg-zinc-950 border-2 border-amber-400 flex items-center justify-center" style={{bottom:'-16px',right:'-16px',width:'88px',height:'88px',transform:'rotate(12deg)',transition:'transform .5s,box-shadow .5s',zIndex:10}} onMouseEnter={e=>e.currentTarget.style.transform='rotate(0deg)'} onMouseLeave={e=>e.currentTarget.style.transform='rotate(12deg)'}>
+                    <div style={{textAlign:'center'}}>
+                        <div style={{fontSize:'1.25rem',fontWeight:900,color:'#fbbf24'}}><CountUp end={3} suffix="+"/></div>
+                        <div style={{fontSize:'0.65rem',color:'#a1a1aa'}}>Years</div>
                     </div>
                 </div>
             </div>
@@ -586,7 +729,7 @@
         return(
             <div ref={ref} className={`wp-card group relative border border-zinc-800 bg-zinc-900 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:border-amber-400/60 hover:shadow-2xl ${isInView?'opacity-100 translate-y-0':'opacity-0 translate-y-20'}`} style={{transitionDelay:`${index*150}ms`}}>
                 <div className="relative overflow-hidden" style={{height:'200px'}}>
-                    <img src={project.image} alt={project.title} className="lazy-img wp-card-img w-full h-full object-cover object-top" loading="lazy" decoding="async" onLoad={e=>e.target.classList.add('loaded')}/>
+                    <img src={project.image} alt={project.title} className="lazy-img wp-card-img w-full h-full object-cover object-top" loading="eager" decoding="async" fetchPriority="high" onLoad={e=>e.target.classList.add('loaded')}/>
                     <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/30 to-transparent"/>
                     <div className="wp-overlay absolute inset-0 bg-amber-400/10"/>
                     <div className="absolute top-3 left-3 w-9 h-9 bg-zinc-950/80 border border-amber-400 flex items-center justify-center"><span className="text-xs font-bold text-amber-400">0{index+1}</span></div>
@@ -604,11 +747,7 @@
     });
 
     const SocialCardsScroll=()=>{
-        const trackRef=useRef(null);const isDragging=useRef(false);const startX=useRef(0);const scrollLeft=useRef(0);const[activeIdx,setActiveIdx]=useState(0);
-        const onMouseDown=useCallback(e=>{isDragging.current=true;startX.current=e.pageX-trackRef.current.offsetLeft;scrollLeft.current=trackRef.current.scrollLeft;trackRef.current.classList.add('dragging');},[]);
-        const onMouseUp=useCallback(()=>{isDragging.current=false;trackRef.current?.classList.remove('dragging');},[]);
-        const onMouseMove=useCallback(e=>{if(!isDragging.current)return;e.preventDefault();const x=e.pageX-trackRef.current.offsetLeft;trackRef.current.scrollLeft=scrollLeft.current-(x-startX.current)*1.5;},[]);
-        const onScroll=useCallback(()=>{if(!trackRef.current)return;const{scrollLeft:sl,scrollWidth,clientWidth}=trackRef.current;const maxScroll=scrollWidth-clientWidth;const idx=Math.round((sl/maxScroll)*6);setActiveIdx(Math.max(0,Math.min(6,idx)));},[]);
+        const trackRef=useRef(null);
         const cards=[
             {platform:'LinkedIn',handle:'@therealhaseebrehman',desc:'Professional updates, dev insights & career milestones.',stat:'500+ Connections',cta:'Connect',ctaHref:'https://www.linkedin.com/in/therealhaseebrehman/',bg:'#0A66C2',textColor:'#0A66C2',ctaBorder:'rgba(10,102,194,0.4)',ctaText:'rgba(100,170,255,0.9)',icon:<svg viewBox="0 0 24 24" width="26" height="26"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002zM7 8.48H3V21h4V8.48zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.72-2.91l.04-1.68z" fill="white"/></svg>},
             {platform:'GitHub',handle:'@therealhaseebrehman',desc:'Open-source projects, code experiments & contributions.',stat:'Active Repos',cta:'Follow',ctaHref:'https://github.com/therealhaseebrehman',bg:'#e0e0e0',textColor:'#e0e0e0',ctaBorder:'rgba(255,255,255,0.2)',ctaText:'rgba(220,220,220,0.9)',icon:<svg viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>},
@@ -622,29 +761,31 @@
             <div className="mt-6">
                 <div className="flex items-center justify-between mb-3 pr-4">
                     <div className="text-xs font-bold tracking-widest text-amber-400/60">CONNECT WITH ME</div>
-                    <div className="flex items-center gap-1.5 text-zinc-600 text-xs font-medium"><span>Drag to explore</span><svg className="scroll-hint-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+                    <div className="flex items-center gap-1.5 text-zinc-600 text-xs font-medium">
+                        <span>Hover to pause</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </div>
                 </div>
-                <div ref={trackRef} className="social-cards-track" onMouseDown={onMouseDown} onMouseUp={onMouseUp} onMouseLeave={onMouseUp} onMouseMove={onMouseMove} onScroll={onScroll}>
-                    {cards.map(({platform,handle,desc,stat,cta,ctaHref,bg,textColor,ctaBorder,ctaText,icon},i)=>(
-                        <div key={i} className="social-card" style={{boxShadow:'0 4px 24px rgba(0,0,0,0.4)'}}>
-                            <div className="social-card-shine"/>
-                            <div className="social-card-bg" style={{background:`radial-gradient(ellipse 140% 100% at 50% 0%, ${bg}, transparent)`}}/>
-                            <div style={{position:'absolute',top:0,left:0,right:0,height:'2px',background:`linear-gradient(90deg,transparent,${bg},transparent)`,opacity:.6}}/>
-                            <div className="social-card-stat" style={{color:textColor}}>{stat}</div>
-                            <div className="social-card-inner">
-                                <div className="social-card-icon" style={{background:`${bg}18`,border:`1px solid ${bg}30`}}>{icon}</div>
-                                <div className="social-card-platform" style={{color:textColor}}>{platform}</div>
-                                <div className="social-card-handle text-zinc-100">{handle}</div>
-                                <div className="social-card-desc">{desc}</div>
-                                <a href={ctaHref} target="_blank" rel="noopener noreferrer" className="social-card-cta" style={{borderColor:ctaBorder,color:ctaText,background:`${bg}0d`}} onClick={e=>e.stopPropagation()}>
-                                    {cta}<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                                </a>
+                <div className="social-cards-auto-outer">
+                    <div ref={trackRef} className="social-cards-auto-track">
+                        {[...cards,...cards].map(({platform,handle,desc,stat,cta,ctaHref,bg,textColor,ctaBorder,ctaText,icon},i)=>(
+                            <div key={i} className="social-card" style={{boxShadow:'0 4px 24px rgba(0,0,0,0.4)'}}>
+                                <div className="social-card-shine"/>
+                                <div className="social-card-bg" style={{background:`radial-gradient(ellipse 140% 100% at 50% 0%, ${bg}, transparent)`}}/>
+                                <div style={{position:'absolute',top:0,left:0,right:0,height:'2px',background:`linear-gradient(90deg,transparent,${bg},transparent)`,opacity:.6}}/>
+                                <div className="social-card-stat" style={{color:textColor}}>{stat}</div>
+                                <div className="social-card-inner">
+                                    <div className="social-card-icon" style={{background:`${bg}18`,border:`1px solid ${bg}30`}}>{icon}</div>
+                                    <div className="social-card-platform" style={{color:textColor}}>{platform}</div>
+                                    <div className="social-card-handle text-zinc-100">{handle}</div>
+                                    <div className="social-card-desc">{desc}</div>
+                                    <a href={ctaHref} target="_blank" rel="noopener noreferrer" className="social-card-cta" style={{borderColor:ctaBorder,color:ctaText,background:`${bg}0d`}} onClick={e=>e.stopPropagation()}>
+                                        {cta}<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
-                <div className="flex justify-center gap-1.5 mt-2">
-                    {[0,1,2,3,4,5,6].map(i=><div key={i} style={{width:i===activeIdx?'16px':'4px',height:'4px',borderRadius:'2px',background:i===activeIdx?'#fbbf24':'rgba(63,63,70,0.8)',transition:'all .3s'}}/>)}
+                        ))}
+                    </div>
                 </div>
             </div>
         );
@@ -872,6 +1013,23 @@
                     </div>
                 </nav>
 
+                {/* WHATSAPP FLOATING BUTTON */}
+                <a
+                    href="https://wa.me/923346419135?text=Hi%20Aceeb!%20I%20visited%20your%20portfolio%20and%20I%27d%20like%20to%20discuss%20a%20project."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="wa-float-btn"
+                    aria-label="Chat on WhatsApp"
+                    style={{position:'fixed',bottom:'24px',right:'24px',zIndex:9998}}
+                >
+                    <div className="wa-ripple"/>
+                    <div className="wa-ripple wa-ripple-2"/>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="white" style={{flexShrink:0}}>
+                        <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.38 1.26 4.8L2 22l5.45-1.43a9.88 9.88 0 004.59 1.14c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.16c-1.46 0-2.9-.4-4.15-1.14l-.3-.18-3.08.81.82-3-.19-.31a8.26 8.26 0 01-1.27-4.44c0-4.56 3.72-8.27 8.28-8.27s8.27 3.71 8.27 8.27-3.71 8.26-8.28 8.26zm4.52-6.18c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.44.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.44-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.41-.56-.42h-.48c-.17 0-.44.06-.67.31-.23.25-.87.85-.87 2.07s.89 2.4 1.01 2.56c.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18s-.22-.16-.47-.28z"/>
+                    </svg>
+                    <span className="wa-float-label">WhatsApp Me</span>
+                </a>
+
                 {/* HERO */}
                 <section id="home" className="min-h-screen flex items-center pt-16 md:pt-20 relative overflow-hidden">
                     <div className="absolute inset-0 overflow-hidden">
@@ -909,8 +1067,8 @@
                         <div className="about-3d-shape about-3d-shape-5" style={{bottom:'10%',right:'15%',opacity:.13,animationDelay:'.5s'}}><svg width="70" height="70" viewBox="0 0 70 70" fill="none"><polygon points="35,5 65,55 5,55" stroke="#fbbf24" strokeWidth="1.5" fill="rgba(251,191,36,0.04)"/><circle cx="35" cy="5" r="3" fill="#fbbf24" opacity=".5"/><circle cx="65" cy="55" r="3" fill="#fbbf24" opacity=".5"/><circle cx="5" cy="55" r="3" fill="#fbbf24" opacity=".5"/></svg></div>
                     </div>
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative" style={{zIndex:1}}>
-                        <div className="grid lg:grid-cols-2 gap-12 md:gap-16 items-start">
-                            <div className="photo-col mx-auto w-full max-w-xs sm:max-w-sm lg:max-w-none"><PhotoShowcase/></div>
+                        <div className="grid sm:grid-cols-2 gap-6 sm:gap-8 md:gap-12 lg:gap-16 items-start">
+                            <div className="photo-col w-full" style={{display:"block",visibility:"visible",minWidth:0}}><PhotoShowcase/></div>
                             <div className="space-y-6 md:space-y-8">
                                 <div className="space-y-4"><h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">About Me</h2><div className="w-20 h-1 bg-amber-400"/></div>
                                 <div className="space-y-4 md:space-y-6 text-zinc-400 leading-relaxed">
@@ -951,7 +1109,7 @@
                 </section>
 
                 {/* EXPERTISE */}
-                <section id="expertise" className="py-20 md:py-32 border-t border-zinc-800 relative overflow-hidden">
+                <section id="expertise" className="py-20 md:py-32 border-t border-zinc-800 relative" style={{overflowX:"hidden"}}>
                     <div className="absolute inset-0 pointer-events-none overflow-hidden"><svg className="absolute top-0 left-0 w-full h-full opacity-[0.03]" viewBox="0 0 1200 800" fill="none"><path d="M-50 600 Q200 400 400 350 Q600 300 800 200 Q1000 100 1300 50" stroke="#fbbf24" strokeWidth="80" strokeLinecap="round" fill="none"/><path d="M-50 650 Q200 450 400 400 Q600 350 800 250 Q1000 150 1300 100" stroke="#fbbf24" strokeWidth="2" strokeLinecap="round" fill="none" strokeDasharray="12 8"/></svg></div>
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
                         <div className="space-y-4 md:space-y-6 mb-10 md:mb-16 text-center">
@@ -975,7 +1133,7 @@
                                 ))}
                             </div>
                         </div>
-                        <div className="grid sm:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto">
+                        <div className="grid gap-6 md:gap-8 max-w-6xl mx-auto" style={{gridTemplateColumns:"repeat(auto-fit,minmax(min(100%,480px),1fr))"}}>  
                             <a href="graphic-design.html" className="block"><ExpertiseCard index={0} title="Graphic Design" description="Crafting stunning visual identities, brand systems, and digital assets that capture attention and drive engagement." skills={['Brand Identity','Logo Design','UI/UX Design','Social Media Graphics','Print Design','Illustrations']} adobeTools={[{name:'Photoshop',color:'#31A8FF',abbr:'Ps'},{name:'Illustrator',color:'#FF9A00',abbr:'Ai'},{name:'InDesign',color:'#FF3366',abbr:'Id'}]}/></a>
                             <a href="video-editing.html" className="block"><ExpertiseCard index={1} title="Video Editing" description="Professional video production and post-production that tells compelling stories. Motion graphics, color grading, and cinematic effects." skills={['Promotional Videos','Social Media Content','Motion Graphics','Color Grading','VFX','Sound Design']} adobeTools={[{name:'Premiere Pro',color:'#9999FF',abbr:'Pr'},{name:'After Effects',color:'#9999FF',abbr:'Ae'},{name:'Audition',color:'#00E4BB',abbr:'Au'}]}/></a>
                         </div>
